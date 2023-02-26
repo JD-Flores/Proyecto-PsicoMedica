@@ -15,7 +15,7 @@ export function RegisterPage() {
           <div id="titulo" className=" flex text-center h-1/5 justify-center items-center text-white text-1xl font-bold">
             <h1 className="w-3/4">¿Cómo podemos ayudarte?</h1>
           </div>
-          <div id="registros" className="flex justify-between items-center h-2/5 flex-col">
+          <div id="registros" className="flex justify-between items-center h-2/5">
               <div id="psicologo" className=" flex w-full  justify-center items-center">
                 <Link to={REGISTER_PATIENT_URL}>
                 <img src={imagenPaciente} alt="" className="rounded-full h-24 "/>
@@ -35,9 +35,9 @@ export function RegisterPage() {
               </svg></span></Link></p>
           </div>
         </div>
-        <div id="ladoder" className="w-full h-full ">
+        {/* <div id="ladoder" className="w-full h-full ">
             <img src={sesionPsicologica} alt="" className="rounded-l-3xl w-full h-full"   />
-        </div>
+        </div> */}
     </div>
   )
 }
