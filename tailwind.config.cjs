@@ -2,7 +2,12 @@
 module.exports = {
   content: ["./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        'alfa-slab-one': ['"Alfa Slab One"', 'regular'],
+        'comfortaa': ['"Comfortaa"', 'light'],
+      },
+    }
   },
   plugins: [],
 };

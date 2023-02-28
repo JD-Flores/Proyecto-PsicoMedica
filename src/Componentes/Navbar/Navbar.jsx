@@ -6,9 +6,9 @@ import { HOME_URL, LOGIN_URL, REGISTER_URL } from '../../constantes/urls';
 
 export function Navbar() {
   return (
-    <nav id="header" className="w-full z-30 top-10 py-1 shadow-lg border-b border-blue-400 ">
+    <nav id="header" className="w-full z-30 top-10 py-1 shadow-lg border-b bg-[#5974A9] font-comfortaa text-[14px]  ">
       <div className="w-full flex items-center justify-between mt-0 px-6 py-2">
-      <div className="group inline-block md:hidden block">
+      <div className="group md:hidden block">
             <button
                 className="outline-none focus:outline-none border px-3 py-1 bg-white rounded-sm flex items-center min-w-32"
             >
