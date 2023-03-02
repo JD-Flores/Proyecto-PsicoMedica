@@ -3,9 +3,9 @@ import { Outlet } from "react-router-dom"
 
 export function Layout() {
   return (
-    <main className="bg-blue-400 max-h-fit">
+    <main className="bg-blue-400 ">
       <Navbar />
-      <section className="body">
+      <section className="body " >
         <Outlet />
       </section>
   </main>

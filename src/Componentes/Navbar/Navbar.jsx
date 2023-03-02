@@ -35,12 +35,12 @@ export function Navbar() {
                 <li className="rounded-sm px-3 py-1 hover:bg-gray-100"><Link to={HOME_URL}>FAQ</Link></li>
             </ul>
             </div>
-         <div className="hidden md:flex md:items-center md:w-auto w-full order-3 md:order-1 overflow-y-auto" id="menu">
+         <div className="hidden md:flex md:items-center md:w-auto w-full order-3 md:order-1 overflow-y-auto " id="menu">
             <nav>
-               <ul className="md:flex items-center justify-between text-base text-white pt-4 md:pt-0">
-                  <li><Link to={HOME_URL} className="inline-block no-underline hover:text-black font-medium text-lg py-2 px-4 lg:-ml-2" >Inicio</Link></li>
-                  <li><Link to={HOME_URL} className="inline-block no-underline hover:text-black font-medium text-lg py-2 px-4 lg:-ml-2" >Nosotros</Link></li>
-                  <li><Link to={HOME_URL} className="inline-block no-underline hover:text-black font-medium text-lg py-2 px-4 lg:-ml-2" >FAQ</Link></li>
+               <ul className="md:flex items-center justify-between text-base text-white font-bold pt-4 md:pt-0">
+                  <li><Link to={HOME_URL} className="inline-block no-underline hover:text-black text-lg py-2 px-4 lg:-ml-2" >Inicio</Link></li>
+                  <li><Link to={HOME_URL} className="inline-block no-underline hover:text-black text-lg py-2 px-4 lg:-ml-2" >Nosotros</Link></li>
+                  <li><Link to={HOME_URL} className="inline-block no-underline hover:text-black text-lg py-2 px-4 lg:-ml-2" >FAQ</Link></li>
                </ul>
             </nav>
          </div>
