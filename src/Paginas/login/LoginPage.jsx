@@ -5,7 +5,7 @@ import { REGISTER_URL } from '../../constantes/urls';
 export function LoginPage() {
   return (
 
-    <div className="max-w-lg mx-auto my-10 bg-white p-8 rounded-xl shadow shadow-slate-300">
+    <div className="max-w-lg mx-auto my-10 bg-white p-8 rounded-xl shadow shadow-slate-300 h-full">
         <h1 className="text-4xl font-medium">Login</h1>
         {/* <p className="text-slate-500">Hi, Welcome back 👋</p> */}
 
