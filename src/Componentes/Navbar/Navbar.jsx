@@ -1,10 +1,18 @@
+import { async } from '@firebase/util';
 import React from 'react'
 import { Link } from "react-router-dom";
 import { HOME_URL, LOGIN_URL, REGISTER_URL } from '../../constantes/urls';
+import { useUser } from '../../contexts/UserContext';
+import { logout } from '../../firebase/auth-service';
 // import { HOME_URL } from '../../constantes/urls';
 
 
 export function Navbar() {
+   const{user}=useUser();
+   console.log(user)
+   const handleLogout = async ()=>{
+      await logout()
+   }
   return (
     <nav id="header" className="w-full z-30 top-10 py-1 shadow-lg border-b bg-[#5974A9] font-comfortaa text-[14px]  ">
       <div className="w-full flex items-center justify-between mt-0 px-6 py-2">
@@ -44,16 +52,24 @@ export function Navbar() {
                </ul>
             </nav>
          </div>
-         
+         {user&&(
+           <div className="order-2 md:order-3 flex flex-wrap items-center justify-end mr-0 md:mr-4" id="nav-content">
+           <div className="auth flex items-center w-full md:w-full">
+              <Link to={LOGIN_URL} className="bg-white text-gray-800  p-2 rounded border border-gray-300 mr-4 hover:bg-gray-100 hover:text-gray-700">Perfil:{user.name}</Link>
+              <button onClick={handleLogout} className="bg-blue-600 text-gray-200  p-2 rounded  hover:bg-blue-500 hover:text-gray-100">Logout</button>
+           </div>
+        </div> 
+         )}
 
 
-         
+         {!user &&(<>
          <div className="order-2 md:order-3 flex flex-wrap items-center justify-end mr-0 md:mr-4" id="nav-content">
             <div className="auth flex items-center w-full md:w-full">
                <Link to={LOGIN_URL} className="bg-white text-gray-800  p-2 rounded border border-gray-300 mr-4 hover:bg-gray-100 hover:text-gray-700">Iniciar sesion</Link>
                <Link to={REGISTER_URL} className="bg-blue-600 text-gray-200  p-2 rounded  hover:bg-blue-500 hover:text-gray-100">Registrarse</Link>
             </div>
          </div>
+         </>)}
       </div>
    </nav>
   )
