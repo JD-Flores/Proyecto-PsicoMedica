@@ -1,28 +1,58 @@
-import React from 'react'
-import { Link } from 'react-router-dom';
+import { async } from '@firebase/util';
+import React, { useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom';
 import { REGISTER_URL } from '../../constantes/urls';
+import { logInWithEmailAndPassword, signInWithGoogle } from '../../firebase/auth-service';
 
 export function LoginPage() {
-  return (
+    const navigate = useNavigate()
+const[formData,setFormData]=useState({
+    email:'',
+    password:'',
+})
+const handleSigninWithGoogle = async ()=>{
+    await signInWithGoogle();
+}
 
+const onSubmit = async(event)=>{
+    event.preventDefault();//evita que el form recargue la pagina
+    const{email,password}=formData//form destructurado
+    await logInWithEmailAndPassword(email,password);
+    navigate("/perfilCliente")
+}
+//en cada input utiliza la info del campo para agregarla al form existente
+const handleOnChange = (event)=>{
+    const{name,value}=event.target;
+    setFormData({
+        ...formData,
+        [name]:value,
+    })
+}
+    return (
     <div className="max-w-lg mx-auto my-10 bg-white p-8 rounded-xl shadow shadow-slate-300 h-full">
         <h1 className="text-4xl font-medium">Login</h1>
         {/* <p className="text-slate-500">Hi, Welcome back 👋</p> */}
 
         <div className="my-5">
-            <button className="w-full text-center py-3 my-3 border flex space-x-2 items-center justify-center border-slate-200 rounded-lg text-slate-700 hover:border-slate-400 hover:text-slate-900 hover:shadow transition duration-150">
+            <button onClick={handleSigninWithGoogle} className="w-full text-center py-3 my-3 border flex space-x-2 items-center justify-center border-slate-200 rounded-lg text-slate-700 hover:border-slate-400 hover:text-slate-900 hover:shadow transition duration-150">
                 <img src="https://www.svgrepo.com/show/355037/google.svg" className="w-6 h-6" alt=""/> <span>Login with Google</span>
             </button>
         </div>
-        <form action="" className="my-10">
+        <form action="" onSubmit={onSubmit} className="my-10">
             <div className="flex flex-col space-y-5">
                 <label htmlFor="email">
                     <p className="font-medium text-slate-700 pb-2">Email address</p>
-                    <input id="email" name="email" type="email" className="w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow" placeholder="Enter email address"/>
+                    <input 
+                    id="email" name="email" type="email" 
+                    onChange={handleOnChange}
+                    className="w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow" placeholder="Enter email address"/>
                 </label>
                 <label htmlFor="password">
                     <p className="font-medium text-slate-700 pb-2">Password</p>
-                    <input id="password" name="password" type="password" className="w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow" placeholder="Enter your password"/>
+                    <input 
+                    id="password" name="password" type="password" 
+                    onChange={handleOnChange}
+                    className="w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow" placeholder="Enter your password"/>
                 </label>
                 <div className="flex flex-row justify-between">
                     <div>
