@@ -24,11 +24,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         <Route path={LOGIN_URL} element={<LoginPage/>}/>
         <Route path={REGISTER_DOCTOR_URL} element={<RegisterDoctorPage/>}/>
         <Route path={REGISTER_PATIENT_URL} element={<RegisterPatientPage/>}/>
-        <Route path={PERFIL_CLIENTE} element={
-          <PrivateRoute>
-            <h1>Profile Page</h1>
-          </PrivateRoute>
-        }/>
+        <Route path={PERFIL_CLIENTE} element={<PrivateRoute><h1>Profile Page</h1></PrivateRoute>}/>
         <Route path="/*" element={<ErrorPage/>}/>
         </Route>
       </Routes>

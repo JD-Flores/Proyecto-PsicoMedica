@@ -1,7 +1,7 @@
 import { async } from '@firebase/util';
 import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom';
-import { REGISTER_URL } from '../../constantes/urls';
+import { PERFIL_CLIENTE, REGISTER_URL } from '../../constantes/urls';
 import { logInWithEmailAndPassword, signInWithGoogle } from '../../firebase/auth-service';
 
 export function LoginPage() {
@@ -12,15 +12,16 @@ const[formData,setFormData]=useState({
 })
 const handleSigninWithGoogle = async ()=>{
     await signInWithGoogle();
+    navigate(PERFIL_CLIENTE)
 }
 
 const onSubmit = async(event)=>{
     event.preventDefault();//evita que el form recargue la pagina
     const{email,password}=formData//form destructurado
     await logInWithEmailAndPassword(email,password);
-    navigate("/perfilCliente")
+    navigate(PERFIL_CLIENTE)
 }
-//en cada input utiliza la info del campo para agregarla al form existente
+//en cada input utiliza la informacion del campo para agregarla al form existente
 const handleOnChange = (event)=>{
     const{name,value}=event.target;
     setFormData({
@@ -31,7 +32,6 @@ const handleOnChange = (event)=>{
     return (
     <div className="max-w-lg mx-auto my-10 bg-white p-8 rounded-xl shadow shadow-slate-300 h-full">
         <h1 className="text-4xl font-medium">Login</h1>
-        {/* <p className="text-slate-500">Hi, Welcome back 👋</p> */}
 
         <div className="my-5">
             <button onClick={handleSigninWithGoogle} className="w-full text-center py-3 my-3 border flex space-x-2 items-center justify-center border-slate-200 rounded-lg text-slate-700 hover:border-slate-400 hover:text-slate-900 hover:shadow transition duration-150">

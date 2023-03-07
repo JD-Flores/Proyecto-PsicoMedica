@@ -13,6 +13,7 @@ export const signInWithGoogle = async()=>{
           await createUserProfile(result.user.uid,{
             email: result.user.email,
             name: result.user.displayName,
+            doctor:false,
             phone: "",
             
           })
@@ -40,6 +41,7 @@ export const registerWithEmailAndPassword = async(
     const result = await createUserWithEmailAndPassword(auth,email,password);
     await createUserProfile(result.user.uid,{
       email,
+      password,
       ...extraData,
     })
     console.log("Register emailandpass",result)

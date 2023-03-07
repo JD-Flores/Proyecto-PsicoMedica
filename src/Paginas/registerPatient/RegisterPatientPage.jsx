@@ -1,4 +1,4 @@
-import { LOGIN_URL } from '../../constantes/urls'
+import { LOGIN_URL, PERFIL_CLIENTE } from '../../constantes/urls'
 import { Link, useNavigate } from 'react-router-dom'
 import { signInWithGoogle } from '../../firebase/auth-service'
 import { useState } from 'react'
@@ -7,6 +7,7 @@ import { registerWithEmailAndPassword } from '../../firebase/auth-service'
 export function RegisterPatientPage() {
     const navigate = useNavigate();
     const [formData,setFormData] =useState({
+        doctor:false,
         name:"",
         email:"",
         phone:"",
@@ -17,13 +18,14 @@ export function RegisterPatientPage() {
 //const para el login con google
     const handleSigninWithGoogle = async ()=>{
         await signInWithGoogle();
+        navigate(PERFIL_CLIENTE)
     }
 
     const onSubmit = async(event)=>{
         event.preventDefault();//evita que el form recargue la pagina
         const{email,password,...extraData}=formData//form destructurado
         await registerWithEmailAndPassword(email,password,extraData);
-        navigate("/perfilCliente")
+        navigate(PERFIL_CLIENTE)
     }
 //en cada input utiliza la info del campo para agregarla al form existente
     const handleOnChange = (event)=>{
@@ -56,33 +58,33 @@ export function RegisterPatientPage() {
                     <input 
                     id="name" name="name" type="text" 
                     onChange={handleOnChange}
-                    className="w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow" placeholder="Enter email address"/>
+                    className="w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow" placeholder="Ingresa tu nombre completo"/>
                 </label>
                 <label htmlFor="email">
                     <p className="font-medium text-slate-700 pb-2">Direccion de correo</p>
                     <input 
                     id="email" name="email" type="email" 
                     onChange={handleOnChange}
-                    className="w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow" placeholder="Enter email address"/>
+                    className="w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow" placeholder="Ingresa dirección de correo"/>
                 </label>
                 <label htmlFor="telefono">
                     <p className="font-medium text-slate-700 pb-2">Numero de telefono</p>
                     <input 
                     id="phone" name="phone" type="text" 
                     onChange={handleOnChange}
-                    className="w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow" placeholder="Enter email address"/>
+                    className="w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow" placeholder="Ingresa tu número de telefono"/>
                 </label>
                 <label htmlFor="password">
                     <p className="font-medium text-slate-700 pb-2">Contraseña</p>
                     <input id="password" name="password" type="password" 
                     onChange={handleOnChange}
-                    className="w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow" placeholder="Enter your password"/>
+                    className="w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow" placeholder="Ingresa tu contraseña"/>
                 </label>
                 <label htmlFor="confirmar">
                     <p className="font-medium text-slate-700 pb-2">Confirmar Contraseña</p>
                     <input id="confirmPassword" name="confirmPassword" type="password" 
                     onChange={handleOnChange}
-                    className="w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow" placeholder="Enter your password"/>
+                    className="w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow" placeholder="Ingresa nuevamente la contraseña"/>
                 </label>
                 <div className="flex flex-row justify-between">
                     <div>
