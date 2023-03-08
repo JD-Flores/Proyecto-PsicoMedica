@@ -7,7 +7,7 @@ export function PerfilClientePage() {
 
   const{user}=useUser();
 
-  const [editable, setEditable] = useState("readOnly");
+  const [editable, setEditable] = useState(true);
 
   return (
     <div id='container' className=' flex justify-center w-screen h-full flex-col'>
@@ -35,22 +35,22 @@ export function PerfilClientePage() {
                 <label htmlFor="name">
                     <p className="font-medium text-slate-700 pb-2">Nombre</p>
                     <input 
-                    id="name" name="name" type="text" readonly={editable}
-                    onChange=""
+                    id="name" name="name" type="text" readOnly={editable}
+                    // onChange=""
                     className="w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow" placeholder={user.name}/>
                 </label>
                 <label htmlFor="number">
                     <p className="font-medium text-slate-700 pb-2">Número telefónico</p>
                     <input 
-                    id="number" name="number" type="text" readonly={editable}
-                    onChange=""
+                    id="number" name="number" type="text" readOnly={editable}
+                    // onChange=""
                     className="w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow" placeholder={user.phone}/>
                 </label>
                 <label htmlFor="age">
                     <p className="font-medium text-slate-700 pb-2">Edad</p>
                     <input 
-                    id="age" name="age" type="age" readonly={editable}
-                    onChange=""
+                    id="age" name="age" type="age" readOnly={editable}
+                    // onChange=""
                     className="w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow" placeholder={user.age}/>
                 </label>
             </div>
@@ -63,8 +63,8 @@ export function PerfilClientePage() {
                  <label htmlFor="email">
                     <p className="font-medium text-slate-700 pb-2">Direccion de correo </p>
                     <input 
-                    id="email" name="email" type="email" readonly={editable}
-                    onChange=""
+                    id="email" name="email" type="email" readOnly={editable}
+                    // onChange=""
                     className="w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow" placeholder={user.email}/>
                 </label>
                 <div id='buttons' className='flex flex-row items-center justify-evenly w-full'>
