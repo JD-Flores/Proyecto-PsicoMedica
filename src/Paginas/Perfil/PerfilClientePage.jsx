@@ -7,7 +7,7 @@ export function PerfilClientePage() {
 
   const{user}=useUser();
 
-  const [editable, setEditable] = useState("readonly");
+  const [editable, setEditable] = useState("readOnly");
 
   return (
     <div id='container' className=' flex justify-center w-screen h-full flex-col'>
