@@ -9,7 +9,6 @@ import { logout } from '../../firebase/auth-service';
 
 export function Navbar() {
    const{user}=useUser();
-   console.log(user)
    const handleLogout = async ()=>{
       await logout()
    }
