@@ -82,8 +82,11 @@ export function HomePage() {
         </div>
 
         <div className='flex justify-center'> {/*Contenedor de preguntas frecuentes*/}
-            <h1 className='text-[25px] mt-2 mb-2'>Preguntas Frecuentes</h1>
-            
+            <h1 className='text-[25px] mt-2 mb-2'>Preguntas Frecuentes - TO DO</h1>
+        </div>
+
+        <div> {/*Contenedor de calificación*/}
+          TODO
         </div>
 
 
