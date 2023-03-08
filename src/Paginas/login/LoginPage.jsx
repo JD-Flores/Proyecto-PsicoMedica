@@ -30,7 +30,7 @@ const handleOnChange = (event)=>{
     })
 }
     return (
-    <div className="max-w-lg mx-auto my-10 bg-white p-8 rounded-xl shadow shadow-slate-300 h-full">
+    <div className="max-w-lg mx-auto my-10 bg-white p-8 rounded-xl shadow shadow-slate-300 h-9/10">
         <h1 className="text-4xl font-medium">Login</h1>
 
         <div className="my-5">
@@ -77,6 +77,8 @@ const handleOnChange = (event)=>{
             </div>
         </form>
     </div>
+    
+    
     
   )
 }
