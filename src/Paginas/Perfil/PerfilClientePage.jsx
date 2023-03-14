@@ -12,8 +12,8 @@ export function PerfilClientePage() {
   return (
     <div id='container' className=' flex justify-center w-screen h-full flex-col'>
       <ProfileNav></ProfileNav>
-      <div id='secondHalf' className='p-4 flex w-full h-4/5 items-center'>
-        <div className='flex flex-col w-full mx-auto my-10 bg-white p-8 rounded-xl shadow shadow-slate-300 h-full'>
+      <div id='secondHalf' className='p-4 flex w-full  items-center'>
+        <div className='flex flex-col w-full mx-auto bg-white p-6 rounded-xl shadow shadow-slate-300 '>
           <div id='title' className='text-2xl m-4 mx-0 text-gray-500'>
             <h1>Datos Personales</h1>
           </div>
