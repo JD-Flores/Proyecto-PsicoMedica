@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useUser } from '../../contexts/UserContext';
 import fotoPerfil from '../../imagenes/fotoPerfil.jpg'
-import { Link } from 'react-router-dom';
+import { ProfileNav } from '../../Componentes/ProfileNav/ProfileNav';
 
 export function PerfilClientePage() {
 
@@ -11,19 +11,7 @@ export function PerfilClientePage() {
 
   return (
     <div id='container' className=' flex justify-center w-screen h-full flex-col'>
-      <div id='firstHalf' className=' flex p-4 w-full h-1/5 items-center'>
-        <div className='flex flex-col w-full  bg-white p-2 rounded-xl shadow shadow-slate-300 h-full'> 
-          <div id='top' className='flex items-center justify-center h-full'>
-            <h1 className='flex items-center justify-center text-center text-xl h-2/4'>Bienvenido {user.name}</h1>
-          </div>
-          <div id='bottom' className='flex flex-row items-center justify-evenly h-2/4'>
-            <Link className='flex items-center justify-center bg-black text-white p-1 rounded-md h-10 w-1/5 text-center'>Perfil</Link>
-            <Link className='flex items-center justify-center bg-black text-white p-1 rounded-md h-10 w-1/5 text-center'>Buscar Doctor</Link>
-            <Link className='flex items-center justify-center bg-black text-white p-1 rounded-md h-10 w-1/5 text-center'>Reservar Cita</Link>
-            <Link className='flex items-center justify-center bg-black text-white p-1 rounded-md h-10 w-1/5 text-center'>Chats</Link>
-          </div>
-        </div>
-      </div>
+      <ProfileNav></ProfileNav>
       <div id='secondHalf' className='p-4 flex w-full h-4/5 items-center'>
         <div className='flex flex-col w-full mx-auto my-10 bg-white p-8 rounded-xl shadow shadow-slate-300 h-full'>
           <div id='title' className='text-2xl m-4 mx-0 text-gray-500'>
@@ -67,7 +55,10 @@ export function PerfilClientePage() {
                     // onChange=""
                     className="w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow" placeholder={user.email}/>
                 </label>
-                <div id='buttons' className='flex flex-row items-center justify-evenly w-full'>
+                <div>
+                { editable==true &&(
+                  
+                    <div id='buttons' className='flex flex-row items-center justify-evenly w-full'>
                   <button onClick={() => setEditable(false)} className='flex items-center justify-center bg-black text-white p-1 rounded-md h-14 w-2/5 mt-2' >
                     Editar Datos Personales
                   </button>
@@ -75,9 +66,11 @@ export function PerfilClientePage() {
                     Editar Foto de Perfil
                   </button>
                   </div>
+                  )}
+                  </div>
                   { editable==false &&(
                     <div className='flex items-center justify-center'>
-                    <button onClick={() => setEditable("readonly")} className='flex items-center justify-center bg-black text-white p-1 rounded-md h-14 w-2/5 mt-2' >
+                    <button onClick={() => setEditable(true)} className='flex items-center justify-center bg-black text-white p-1 rounded-md h-14 w-2/5 mt-2' >
                     Actualizar
                   </button>
                   </div>
