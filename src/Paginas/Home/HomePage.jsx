@@ -102,14 +102,14 @@ export function HomePage() {
                 <div onClick={() => {setFaq1(!faq1)}} >
                 ¿Cómo puedo agendar una sesión?
                 <div className={`${faq1? 'opacity-100 visible translate-y-0 duration-500' : 'opacity-0 invisible translate-y-[-20px] duration-500'}`}>
-                <Dropdown text= {"Prueba"}/>
+                <Dropdown text= {`${faq1? 'Prueba': ''}`}/>
                 </div>
                 </div>
               <div>
                 <div onClick={() => {setFaq2(!faq2)}} >
                 ¿Cómo funciona la plataforma?
                 <div className={`${faq2? 'opacity-100 visible translate-y-0 duration-500' : 'opacity-0 invisible translate-y-[-20px] duration-500'}`}>
-                <Dropdown text= {"Prueba"}/>
+                <Dropdown text= {`${faq2? 'Prueba': ''}`}/>
                 </div>
                 </div>
               </div>
@@ -117,7 +117,7 @@ export function HomePage() {
                 <div onClick={() => {setFaq3(!faq3)}} >
                 ¿Cuánto tiempo duran las sesiones?
                 <div className={`${faq3? 'opacity-100 visible translate-y-0 duration-500' : 'opacity-0 invisible translate-y-[-20px] duration-500'}`}>
-                <Dropdown text= {"Prueba"}/>
+                <Dropdown text= {`${faq3? 'Prueba': ''}`}/>
                 </div>
                 </div>
               </div>
@@ -125,7 +125,7 @@ export function HomePage() {
                 <div onClick={() => {setFaq4(!faq4)}} >
                 ¿Qué tipo de problemas se pueden tratar con este servicio?
                 <div className={`${faq4? 'opacity-100 visible translate-y-0 duration-500' : 'opacity-0 invisible translate-y-[-20px] duration-500'}`}>
-                <Dropdown text= {"Prueba"}/>
+                <Dropdown text= {`${faq4? 'Prueba': ''}`}/>
                 </div>
                 </div>
               </div>
