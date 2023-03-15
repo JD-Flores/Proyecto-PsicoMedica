@@ -2,7 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import './index.css'
 import { Routes,Route,BrowserRouter} from "react-router-dom"
-import {BUSCAR_DOC, CHAT, HOME_URL, LOGIN_URL, PERFIL_CLIENTE, REGISTER_DOCTOR_URL, REGISTER_PATIENT_URL, REGISTER_URL, RESERVAR_CITA } from './constantes/urls'
+import {BUSCAR_DOC, CHAT, HOME_URL, LOGIN_URL, PERFIL_CLIENTE, PERFIL_DOCTOR, REGISTER_DOCTOR_URL, REGISTER_PATIENT_URL, REGISTER_URL, RESERVAR_CITA } from './constantes/urls'
 import { Layout } from './Componentes/Layout/Layout'
 import {HomePage} from './Paginas/Home/HomePage'
 import {RegisterPage} from './Paginas/register/RegisterPage'
@@ -15,6 +15,8 @@ import { PrivateRoute } from './Componentes/PrivateRoutes/PrivateRoute'
 import { BuscarDoc } from './Paginas/buscarDoc/BuscarDoc'
 import { ReservarCita } from './Paginas/reservarCite/ReservarCita'
 import { Chat } from './Paginas/chat/Chat'
+import { PerfilDoctorPage } from './Paginas/Perfil/PerfilDoctorPage'
+import { PrivateRouteDoc } from './Componentes/PrivateRoutes/PrivateRouteDoc'
 
 
 ReactDOM.createRoot(document.getElementById('root')).render(
@@ -31,6 +33,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         <Route path={BUSCAR_DOC} element={<PrivateRoute><BuscarDoc/></PrivateRoute>}/>
         <Route path={RESERVAR_CITA} element={<PrivateRoute><ReservarCita/></PrivateRoute>}/>
         <Route path={CHAT} element={<PrivateRoute><Chat/></PrivateRoute>}/>
+        <Route path={PERFIL_DOCTOR} element={<PrivateRouteDoc><PerfilDoctorPage/></PrivateRouteDoc>}/>
         <Route path="/*" element={<ErrorPage/>}/>
         </Route>
       </Routes>

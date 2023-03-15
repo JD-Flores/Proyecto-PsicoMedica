@@ -4,11 +4,36 @@ import { createUserWithEmailAndPassword, getAdditionalUserInfo, signInWithEmailA
 import { auth, googleProvider } from "./config";
 import { createUserProfile } from "./users-service";
 
+let Error="";
+let complete=false;
+
+const Validacion = (error)=>{
+    if(error=="auth/user-not-found"){
+      Error="Usuario o contraseña incorrectos"
+
+    }if (error=="auth/internal-error") {
+      Error="Ingrese los datos correctamente"
+    } if(error=="auth/invalid-email") {
+      Error="Email invalido"
+    }if(error=="auth/wrong-password") {
+      Error="Contraseña incorrecta"
+    }if(error=="auth/email-already-in-use") {
+      Error="Este correo ya se encuentra registrado"
+    }
+    }
+    export function returnError(){
+      return Error;
+    }
+    export function completed(){
+      return complete;
+    }
+
 export const signInWithGoogle = async()=>{
     try {
         const result = await signInWithPopup(auth,googleProvider)//abre la ventana de login de google
         
         const {isNewUser}=getAdditionalUserInfo(result);
+        complete=true;
         if(isNewUser){
           await createUserProfile(result.user.uid,{
             email: result.user.email,
@@ -19,24 +44,26 @@ export const signInWithGoogle = async()=>{
           })
         }
     } catch (error) {
-      console.error(error)  
+      Validacion(error) 
     }
 };
 
 export const logInWithEmailAndPassword = async(email,password)=>{
   try {
     const result = await signInWithEmailAndPassword(auth,email,password);
-    console.log("Login",result)
+    complete=true;
   } catch (error) {
-    console.error(error)  
+    Validacion(error)  
   }
 };
 
 export const registerWithEmailAndPassword = async(
   email,
   password,
+  confirmPassword,
   extraData
   )=>{
+    if(password==confirmPassword){
   try {
     const result = await createUserWithEmailAndPassword(auth,email,password);
     await createUserProfile(result.user.uid,{
@@ -44,9 +71,13 @@ export const registerWithEmailAndPassword = async(
       password,
       ...extraData,
     })
-    console.log("Register emailandpass",result)
+    complete=true;
+    
   } catch (error) {
-    console.error(error)  
+    Validacion(error.code)  
+  }
+  }else{
+    Error="Las contraseñas no coinciden"
   }
 };
 

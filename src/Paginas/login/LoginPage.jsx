@@ -1,25 +1,35 @@
 import { async } from '@firebase/util';
 import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom';
-import { PERFIL_CLIENTE, REGISTER_URL } from '../../constantes/urls';
-import { logInWithEmailAndPassword, signInWithGoogle } from '../../firebase/auth-service';
+import { LOGIN_URL, PERFIL_CLIENTE, REGISTER_URL } from '../../constantes/urls';
+import { completed, logInWithEmailAndPassword, returnError, signInWithGoogle } from '../../firebase/auth-service';
 
 export function LoginPage() {
     const navigate = useNavigate()
+    const [error, setError] = useState("");
 const[formData,setFormData]=useState({
     email:'',
     password:'',
 })
 const handleSigninWithGoogle = async ()=>{
     await signInWithGoogle();
-    navigate(PERFIL_CLIENTE)
+    if(completed()){
+        navigate(PERFIL_CLIENTE)
+      }else{
+        navigate(LOGIN_URL)
+      }
+    
 }
 
 const onSubmit = async(event)=>{
     event.preventDefault();//evita que el form recargue la pagina
     const{email,password}=formData//form destructurado
     await logInWithEmailAndPassword(email,password);
-    navigate(PERFIL_CLIENTE)
+    if(completed()){
+        navigate(PERFIL_CLIENTE)
+      }else{
+        setError(returnError())
+      }
 }
 //en cada input utiliza la informacion del campo para agregarla al form existente
 const handleOnChange = (event)=>{
