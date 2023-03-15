@@ -99,64 +99,65 @@ export function RegisterDoctorPage() {
   }
 
   return (
-    <div className='flex justify-center items-center'>
-    <div className='flex justify-center items-center flex-col  max-w-lg m-2 bg-white p-4 rounded-xl shadow shadow-slate-300 h-full text-xs '>
-      <p className="text-slate-500 my-3 ">Ingrese sus datos para confirmar registro</p>
+    <div className='flex justify-center items-center m-3 py-9'>
+    <div className='flex justify-center items-center flex-col  max-w-lg m-2 bg-white p-5 rounded-xl shadow shadow-slate-300 h-full text-xs '>
+      <p className="text-slate-700 my-4 p-2 font-bold pb-1 text-black text-lg">Ingresa tus datos para confirmar el registro</p>
       <form action="" onSubmit={onSubmit} className="flex flex-col justify-between gap-2">
-        <div className='flex flex-row gap-2'>
+        <div className='flex flex-row  gap-x-16 gap-y-5'>
         <div id='leftHalf' className='w-full'>
-          <label htmlFor="name">
-            <div className='flex flex-row'>
-                <h1 className="font-medium text-slate-700 pb-2">Nombre completo</h1><p className='text-red-600'>{errorName}</p>
+          <label htmlFor="name" className= "block cursor-pointer">
+            <div className='flex flex-row py-1 mt-2'>
+                <h1 className="font-medium text-slate-700 pb-2 text-sm ">Nombre completo</h1><p className='text-red-600'>{errorName}</p>
                 </div>
                 <input 
                 id="name" name="name" type="text" 
                 onChange={handleOnChange}
-                className="w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow" placeholder="Ingresa tu nombre completo"/>
+                className="w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow text-sm" placeholder="Ingresa tu nombre completo"/>
             </label>
-            <label htmlFor="email">
-            <div className='flex flex-row'>
-                <h1 className="font-medium text-slate-700 pb-2">Direccion de correo</h1><p className='text-red-600'>{errorEmail}</p>
+
+            <label htmlFor="email" className= "block cursor-pointer">
+            <div className='flex flex-row py-1 mt-2'>
+                <h1 className="font-medium text-slate-700 pb-2 text-sm">Correo electrónico</h1><p className='text-red-600'>{errorEmail}</p>
                 </div>                   
                  <input 
                     id="email" name="email" type="email" 
                     onChange={handleOnChange}
-                    className="w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow" placeholder="Ingresa dirección de correo"/>
+                    className="w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow text-sm" placeholder="Ingresa tu correo"/>
                 </label>
                 <div>
                 <label htmlFor="telefono">
-                    <div className='flex flex-row'>
-                    <h1 className="font-medium text-slate-700 pb-2">Telefono</h1><p className='text-red-600'>{errorPhone}</p>
+                    <div className='flex flex-row py-1 mt-2'>
+                    <h1 className="font-medium text-slate-700 pb-2 text-sm">Teléfono</h1><p className='text-red-600'>{errorPhone}</p>
                     </div>                   
                      {/* <Telefono></Telefono> */}
                     <input 
                     id="phone" name="phone" type="text" 
                     onChange={handleOnChange}
-                    className="w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow" placeholder="Ingresa tu número de telefono"/>
+                    className="w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow text-sm" placeholder="Ingresa tu número de teléfono"/>
                 </label>
                 </div>
                 <label htmlFor="password">
-                    <div className='flex flex-row'>
-                    <h1 className="font-medium text-slate-700 pb-2">Contraseña</h1><p className='text-red-600'>{errorPassword}</p>
+                    <div className='flex flex-row py-1 mt-2'>
+                    <h1 className="font-medium text-slate-700 pb-2 text-sm">Contraseña</h1><p className='text-red-600'>{errorPassword}</p>
                     </div>
                     <input id="password" name="password" type="password" 
                     onChange={handleOnChange}
-                    className="w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow" placeholder="Ingresa tu contraseña"/>
+                    className="w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow text-sm" placeholder="Ingresa tu contraseña"/>
                 </label>
                 <label htmlFor="confirmar">
-                  <div className='flex flex-row'>
-                  <h1 className="font-medium text-slate-700 pb-2">Confirmar contraseña</h1><p className='text-red-600'>{errorConfirm}</p>
+                  <div className='flex flex-row py-1 mt-2'>
+                  <h1 className="font-medium text-slate-700 pb-2 text-sm">Confirmar contraseña</h1><p className='text-red-600'>{errorConfirm}</p>
                   </div>
                     <input id="confirmPassword" name="confirmPassword" type="password" 
                     onChange={handleOnChange}
-                    className="w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow" placeholder="Ingresa nuevamente la contraseña"/>
+                    className="w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow text-sm" placeholder="Ingresa nuevamente la contraseña"/>
                 </label>
           </div>
           <div id='rightHalf' className='w-full'>
           <div>
             <label htmlFor="country">
-              <div className='flex flex-row'>
-              <h1 className="font-medium text-slate-700 pb-2">Nacionalidad</h1><p className='text-red-600'>{errorCountry}</p>
+              <div className='flex flex-row py-1 mt-2'>
+              <h1 className="font-medium text-slate-700 pb-2 text-sm">Nacionalidad</h1><p className='text-red-600'>{errorCountry}</p>
               </div> 
               <Nacionalidad handle={handleOnChange} ></Nacionalidad>
             </label>
@@ -164,22 +165,22 @@ export function RegisterDoctorPage() {
             
             
             <label htmlFor="age">
-            <div className='flex flex-row'>
-                  <h1 className="font-medium text-slate-700 pb-2">Fechas nacimiento</h1><p className='text-red-600'>{errorAge}</p>
+            <div className='flex flex-row py-1 mt-2'>
+                  <h1 className="font-medium text-slate-700 pb-2 text-sm">Fecha de nacimiento</h1><p className='text-red-600'>{errorAge}</p>
                   </div>
                 <input id="age" name="age" type="date" 
                 onChange={handleOnChange}
-                className="w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow" placeholder="nacionalidad"/>
+                className="w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow text-sm" placeholder="nacionalidad"/>
             
             </label>
             <label htmlFor="gender">
-            <div className='flex flex-row'>
-                  <h1 className="font-medium text-slate-700 pb-2">Genero</h1><p className='text-red-600'>{errorGender}</p>
+            <div className='flex flex-row py-1 mt-2'>
+                  <h1 className="font-medium text-slate-700 pb-2 text-sm">Género</h1><p className='text-red-600'>{errorGender}</p>
                   </div>
                 <select id="gender" name="gender" 
                 onChange={handleOnChange}
-                className=" bg-white w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow" placeholder="nacionalidad">
-                  <option>Elija su Genero</option>
+                className=" w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow text-sm" placeholder="nacionalidad">
+                  <option>Elije tu género</option>
                   <option value="Masculino">Masculino</option>
                   <option value="Femenino">Femenino</option>
                   <option value="Otro">Otro</option>
@@ -193,9 +194,9 @@ export function RegisterDoctorPage() {
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
                   </svg>
-                  <span>Login</span>
+                  <span className='text-sm'>Registrarse</span>
             </button> 
-            <p className="text-center text-black">Ya tienes una cuenta? <Link to={LOGIN_URL} className="text-indigo-600 font-medium inline-flex space-x-1 items-center"><span>Inicia sesion! </span><span><svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+            <p className="text-center text-black p-2 font-medium text-sm">¿Ya tienes una cuenta? <Link to={LOGIN_URL} className="text-indigo-600 font-medium inline-flex space-x-1 items-center underline text-sm"><span>Inicia sesión. </span><span><svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
             <path strokeLinecap="round" strokeLinejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
           </svg></span></Link></p>
         </form>
