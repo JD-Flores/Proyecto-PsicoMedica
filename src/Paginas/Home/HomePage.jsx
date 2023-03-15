@@ -60,8 +60,9 @@ export function HomePage() {
 
         </div>
 
-        <div>
-          <h1>TO DO SECCIÓN PSICÓLOGOS </h1>
+        <div> {/*Contenedor de muestra de psicólogos*/}
+          
+
         </div>
 
         <div className='bg-[#5974A9] flex flex-col '> {/*Contenedor de pasos a seguir para usar la app*/}
