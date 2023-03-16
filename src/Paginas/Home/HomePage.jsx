@@ -6,6 +6,9 @@ import imageVentaja3 from  "../../imagenes/img3.jpg";
 import estrella from "../../imagenes/Estrella_amarilla.png";
 import Number from '../../Componentes/LandingPage/Number';
 import { Dropdown } from '../../Componentes/Dropdown/Dropdown';
+import { DoctorCard } from '../../Componentes/DoctorCard/DoctorCard';
+import { useEffect } from 'react';
+import { getDoctorsInfo } from '../../firebase/users-service';
 
 
 export function HomePage() {
@@ -14,11 +17,17 @@ export function HomePage() {
   const [faq2, setFaq2]  = useState(false);
   const [faq3, setFaq3]  = useState(false);
   const [faq4, setFaq4]  = useState(false);
-  const [faq5, setFaq5]  = useState(false);
+  const [doctors, setDoctors] = useState([]);
 
-  const handlePrint = () => {
-    console.log(faq1);
+  const getDoctors= async () => {
+    const data = await getDoctorsInfo();
+    console.log(data);
+    setDoctors(data)
   }
+
+  useEffect( () => {
+    getDoctors();
+  }, [])
     
   return (
     <div className='box-border p-0 m-0 scroll-smooth'> {/*Contenedor principal*/}
@@ -34,7 +43,7 @@ export function HomePage() {
             </div>
         </div>
 
-        <div className='flex flex-col bg-white items-center justify-center ' > {/*Contenedor de descripción de la app*/}
+        <div className='flex flex-col bg-white items-center justify-center' > {/*Contenedor de descripción de la app*/}
             <h1 className=' text-[17px] mt-[15px] mb-[15px]'>Encuentra al psicólogo que se adapte más a ti</h1>
 
             <div className=' flex mt-[-5px] flex-row ml-1' > {/*Contenedor de ventajas de la app*/}
@@ -60,7 +69,12 @@ export function HomePage() {
 
         </div>
 
-        <div> {/*Contenedor de muestra de psicólogos*/}
+        <div className='flex flex-row flex-wrap justify-evenly items-center '> 
+          {doctors.map((doctor, idx) => (
+            <DoctorCard info={doctor} key={idx}/>
+          )
+          )}
+
           
 
         </div>
