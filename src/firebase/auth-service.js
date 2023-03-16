@@ -33,7 +33,6 @@ export const signInWithGoogle = async()=>{
         const result = await signInWithPopup(auth,googleProvider)//abre la ventana de login de google
         
         const {isNewUser}=getAdditionalUserInfo(result);
-        complete=true;
         if(isNewUser){
           await createUserProfile(result.user.uid,{
             email: result.user.email,
@@ -43,6 +42,7 @@ export const signInWithGoogle = async()=>{
             
           })
         }
+        complete=true;
     } catch (error) {
       Validacion(error) 
     }
