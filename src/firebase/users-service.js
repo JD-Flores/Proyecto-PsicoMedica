@@ -19,5 +19,22 @@ export async function getUserProfile(email){
         return user;
     }else{
         return null;
-    }
+    }    
+}
+
+export async function getDoctorsInfo(){
+    const usersQuery = query(collection(db,"users"), where("doctor","==",true));
+
+    const results = await getDocs(usersQuery);
+    //comprueba el tamano de users y retorna los usuarios
+    if(results.size>0){
+        const users = results.docs.map((item)=>({
+            ...item.data(),
+            id: item.id,
+        }
+        ));
+        return users;
+    }else{
+        return null;
+    }    
 }
