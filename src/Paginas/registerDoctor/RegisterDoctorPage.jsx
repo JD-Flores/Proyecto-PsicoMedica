@@ -5,6 +5,8 @@ import { completed, registerWithEmailAndPassword, returnError, signInWithGoogle 
 import { Link } from 'react-router-dom';
 import { LOGIN_URL, PERFIL_DOCTOR, REGISTER_DOCTOR_URL } from '../../constantes/urls';
 import { Telefono } from '../../Componentes/ListasInputs/Telefono';
+import { store } from '../../firebase/config';
+import {ref, uploadBytes, getDownloadURL} from "firebase/storage";
 
 export function RegisterDoctorPage() {
   const navigate = useNavigate();
@@ -23,6 +25,8 @@ export function RegisterDoctorPage() {
   const [errorCountry, setErrorCountry] = useState("");
   const [errorAge, setErrorAge] = useState("");
   const [errorGender, setErrorGender] = useState("");
+  const [image, setImage] = useState(null);
+  const [url, setUrl] = useState(null);
   const [formData,setFormData] =useState({
       doctor:true,  
       name:"",
@@ -33,6 +37,7 @@ export function RegisterDoctorPage() {
       country:"",
       age:"",
       gender:"",
+      profilePic:""
   })
 
 
@@ -90,12 +95,39 @@ export function RegisterDoctorPage() {
           [name]:calculateAge(new Date(value)),
       }
       )
-      }else{
+      }
+      else if(name=="profilePic"){
+        setFormData({
+          ...formData,
+          [name]:url,
+      })
+      }
+      else{
         setFormData({
           ...formData,
           [name]:value,
       })
       }
+  }
+
+  const handleImageChange = (e) => {
+    if (e.target.files[0]) {
+      setImage(e.target.files[0]);
+    }
+  };
+
+  const handleSubmit = (e) => {
+    const imageRef = ref(store, "profilePic")
+    uploadBytes(imageRef, image).then(() => {
+      getDownloadURL(imageRef).then((url) => {
+        setUrl(url)
+      }).catch(error => {
+        console.log(error.message, "error getting the image url")
+      });
+      setImage(null);
+    }).catch(error => {
+      console.log(error.message, "error getting the image url")
+    });
   }
 
   return (
@@ -187,6 +219,12 @@ export function RegisterDoctorPage() {
                   </select>
             
             </label>
+            <div className='flex flex-col py-1 mt-2'>
+                  <h1 className="font-medium text-slate-700 pb-2 text-sm">Subir foto de perfil</h1>
+                  <img className='rounded-full w-[110px] h-[110px] mb-2' src={url} alt="" />
+                  <input id="profilePic" name="profilePic" type="file" onChange={handleImageChange} />
+                  <button onClick={handleSubmit} onChange={handleOnChange}></button>
+            </div>
           </div>
           </div>
           <p className='text-red-700'>{error}</p> 
