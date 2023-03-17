@@ -7,7 +7,9 @@ export function BuscarDoc() {
       <ProfileNav></ProfileNav>
       <div id='secondHalf' className='p-4 flex w-full  items-center'>
         <div className='flex flex-col w-full mx-auto bg-white p-6 rounded-xl shadow shadow-slate-300 '>
-            
+            <button>
+              
+            </button>
         </div>
         </div>
       </div>
