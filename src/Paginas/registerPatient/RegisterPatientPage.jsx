@@ -54,8 +54,8 @@ export function RegisterPatientPage() {
             setError("Los campos marcados con * en rojo son obligatorios")
             setErrorConfirm("*")
           }else{
-            const{email,password,...extraData}=formData//form destructurado
-        await registerWithEmailAndPassword(email,password,extraData);
+            const{email,password,confirmPassword,...extraData}=formData//form destructurado
+        await registerWithEmailAndPassword(email,password,confirmPassword,extraData);
         if(completed()){
             navigate(PERFIL_CLIENTE)
           }else{
