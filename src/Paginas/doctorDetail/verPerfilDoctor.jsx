@@ -2,7 +2,7 @@
 
 
 
-export function verPerfilDoctor() {
+export function doctorDetail() {
     return(
         <div id="main-container" className="flex flex-col">
             
