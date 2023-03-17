@@ -1,17 +1,27 @@
 import React from 'react'
 import { ProfileNav } from '../../Componentes/ProfileNav/ProfileNav'
+import { DOC_DETAIL } from '../../constantes/urls'
 
 export function BuscarDoc() {
   return (
-    <div id='container' className=' flex justify-center w-screen h-full flex-col'>
-      <ProfileNav></ProfileNav>
-      <div id='secondHalf' className='p-4 flex w-full  items-center'>
-        <div className='flex flex-col w-full mx-auto bg-white p-6 rounded-xl shadow shadow-slate-300 '>
-            <button>
-              
-            </button>
-        </div>
-        </div>
+    <div id='main-container' className=' flex flex-col justify-center w-screen h-full p-4'>
+      
+      <div id='top-container'>
+        <ProfileNav></ProfileNav>
       </div>
+      
+      <div id='middle-container' className='flex flex-row'>
+        <input id='buscador'  placeholder='Introduzca el nombre del doctor'></input>
+        <button id='buscar'>Buscar</button>
+        
+
+
+      </div>
+      
+      <div id='bottom-container'>
+        
+      </div>
+      
+    </div>
   )
 }
