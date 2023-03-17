@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router';
 import { Nacionalidad } from '../../Componentes/ListasInputs/Nacionalidad';
 import { completed, registerWithEmailAndPassword, returnError, signInWithGoogle } from '../../firebase/auth-service';
@@ -7,6 +7,7 @@ import { LOGIN_URL, PERFIL_DOCTOR, REGISTER_DOCTOR_URL } from '../../constantes/
 import { Telefono } from '../../Componentes/ListasInputs/Telefono';
 import { store } from '../../firebase/config';
 import {ref, uploadBytes, getDownloadURL} from "firebase/storage";
+import { uploadFile } from '../../utils/utils';
 
 export function RegisterDoctorPage() {
   const navigate = useNavigate();
@@ -27,6 +28,7 @@ export function RegisterDoctorPage() {
   const [errorGender, setErrorGender] = useState("");
   const [image, setImage] = useState(null);
   const [url, setUrl] = useState(null);
+  const [file, setFile] = useState(null);
   const [formData,setFormData] =useState({
       doctor:true,  
       name:"",
@@ -96,12 +98,6 @@ export function RegisterDoctorPage() {
       }
       )
       }
-      else if(name=="profilePic"){
-        setFormData({
-          ...formData,
-          [name]:url,
-      })
-      }
       else{
         setFormData({
           ...formData,
@@ -110,25 +106,23 @@ export function RegisterDoctorPage() {
       }
   }
 
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+        const result = await uploadFile(file);
+        setUrl(result);
+        console.log(result);
+      
+  }
+
   const handleImageChange = (e) => {
     if (e.target.files[0]) {
       setImage(e.target.files[0]);
     }
   };
 
-  const handleSubmit = (e) => {
-    const imageRef = ref(store, "profilePic")
-    uploadBytes(imageRef, image).then(() => {
-      getDownloadURL(imageRef).then((url) => {
-        setUrl(url)
-      }).catch(error => {
-        console.log(error.message, "error getting the image url")
-      });
-      setImage(null);
-    }).catch(error => {
-      console.log(error.message, "error getting the image url")
-    });
-  }
+  
+
+  
 
   return (
     <div className='flex justify-center items-center m-3 py-9'>
@@ -221,9 +215,10 @@ export function RegisterDoctorPage() {
             </label>
             <div className='flex flex-col py-1 mt-2'>
                   <h1 className="font-medium text-slate-700 pb-2 text-sm">Subir foto de perfil</h1>
-                  <img className='rounded-full w-[110px] h-[110px] mb-2' src={url} alt="" />
-                  <input id="profilePic" name="profilePic" type="file" onChange={handleImageChange} />
-                  <button onClick={handleSubmit} onChange={handleOnChange}></button>
+                  <img className='rounded-full w-[110px] h-[110px] mb-2' src={image} alt="" />
+
+                  <input type="file" name='profilePic' onChange={(e) => {setFile(e.target.files[0]), setImage(URL.createObjectURL(e.target.files[0]))}}/>
+                 <button onClick={handleSubmit}>Subir</button>
             </div>
           </div>
           </div>
