@@ -16,8 +16,8 @@ export function ProfileNav() {
   const [isOpen, setIsOpen] = useState(false)
 
   return (
-    <div id="main-container" className=" flex flex-col gap-y-[13px] p-4 w-full items-center">
-      <button onClick={() => setIsOpen((prev) => !prev)} className="flex justify-center items-center w-[364px] h-[32px] bg-[#FFFFFF] rounded-[12px]">
+    <div id="main-container" className=" flex flex-col gap-y-[13px] w-full items-center">
+      <button onClick={() => setIsOpen((prev) => !prev)} className="flex justify-center items-center w-[364px] h-[32px] bg-[#908989] rounded-[12px]">
         {!isOpen ? (
           <img className="w-[24px] h-[24px]" src={ArrowDown} alt="" />
         ) : (
