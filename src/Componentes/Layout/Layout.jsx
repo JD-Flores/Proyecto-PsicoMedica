@@ -4,7 +4,7 @@ import { UserContextProvider } from "../../contexts/UserContext";
 
 export function Layout() {
   return (
-    <main className="bg-blue-400 min-h-full">
+    <main className="bg-purple min-h-full">
       <UserContextProvider>
       <Navbar />
       <section className="body h-full " >
