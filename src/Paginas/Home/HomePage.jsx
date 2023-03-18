@@ -70,7 +70,7 @@ export function HomePage() {
         </div>
 
         <div className='flex flex-row flex-wrap justify-evenly items-center '> 
-          {doctors.map((doctor, idx) => (
+          {doctors?.map((doctor, idx) => (
             <DoctorCard info={doctor} key={idx}/>
           )
           )}
