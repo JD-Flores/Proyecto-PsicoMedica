@@ -33,7 +33,6 @@ export function Search() {
         const combinedID = user.uid > user2.uid ? 
         user.uid + user2.uid : 
         user2.uid + user.uid;
-        console.log(combinedID)
         const res = await getDoc(doc(db,"chats",combinedID));
         try{    
             console.log("hello")

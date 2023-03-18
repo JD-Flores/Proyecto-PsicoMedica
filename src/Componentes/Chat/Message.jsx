@@ -1,11 +1,18 @@
 import React from 'react'
+import { ChatContext } from '../../contexts/chatContext';
+import { UserContext, useUser } from '../../contexts/UserContext'
 import foto from '../../imagenes/fotoPerfil.jpg'
 
-export function Message() {
+export function Message({message}) {
+  const {user} = useUser();
+  const {data} = UserContext(ChatContext)
   return (
     <div id='message' className='flex gap-5 mb-3'>
         <div className='flex flex-col text-gray-300 text-xs'>
-            <img src={foto} alt="" className='w-[40px] object-cover'/>
+            <img 
+            src={foto}
+             alt="" 
+             className='w-[40px] object-cover'/>
             <span>Just now</span>
         </div>
         <div className='flex flex-col max-w-[80%]'>
