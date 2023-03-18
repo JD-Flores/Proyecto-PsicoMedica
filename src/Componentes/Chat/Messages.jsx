@@ -78,6 +78,7 @@ export function Messages() {
     }
 
   return (
+    
     <div className='flex flex-col w-2/3'>
         <div className='w-full p-2 bg-black text-white'>
             <span>{data.user?.name}</span>
@@ -92,7 +93,7 @@ export function Messages() {
             <input 
             type="text" 
             onChange={e=>setText(e.target.value)}
-            placeholder='Inserta un mensaje'
+            placeholder='Inserta un mensaje...'
             value={text}
             className=' bg-black p-2 w-full outline-none text-white'
             />

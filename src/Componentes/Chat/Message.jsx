@@ -13,35 +13,43 @@ export function Message({message}) {
     ref.current.scrollIntoView({behavior:"smooth"})
   },[message])
 
+
   return (
     <div ref={ref}>
       {message.senderId===user.uid&&
-        <div id='message' className='flex flex-row-reverse gap-5 mb-3 '>
-        <div className='flex flex-col text-gray-300 text-xs'>
+        <div id='message' className='flex flex-row-reverse items-center gap-5 mb-3 '>
+        <div className='flex flex-col items-center text-gray-300 text-xs'>
             <img 
             src={foto}
              alt="" 
              className='w-[40px] object-cover'/>
-            <span>Just now</span>
+             <div className='flex flex-col items-center'>
+             <span>{message.date.toDate().toString().slice(3,15)}</span>
+            <span>{message.date.toDate().toString().slice(15,25)}</span>
+             </div>
+            
         </div>
-        <div className='flex flex-col max-w-[80%]'>
-            <p className='bg-black text-white p-2 rounded-l rounded-tr  max-w-fit'>{message.text}</p>
+        <div className='flex flex-col flex-wrap max-w-[60%] break-words h-auto'>
+            <p className=' bg-black text-white p-2 rounded-l rounded-tr  max-w-fit break-all'>{message.text}</p>
             <img src={"foto"} alt="" className='w-1/2'/>
         </div>
         
     </div>
       }
       {message.senderId!=user.uid&&
-        <div id='message' className='flex gap-5 mb-3'>
-        <div className='flex flex-col text-gray-300 text-xs'>
+        <div id='message' className='flex items-center gap-5 mb-3'>
+        <div className='flex flex-col items-center text-gray-300 text-xs'>
         <img 
         src={foto}
          alt="" 
          className='w-[40px] object-cover'/>
-        <span>Just now</span>
+        <div className='flex flex-col items-center'>
+             <span>{message.date.toDate().toString().slice(3,15)}</span>
+            <span>{message.date.toDate().toString().slice(15,25)}</span>
+             </div>
     </div>
-    <div className='flex flex-col max-w-[80%]'>
-        <p className='bg-black text-white p-2 rounded-r rounded-tl max-w-fit'>{message.text}</p>
+    <div className='flex flex-col flex-wrap max-w-[60%] break-words h-auto'>
+        <p className=' bg-black text-white p-2 rounded-r rounded-tl max-w-fit break-all'>{message.text}</p>
         <img src={"foto"} alt="" className='w-1/2'/>
     </div>
     </div> 

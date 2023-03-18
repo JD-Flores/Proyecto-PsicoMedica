@@ -28,23 +28,23 @@ export function Chats() {
   }
 
   return (
-    <div className=''>
+    <div className='w-full overflow-hidden text-ellipsis p-1'>
       {Object.entries(chats)?.sort((a,b)=>b[1].date-a[1].date).map((chat)=>(
         <div 
         id='userchat' 
         key={chat[0]} 
         onClick={()=>handleSelect(chat[1].userInfo)}
-        className='flex flex-row p-2 items-center gap-3 text-white hover:bg-green-900 w-full'>
+        className='flex flex-row p-2 items-center gap-3 text-white hover:bg-green-900 cursor-pointer w-full'>
         <img 
         src={fotoPerfil} 
         alt="" 
-        className='w-[24px] h-[24px] rounded-full'/>
-        <div id='userinfo'>
+        className='w-[24px] h-[24px] rounded-full '/>
+        <div id='userinfo' className='flex flex-col w-full overflow-hidden '>
         <span 
           className='font-bold'>
           {chat[1].userInfo.name}</span>
         <p 
-        className='text-xs text-gray-300'>
+        className='w-4/5 text-xs text-gray-300 truncate '>
           {chat[1].lastMessage?.text}</p>
         </div>
     </div>
