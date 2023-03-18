@@ -3,17 +3,20 @@ import { Message } from './Message'
 import file from '../../imagenes/attach.png'
 import image from '../../imagenes/imageicon.png'
 import { ChatContext } from '../../contexts/chatContext'
-import { doc, onSnapshot, Timestamp, updateDoc } from '@firebase/firestore'
-import { db } from '../../firebase/config'
-import { async } from '@firebase/util'
+import { arrayUnion, doc, onSnapshot, serverTimestamp, Timestamp, updateDoc } from '@firebase/firestore'
+import { db,store  } from '../../firebase/config'
+// import { async } from '@firebase/util'
 import { v4 as uuid} from "uuid";
-import { uploadBytesResumable } from '@firebase/storage'
+import { getDownloadURL, ref, uploadBytesResumable } from '@firebase/storage'
+import { useUser } from '../../contexts/UserContext'
+
 
 export function Messages() {
     const [messages, setMessages] = useState([])
     const {data} = useContext(ChatContext)
     const [text,setText] = useState("");
     const [img,setImg] = useState(null);
+    const {user} = useUser();
 
     useEffect(()=>{
         const unSub = onSnapshot(doc(db,"chats",data.chatId),(doc)=>{
@@ -27,20 +30,51 @@ export function Messages() {
     const handleSend = async()=>{
 
         if(img){
-            const storageRef = ref(storage,uuid)
+            const storageRef = ref(store,uuid())
 
             const uploadTask = uploadBytesResumable(storageRef,img)
+            uploadTask.on(
+                (error)=>{
 
+                },
+                ()=>{
+                    getDownloadURL(uploadTask.snapshot.ref).then(async(getDownloadURL)=>{
+                        await updateDoc(doc(db,"chats",data.chatId),{
+                            messages:arrayUnion({
+                                id:uuid(),
+                                text,
+                                senderId:user.uid,
+                                date: Timestamp.now(),
+                                img: downloadURL
+                            })
+                        })
+                    })
+                }
+            )
         }else{
             await updateDoc(doc(db,"chats",data.chatId),{
                 messages:arrayUnion({
-                    id: uuid,
+                    id: uuid(),
                     text,
                     senderId:user.uid,
                     date:Timestamp.now(),
                 })
             })
         }
+            await updateDoc(doc(db,"userChat",user.uid),{
+                [data.chatId+".lastMessage"]:{
+                    text
+                },
+                [data.chatId+".date"]: serverTimestamp()
+            })
+            await updateDoc(doc(db,"userChat",data.user.uid),{
+                [data.chatId+".lastMessage"]:{
+                    text
+                },
+                [data.chatId+".date"]: serverTimestamp()
+            })
+            setText("")
+            setImg(null)
     }
 
   return (
@@ -56,8 +90,10 @@ export function Messages() {
         <div className='flex justify-between'>
 
             <input 
-            type="text" onChange={e=>setText(e.target.value)}
+            type="text" 
+            onChange={e=>setText(e.target.value)}
             placeholder='Inserta un mensaje'
+            value={text}
             className=' bg-black p-2 w-full outline-none text-white'
             />
             <div id='iconos' className='flex items-center gap-2 '>
