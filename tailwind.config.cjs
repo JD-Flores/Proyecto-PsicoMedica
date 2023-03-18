@@ -7,9 +7,7 @@ module.exports = {
         'alfa-slab-one': ['"Alfa Slab One"', 'regular'],
         'comfortaa': ['"Comfortaa"', 'light'],
       },
-      colors: {purple: "#5974A9"}
-    },
-    
+    }
   },
   plugins: [],
 };
