@@ -38,7 +38,7 @@ export function Messages() {
 
                 },
                 ()=>{
-                    getDownloadURL(uploadTask.snapshot.ref).then(async(getDownloadURL)=>{
+                    getDownloadURL(uploadTask.snapshot.ref).then(async(downloadURL)=>{
                         await updateDoc(doc(db,"chats",data.chatId),{
                             messages:arrayUnion({
                                 id:uuid(),

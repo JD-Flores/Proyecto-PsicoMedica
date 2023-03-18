@@ -29,9 +29,12 @@ export function Message({message}) {
              </div>
             
         </div>
-        <div className='flex flex-col flex-wrap max-w-[60%] break-words h-auto'>
-            <p className=' bg-black text-white p-2 rounded-l rounded-tr  max-w-fit break-all'>{message.text}</p>
-            <img src={"foto"} alt="" className='w-1/2'/>
+        <div className='flex flex-col flex-wrap max-w-[60%] break-words h-auto  '>
+            <p className='flex flex-col items-end bg-black text-white p-2 rounded-l rounded-tr  break-all'>
+            <img src={message.img} alt="" className='max-w-[250px]' />
+            {message.text}
+            </p>
+            
         </div>
         
     </div>
@@ -48,10 +51,14 @@ export function Message({message}) {
             <span>{message.date.toDate().toString().slice(15,25)}</span>
              </div>
     </div>
-    <div className='flex flex-col flex-wrap max-w-[60%] break-words h-auto'>
-        <p className=' bg-black text-white p-2 rounded-r rounded-tl max-w-fit break-all'>{message.text}</p>
-        <img src={"foto"} alt="" className='w-1/2'/>
-    </div>
+    
+    <div className='flex flex-col flex-wrap max-w-[60%] break-words h-auto  '>
+            <img src={message.img} alt="" className='max-w-[250px]' />
+            <p className='flex flex-col items-start bg-black text-white p-2 rounded-l rounded-tr  break-all'>
+            {message.text}
+            </p>
+            
+        </div>
     </div> 
       }
 

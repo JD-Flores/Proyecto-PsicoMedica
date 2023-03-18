@@ -8,6 +8,7 @@ import { Telefono } from '../../Componentes/ListasInputs/Telefono';
 import { store } from '../../firebase/config';
 import {ref, uploadBytes, getDownloadURL} from "firebase/storage";
 import { uploadFile } from '../../utils/utils';
+import { async } from '@firebase/util';
 
 export function RegisterDoctorPage() {
   const navigate = useNavigate();
@@ -27,7 +28,7 @@ export function RegisterDoctorPage() {
   const [errorAge, setErrorAge] = useState("");
   const [errorGender, setErrorGender] = useState("");
   const [image, setImage] = useState(null);
-  const [url, setUrl] = useState(null);
+  const [imageUrl, setImageUrl] = useState("");
   const [file, setFile] = useState(null);
   const [formData,setFormData] =useState({
       doctor:true,  
@@ -77,7 +78,11 @@ export function RegisterDoctorPage() {
         setError("Los campos marcados con * en rojo son obligatorios")
         setErrorGender("*")
       }else{
+        
+        const result = await uploadFile(file);
+        formData.profilePic=result;
         const{email,password,confirmPassword,...extraData}=formData//form destructurado
+        
       await registerWithEmailAndPassword(email,password,confirmPassword,extraData);
       if(completed()){
         navigate(PERFIL_DOCTOR)
@@ -106,19 +111,7 @@ export function RegisterDoctorPage() {
       }
   }
 
-  const handleSubmit = async (e) => {
-    e.preventDefault()
-        const result = await uploadFile(file);
-        setUrl(result);
-        console.log(result);
-      
-  }
 
-  const handleImageChange = (e) => {
-    if (e.target.files[0]) {
-      setImage(e.target.files[0]);
-    }
-  };
 
   
 
@@ -218,7 +211,6 @@ export function RegisterDoctorPage() {
                   <img className='rounded-full w-[110px] h-[110px] mb-2' src={image} alt="" />
 
                   <input type="file" name='profilePic' onChange={(e) => {setFile(e.target.files[0]), setImage(URL.createObjectURL(e.target.files[0]))}}/>
-                 <button onClick={handleSubmit}>Subir</button>
             </div>
           </div>
           </div>
