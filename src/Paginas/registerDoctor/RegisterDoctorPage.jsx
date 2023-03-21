@@ -7,7 +7,7 @@ import { LOGIN_URL, PERFIL_DOCTOR, REGISTER_DOCTOR_URL } from '../../constantes/
 import { Telefono } from '../../Componentes/ListasInputs/Telefono';
 import { store } from '../../firebase/config';
 import {ref, uploadBytes, getDownloadURL} from "firebase/storage";
-import { uploadFile } from '../../utils/utils';
+import { uploadFile } from '../../firebase/users-service';
 import { async } from '@firebase/util';
 
 export function RegisterDoctorPage() {

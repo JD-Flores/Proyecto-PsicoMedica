@@ -2,18 +2,42 @@ import React, { useState } from 'react'
 import { useUser } from '../../contexts/UserContext';
 import fotoPerfil from '../../imagenes/fotoPerfil.jpg'
 import { ProfileNav } from '../../Componentes/ProfileNav/ProfileNav';
+import { async } from '@firebase/util';
+import { getUserInfo } from '../../firebase/users-service';
+import { updateProfile } from 'firebase/auth';
+import { uploadFile } from '../../firebase/users-service';
+import { updateProfilePic } from '../../firebase/users-service';
 
 export function PerfilClientePage() {
 
   const{user}=useUser();
 
   const [editable, setEditable] = useState(true);
+  const [file, setFile] = useState(null);
+  const [image, setImage] = useState(null);
+
+  const updatePhoto = async() =>{
+    user.profilePic=null;
+    const result = await uploadFile(file);
+    console.log(result);
+    if (result==null) {
+      const url =  "gs://proyecto-psicomedica-6dbc5.appspot.com/fotoPerfil.jpg";
+      updateProfilePic(user,url);
+      console.log(result);
+      
+    }
+    else{
+      
+      updateProfilePic(user,result);
+      console.log(result);
+    }
+  }
 
   return (
     <div id='container' className=' flex justify-center w-screen h-full flex-col'>
       <ProfileNav></ProfileNav>
-      <div id='secondHalf' className='p-4 flex w-full  items-center'>
-        <div className='flex flex-col w-full mx-auto bg-white p-6 rounded-xl shadow shadow-slate-300 '>
+      <div id='secondHalf' className='p-4 flex w-full h-4/5 items-center'>
+        <div className='flex flex-col w-full mx-auto my-10 bg-white p-8 rounded-xl shadow shadow-slate-300 h-full'>
           <div id='title' className='text-2xl m-4 mx-0 text-gray-500'>
             <h1>Datos Personales</h1>
           </div>
@@ -43,7 +67,19 @@ export function PerfilClientePage() {
                 </label>
             </div>
             <div id='rightSide' className='flex justify-center w-2/4'>
-                <img src={fotoPerfil} alt="Profile picture" className='w-full rounded-full' />
+              {editable==false && (
+                <div className='flex flex-col items-center'>
+                  <img src={image} alt="Profile picture" className='w-full rounded-full' />
+                  <input type="file" onChange={(e) => {setFile(e.target.files[0]), setImage(URL.createObjectURL(e.target.files[0]))}} className='flex items-center justify-center bg-black text-white p-1 rounded-md h-14 w-[200px] mt-3' />
+                </div>
+               )}
+               {editable==true && (
+                <div>
+                  <img src={image} alt="Profile picture" className='w-full rounded-full' />
+                </div>
+               )}
+                
+                
             </div>
             </div>
             <div id='bottom' className='flex flex-col'>
@@ -58,19 +94,16 @@ export function PerfilClientePage() {
                 <div>
                 { editable==true &&(
                   
-                    <div id='buttons' className='flex flex-row items-center justify-evenly w-full'>
-                  <button onClick={() => setEditable(false)} className='flex items-center justify-center bg-black text-white p-1 rounded-md h-14 w-2/5 mt-2' >
-                    Editar Datos Personales
-                  </button>
-                  <button className='flex items-center justify-center bg-black text-white p-1 rounded-md h-14 w-2/5 mt-2'>
-                    Editar Foto de Perfil
-                  </button>
+                  <div id='buttons' className='flex flex-row items-center justify-evenly w-full'>
+                    <button onClick={() => {setEditable(false)}} className='flex items-center justify-center bg-black text-white p-1 rounded-md h-14 w-2/5 mt-2' >
+                      Editar Datos Personales
+                    </button>
                   </div>
                   )}
                   </div>
                   { editable==false &&(
                     <div className='flex items-center justify-center'>
-                    <button onClick={() => setEditable(true)} className='flex items-center justify-center bg-black text-white p-1 rounded-md h-14 w-2/5 mt-2' >
+                    <button onClick={() => {setEditable(true), updatePhoto()}} className='flex items-center justify-center bg-black text-white p-1 rounded-md h-14 w-2/5 mt-2' >
                     Actualizar
                   </button>
                   </div>
