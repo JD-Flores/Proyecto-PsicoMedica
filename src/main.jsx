@@ -2,7 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import './index.css'
 import { Routes,Route,BrowserRouter} from "react-router-dom"
-import {BUSCAR_DOC, CHAT, HOME_URL, LOGIN_URL, PERFIL_CLIENTE, PERFIL_DOCTOR, REGISTER_DOCTOR_URL, REGISTER_PATIENT_URL, REGISTER_URL, RESERVAR_CITA,DOC_DETAIL, CHECKOUT } from './constantes/urls'
+import {BUSCAR_DOC, CHAT, HOME_URL, LOGIN_URL, PERFIL_CLIENTE, PERFIL_DOCTOR, REGISTER_DOCTOR_URL, REGISTER_PATIENT_URL, REGISTER_URL, RESERVAR_CITA,DOC_DETAIL, CHECKOUT, CITA_AGENDADA } from './constantes/urls'
 import { Layout } from './Componentes/Layout/Layout'
 import {HomePage} from './Paginas/Home/HomePage'
 import {RegisterPage} from './Paginas/register/RegisterPage'
@@ -19,7 +19,7 @@ import { PerfilDoctorPage } from './Paginas/Perfil/PerfilDoctorPage'
 import { PrivateRouteDoc } from './Componentes/PrivateRoutes/PrivateRouteDoc'
 import { doctorDetail } from './Paginas/doctorDetail/doctorDetail'
 import { CheckoutPage } from './Paginas/checkout/CheckoutPage'
-
+import { CitasAgendadasPage } from './Paginas/citasAgendadas/CitasAgendadasPage'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
@@ -39,6 +39,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         <Route path={PERFIL_DOCTOR} element={<PrivateRouteDoc><PerfilDoctorPage/></PrivateRouteDoc>}/>
         {/* TODO CAMBIAR A PRIVADO */}
         <Route path={CHECKOUT} element={<CheckoutPage/>}/>
+        <Route path={CITA_AGENDADA} element={<CitasAgendadasPage/>}/>
         <Route path="/*" element={<ErrorPage/>}/>
         </Route>
       </Routes>
