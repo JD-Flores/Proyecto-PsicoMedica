@@ -7,6 +7,7 @@ export function PerfilDoctorPage() {
 
  
   return (
-    <div></div>
+    <div>
+    </div>
   )
 }
