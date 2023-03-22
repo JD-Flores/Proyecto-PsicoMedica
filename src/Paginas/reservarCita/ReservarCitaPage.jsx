@@ -1,20 +1,59 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { ProfileNav } from "../../Componentes/ProfileNav/ProfileNav";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import { CheckoutPage } from "../checkout/CheckoutPage";
+import { useUser } from "../../contexts/UserContext";
+import { arrayUnion, doc, getDoc, onSnapshot, setDoc, updateDoc } from '@firebase/firestore'
+import { db } from "../../firebase/config";
+import { CHECKOUT } from "../../constantes/urls";
 
 
 export function ReservarCitaPage() {
+  const navigate = useNavigate();
+  const [reservation, setReservation] = useState([])
+  const {user}=useUser();
+
+  useEffect(()=>{
+    const unSub = onSnapshot(doc(db,"calendarios","LvHwpji3tQZlcmQQDDoNx1qkqTs2"),(doc)=>{
+        doc.exists()&& setReservation(doc.data().citas)
+    })
+    return ()=>{
+        unSub()
+    }
+},["LvHwpji3tQZlcmQQDDoNx1qkqTs2"])
+  
+
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
 
-  const onSubmit = (data) => {
-    console.log(data);
-  };
+  const onSubmit = async (data) => {
+    // busca si el documento exist o ya esta creado
+    const res = await getDoc(doc(db,"calendarios","LvHwpji3tQZlcmQQDDoNx1qkqTs2"));
+        try{    
+            
+          if(!res.exists()){
+              //si no esta creado lo creo con el id del Doctor
+              await setDoc(doc(db,"calendarios","LvHwpji3tQZlcmQQDDoNx1qkqTs2"),{citas:[]});   
+          }
+          // Si ya existe o fue creado agrega al array de citas la nueva cita
+            await updateDoc(doc(db,"calendarios","LvHwpji3tQZlcmQQDDoNx1qkqTs2"),{
+              citas:arrayUnion({
+                  title: user.id,
+                  start:data.fecha +" "+ data.hora,
+                  end:data.fecha +" "+ data.hora2,
+                })
+              })
+              navigate(CHECKOUT)
+          }catch{
+
+          }
+    
+  }
+
 
   return (
     <div
@@ -63,49 +102,63 @@ export function ReservarCitaPage() {
 
           <label htmlFor="hora" className="block cursor-pointer">
             <div className="py-1 mt-1">
-              <h2 className="text-xl text-black font-bold  mb-1">Hora:</h2>
+              <h2 className="text-xl text-black font-bold  mb-1">Hora Inicio:</h2>
 
-              <input
-              id="hora"
+              <select
+              id="hora" placeholder="Indique una hora"
                 className="w-[300px] p-3 border border-slate-200 rounded-lg focus:outline-none focus:border-slate-500 hover:shadow text-sm"
                 type="time"
                 {...register("hora", {
                   required: true,
                 })}
-              />
+              >
+                  <option value="08:00:00">8:00 AM</option>
+                  <option value="09:00:00">9:00 AM</option>
+                  <option value="10:00:00">10:00 AM</option>
+                  <option value="11:00:00">11:00 AM</option>
+                  <option value="12:00:00">12:00 AM</option>
+                  <option value="13:00:00">1:00 PM</option>
+                  <option value="14:00:00">2:00 PM</option>
+                  <option value="15:00:00">3:00 PM</option>
+                  <option value="16:00:00">4:00 PM</option>
+                  <option value="17:00:00">5:00 PM</option>
+                  <option value="18:00:00">6:00 PM</option>
+                  <option value="19:00:00">7:00 PM</option>
+                  <option value="20:00:00">8:00 PM</option>
+              </select>
               {errors.hora?.type === "required" && <p className="text-red-600">El campo es requerido</p>}
             </div>
           </label>
 
           {/* Input duración */}
 
-          <label htmlFor="duracionCita" className="block cursor-pointer">
+          <label htmlFor="hora2" className="block cursor-pointer">
             <div className="py-1 mt-1">
-              <h2 className="text-xl text-black font-bold  mb-1">Duración:</h2>
+              <h2 className="text-xl text-black font-bold  mb-1">Hora Fin:</h2>
 
-              <input
-              id="duracionCita"
+              <select
+              id="hora2"
                 className="w-[300px] p-3 border border-slate-200 rounded-lg focus:outline-none focus:border-slate-500 hover:shadow text-sm"
-                type="number"
-                placeholder="[minutos]"
-                {...register("duracionCita", {
+                type="time"
+                {...register("hora2", {
                   required: true,
-                  min: 10,
-                  max: 120,
                 })}
-              />
-              {errors.duracionCita?.type === "required" && (
-                <p className="text-red-600">El campo es requerido</p>
-              )}
-              {errors.duracionCita?.type === "min" && (
-                <p className="text-red-600">La cita debe tener una duración mínima de 10 minutos</p>
-              )}
-              {errors.duracionCita?.type === "max" && (
-                <p className="text-red-600">
-                  La cita debe tener una duración máxima de 120 minutos (2
-                  horas)
-                </p>
-              )}
+              >
+                  <option value="08:00:00">8:00 AM</option>
+                  <option value="09:00:00">9:00 AM</option>
+                  <option value="10:00:00">10:00 AM</option>
+                  <option value="11:00:00">11:00 AM</option>
+                  <option value="12:00:00">12:00 AM</option>
+                  <option value="13:00:00">1:00 PM</option>
+                  <option value="14:00:00">2:00 PM</option>
+                  <option value="15:00:00">3:00 PM</option>
+                  <option value="16:00:00">4:00 PM</option>
+                  <option value="17:00:00">5:00 PM</option>
+                  <option value="18:00:00">6:00 PM</option>
+                  <option value="19:00:00">7:00 PM</option>
+                  <option value="20:00:00">8:00 PM</option>
+              </select>
+              {errors.hora2?.type === "required" && <p className="text-red-600">El campo es requerido</p>}
             </div>
           </label>
 
@@ -142,7 +195,8 @@ export function ReservarCitaPage() {
           <div className="flex flex-row items-center justify-evenly m-5">
 
           
-          <input className="flex items-center justify-center bg-black text-white p-1 rounded-md h-10 w-[180px] text-center text-sm font-medium" type="submit" value="Confirmar cita" />
+          <input 
+          className=" cursor-pointer flex items-center justify-center bg-black text-white p-1 rounded-md h-10 w-[180px] text-center text-sm font-medium" type="submit" value="Confirmar cita" />
           </div>
         </form>
       </div>

@@ -16,8 +16,9 @@ export function ProfileNav() {
   const [isOpen, setIsOpen] = useState(false)
 
   return (
-    <div id="main-container" className=" flex flex-col gap-y-[13px] w-full items-center">
-      <button onClick={() => setIsOpen((prev) => !prev)} className="flex justify-center items-center w-[364px] h-[32px] bg-[#908989] rounded-[12px]">
+    <div id="main-container" className=" flex flex-col gap-y-[13px] w-full items-center ">
+      <button onClick={() => setIsOpen((prev) => !prev)} className="flex flex-row justify-between text-white items-center w-[363px] h-[36px] bg-[#908989] rounded-[12px] px-[13px]">
+        Menu de Usuario
         {!isOpen ? (
           <img className="w-[24px] h-[24px]" src={ArrowDown} alt="" />
         ) : (

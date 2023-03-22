@@ -66,7 +66,6 @@ export const registerWithEmailAndPassword = async(
   )=>{
     if(password==confirmPassword){
   try {
-    console.log("por aqui pasa")
     const result = await createUserWithEmailAndPassword(auth,email,password);
     await createUserProfile(result.user.uid,{
       uid:result.user.uid,
@@ -74,7 +73,6 @@ export const registerWithEmailAndPassword = async(
       password,
       ...extraData,
     })
-    console.log("listo")
     complete=true;
     
   } catch (error) {
