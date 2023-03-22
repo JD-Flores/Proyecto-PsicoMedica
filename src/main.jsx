@@ -37,7 +37,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         <Route path={RESERVAR_CITA} element={<PrivateRoute><ReservarCitaPage/></PrivateRoute>}/>
         <Route path={CHAT} element={<PrivateRoute><Chat/></PrivateRoute>}/>
         <Route path={PERFIL_DOCTOR} element={<PrivateRouteDoc><PerfilDoctorPage/></PrivateRouteDoc>}/>
-        {/* TODO CAMBIAR A PRIVADO */}
+        <Route path={CITA_AGENDADA} element={<PrivateRouteDoc><CitasAgendadasPage/></PrivateRouteDoc>}/>
         <Route path={CHECKOUT} element={<PrivateRoute><CheckoutPage/></PrivateRoute>}/>
         <Route path="/*" element={<ErrorPage/>}/>
         </Route>

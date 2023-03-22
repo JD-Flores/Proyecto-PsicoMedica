@@ -20,6 +20,16 @@ export function CitasAgendadasPage() {
           </h1>
         </div>
 
+        <div className='flex flex-row flex-wrap justify-evenly items-center '> 
+          {citas?.map(() => (
+            <CitaAgendada />
+          )
+          )}
+
+          
+
+        </div>
+
        
         </div>
       </div>
