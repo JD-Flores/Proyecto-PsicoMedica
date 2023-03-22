@@ -72,17 +72,14 @@ export function CheckoutPage() {
                       <h2 className="text-base text-purple font-bold mb-1 mt-1 text-left">
                         Método de pago:
                       </h2>
-                      <img src={paypal} alt="logo paypal" className=' w-[150px] h-[50px]  items-center justify-center  mt-[17px] '/>
+                      <div className="mt-5 flex justify-center h-min">
+                        <CheckoutForm />          
+                      </div>
                 
                     </div>
                   </label>
                 </form>
   
-              </div>
-              <div className="flex flex-row items-center justify-evenly  text-xs mt-10">
-                
-                <CheckoutForm />
-       
               </div>
             </div>
           </div>
