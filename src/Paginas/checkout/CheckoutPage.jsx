@@ -1,16 +1,18 @@
 import React from "react";
 import { ProfileNav } from "../../Componentes/ProfileNav/ProfileNav";
 import paypal from  "../../imagenes/paypal.png";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
+import CheckoutForm from "../../Componentes/Checkout/checkout.jsx"
 
 export function CheckoutPage() {
   return (
      
 
-        <div id="container" className="h-[780px]">
+        <div id="container" className="h-min">
           {/* <ProfileNav></ProfileNav> */}
   
-          <div className="max-w-lg mx-auto m-14 bg-white p-10 rounded-xl shadow shadow-slate-300 h-[720px]">
-            <div>
+          <div className="p-10">
+            <div className="md:max-w-lg max-w-sm mx-auto bg-white p-10 rounded-xl shadow shadow-slate-300">
               <h1 className="text-4xl text-gray-500 text-justify p-2">
                 Checkout
               </h1>
@@ -66,6 +68,7 @@ export function CheckoutPage() {
                   </label>
                   <label htmlFor="paypal" >
                     <div className="py-1 mt-2">
+                      
                       <h2 className="text-base text-purple font-bold mb-1 mt-1 text-left">
                         Método de pago:
                       </h2>
@@ -75,15 +78,12 @@ export function CheckoutPage() {
                   </label>
                 </form>
   
-                
               </div>
-              <div className="flex flex-row items-center justify-evenly  text-xs m-7">
-                  
-                    <button className="flex items-center justify-center bg-black text-white p-1 rounded-md h-10 w-[180px] text-center text-sm font-medium" type="submit">
-                      <span>Pagar Cita </span>
-                    </button>
+              <div className="flex flex-row items-center justify-evenly  text-xs mt-10">
+                
+                <CheckoutForm />
        
-                </div>
+              </div>
             </div>
           </div>
         </div>
