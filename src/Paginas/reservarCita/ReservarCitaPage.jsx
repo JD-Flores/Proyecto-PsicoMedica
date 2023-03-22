@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import { CheckoutPage } from "../checkout/CheckoutPage";
 import { useUser } from "../../contexts/UserContext";
-import { arrayUnion, doc, getDoc, onSnapshot, setDoc, updateDoc } from '@firebase/firestore'
+import { arrayUnion, doc, getDoc, onSnapshot, setDoc, Timestamp, updateDoc } from '@firebase/firestore'
 import { db } from "../../firebase/config";
 import { CHECKOUT } from "../../constantes/urls";
 
@@ -42,7 +42,7 @@ export function ReservarCitaPage() {
           // Si ya existe o fue creado agrega al array de citas la nueva cita
             await updateDoc(doc(db,"calendarios","LvHwpji3tQZlcmQQDDoNx1qkqTs2"),{
               citas:arrayUnion({
-                  title: user.id,
+                  title: user.name+":  "+data.motivoCita,
                   start:data.fecha +" "+ data.hora,
                   end:data.fecha +" "+ data.hora2,
                 })
