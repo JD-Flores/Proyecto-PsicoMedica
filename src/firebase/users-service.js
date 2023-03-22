@@ -8,6 +8,7 @@ import { v4 } from "uuid";
 
 export async function createUserProfile(userId,data){
      setDoc(doc(db,'userChat',userId),{});
+     setDoc(doc(db,'calendarios',userId),{reservaciones:[]});
     return setDoc(doc(db,'users',userId),data);
 }
 
