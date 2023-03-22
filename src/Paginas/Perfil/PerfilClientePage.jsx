@@ -34,7 +34,7 @@ export function PerfilClientePage() {
   }
 
   return (
-    <div id='main-container' className=' flex flex-col justify-center items-center gap-[13px] py-[17px]'>
+    <div id='main-container' className='flex flex-col justify-center items-center gap-[13px] py-[17px]'>
       <div id='top-container'>
         <ProfileNav></ProfileNav>
       </div>
