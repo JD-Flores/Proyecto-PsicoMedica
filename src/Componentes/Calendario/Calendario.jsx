@@ -11,23 +11,60 @@ import enUS from "date-fns/locale/en-US";
 import { setDate } from "date-fns";
 import { doc, getDoc, onSnapshot } from "@firebase/firestore";
 import { db } from "../../firebase/config";
+import { useUser } from "../../contexts/UserContext";
+import { date } from "date-arithmetic";
+
 
 
 export function Calendario() {
-  const [dates,setDates]=useState();
+  const [dates,setDates]=useState([]);
+  const [reserva,setReserva]=useState([])
+  const {user}=useUser();
 
-
-  useEffect(() => {   
-
-   });
-
-   const handleClick= async ()=>{
-    const unSub = onSnapshot(doc(db,"calendarios","LvHwpji3tQZlcmQQDDoNx1qkqTs2"),(doc)=>{
-      doc.exists()&& setDates(doc.data().citas)
-      console.log(dates)
-    })
-   
+  function useDates(){
+    
   }
+  
+  useEffect(() => {  
+
+    const events = dates.map((element) =>{
+        const temp = element.end
+        element.end = new Date(temp)
+        const temp2 = element.start
+        element.start = new Date(temp2)
+        setReserva(dates)
+    }) 
+    
+   },[dates]);
+
+   useEffect(() => {  
+     onSnapshot(doc(db,"calendarios",user.uid),(doc)=>{
+      doc.exists()&& setDates(doc.data().citas)
+    })
+
+    
+   },[]);
+
+   const handle=()=>{
+    console.log(dates)
+   }
+   const handleClick= async ()=>{
+    onSnapshot(doc(db,"calendarios",user.uid),(doc)=>{
+      doc.exists()&& setDates(doc.data().citas)
+    })
+    const events = dates.map((element) =>{
+        const temp = element.end
+        element.end = new Date(temp)
+        const temp2 = element.start
+        element.start = new Date(temp2)
+        setDates(dates)
+        console.log(dates)
+    })
+
+    
+};
+   
+  
 
     const locales = enUS
   const localizer = dateFnsLocalizer({
@@ -52,10 +89,11 @@ export function Calendario() {
     
     return (
       <div  className="bigCalendar-container bg-blue-300 text-white h-[400px]">
-        <button onClick={handleClick}> aqui</button>
+        <button onClick={handle}> aqui</button>
+        <button onClick={handle}>aui2</button>
       <Calendar
         localizer={localizer}
-        events={dates}
+        events={reserva}
         startAccessor="start"
         endAccessor="end"
         messages={{
