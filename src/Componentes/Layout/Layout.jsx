@@ -5,7 +5,7 @@ import { ChatContextProvider } from "../../contexts/chatContext";
 
 export function Layout() {
   return (
-    <main className="bg-blue-400 min-h-full">
+    <main className="bg-[#5974A9] min-h-full">
       <UserContextProvider>
         <ChatContextProvider>
       <Navbar />
