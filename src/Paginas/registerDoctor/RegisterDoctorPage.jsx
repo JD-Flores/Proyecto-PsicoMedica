@@ -40,7 +40,13 @@ export function RegisterDoctorPage() {
       country:"",
       age:"",
       gender:"",
-      profilePic:""
+      profilePic:"",
+      specialty:"",
+      grade:"",
+      Experience:"",
+      Price:"",
+
+
   })
 
 
@@ -120,7 +126,7 @@ export function RegisterDoctorPage() {
   return (
     <div className='flex justify-center items-center m-3 py-9'>
     <div className='flex justify-center items-center flex-col  max-w-lg m-2 bg-white p-5 rounded-xl shadow shadow-slate-300 h-full text-xs '>
-      <p className="text-slate-700 my-4 p-2 font-bold pb-1 text-black text-lg">Ingresa tus datos para confirmar el registro</p>
+      <p className=" my-4 p-2 font-bold pb-1 text-black text-lg">Ingresa tus datos para confirmar el registro</p>
       <form action="" onSubmit={onSubmit} className="flex flex-col justify-between gap-2">
         <div className='flex flex-row  gap-x-16 gap-y-5'>
         <div id='leftHalf' className='w-full'>
@@ -171,6 +177,22 @@ export function RegisterDoctorPage() {
                     onChange={handleOnChange}
                     className="w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow text-sm" placeholder="Ingresa nuevamente la contraseña"/>
                 </label>
+                <label htmlFor="Experience">
+                  <div className='flex flex-row py-1 mt-2'>
+                  <h1 className="font-medium text-slate-700 pb-2 text-sm">Años de experiencias</h1><p className='text-red-600'>{errorConfirm}</p>
+                  </div>
+                    <input id="Experience" name="Experience" type="text" 
+                    onChange={handleOnChange}
+                    className="w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow text-sm" placeholder="Ingrese sus años de experiencia"/>
+                </label>
+                <label htmlFor="Price">
+                  <div className='flex flex-row py-1 mt-2'>
+                  <h1 className="font-medium text-slate-700 pb-2 text-sm">Precio por consulta</h1><p className='text-red-600'>{errorConfirm}</p>
+                  </div>
+                    <input id="Price" name="Price" type="text" 
+                    onChange={handleOnChange}
+                    className="w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow text-sm" placeholder="Indique un precio"/>
+                </label>
           </div>
           <div id='rightHalf' className='w-full'>
           <div>
@@ -206,12 +228,52 @@ export function RegisterDoctorPage() {
                   </select>
             
             </label>
+            <label htmlFor="specialty">
+            <div className='flex flex-row py-1 mt-2'>
+                  <h1 className="font-medium text-slate-700 pb-2 text-sm">Especialidad</h1><p className='text-red-600'>{errorGender}</p>
+                  </div>
+                <select id="specialty" name="specialty" 
+                onChange={handleOnChange}
+                className=" w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow text-sm" placeholder="nacionalidad">
+                  <option>Indique su Especialidad</option>
+                  <option value="Depresión">Depresión</option>
+                  <option value="Trastorno bipolar">Trastorno bipolar</option>
+                  <option value="Ansiedad">Ansiedad</option>
+                  <option value="Trastorno obsesivo-compulsivo">Trastorno obsesivo-compulsivo</option>
+                  <option value="Trastorno por estrés postraumático">Trastorno por estrés postraumático</option>
+                  <option value="Trastorno por estrés agudo">Trastorno por estrés agudo</option>
+                  <option value="Somatización">Somatización</option>
+                  <option value="Disfunciones sexuales">Disfunciones sexuales</option>
+                  <option value="Abusos sexuales">Abusos sexuales</option>
+                  <option value="Dependencia emocional">Dependencia emocional</option>
+                  <option value="Insomnio y trastornos del sueño">Insomnio y trastornos del sueño</option>
+                  <option value="Trastornos de personalidad">Trastornos de personalidad</option>
+                  <option value="Terapia de pareja">Terapia de pareja</option>
+                  <option value="Otro">Otro</option>
+                  </select>
+                  </label>
+
+                  <label htmlFor='grade'>
+                  <div className='flex flex-row py-1 mt-2'>
+                  <h1 className="font-medium text-slate-700 pb-2 text-sm">Grado</h1><p className='text-red-600'>{errorGender}</p>
+                  </div>
+                  <select id="grade" name="grade" 
+                    onChange={handleOnChange}
+                    className=" w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow text-sm" placeholder="grado">
+                      <option>Indica tu grado</option>
+                      <option value="Licenciado">Licenciado</option>
+                      <option value="Master">Master</option>
+                      <option value="Doctor">Doctor</option>
+                  </select>
+            
+            </label>
             <div className='flex flex-col py-1 mt-2'>
                   <h1 className="font-medium text-slate-700 pb-2 text-sm">Subir foto de perfil</h1>
                   <img className='rounded-full w-[110px] h-[110px] mb-2' src={image} alt="" />
 
                   <input type="file" name='profilePic' onChange={(e) => {setFile(e.target.files[0]), setImage(URL.createObjectURL(e.target.files[0]))}}/>
             </div>
+            
           </div>
           </div>
           <p className='text-red-700'>{error}</p> 
