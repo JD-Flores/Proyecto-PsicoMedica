@@ -221,7 +221,7 @@ export function RegisterDoctorPage() {
                 <select id="gender" name="gender" 
                 onChange={handleOnChange}
                 className=" w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow text-sm" placeholder="nacionalidad">
-                  <option>Elije tu género</option>
+                  <option>Elige tu género</option>
                   <option value="Masculino">Masculino</option>
                   <option value="Femenino">Femenino</option>
                   <option value="Otro">Otro</option>
