@@ -132,15 +132,16 @@ export function BuscarDoc() {
 
           </div>
 
-          <div className='flex flex-row flex-wrap justify-evenly items-center mt-5'> 
+          
+        
+      </div>
+      )}
+      <div className='flex flex-row flex-wrap justify-evenly items-center mt-5'> 
           {doctors==null ? <div>No hay resultados para su búsqueda</div> :  doctors?.map((doctor, idx) => (
             <DoctorCard info={doctor} key={idx}/>
           )
           )}
         </div>
-        
-      </div>
-      )}
     </div>
       
     </div>
