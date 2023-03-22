@@ -52,6 +52,88 @@ export async function getDoctorsInfo(){
     }    
 }
 
+export async function searchDoctorsAvailable(star, specialization){
+
+    if (star=="vacio") {
+        const usersQuery = query(collection(db,"users"), where("doctor","==",true), where("specialty","==", specialization));
+
+    const results = await getDocs(usersQuery);
+    //comprueba el tamano de users y retorna los usuarios
+    if(results.size>0){
+        const users = results.docs.map((item)=>({
+            ...item.data(),
+            id: item.id,
+        }
+        ));
+        return users;
+    }else{
+        return null;
+    }   
+    }
+    else if(specialization == "vacio"){
+        const usersQuery = query(collection(db,"users"), where("doctor","==",true), where("ranking","==",star));
+
+    const results = await getDocs(usersQuery);
+    //comprueba el tamano de users y retorna los usuarios
+    if(results.size>0){
+        const users = results.docs.map((item)=>({
+            ...item.data(),
+            id: item.id,
+        }
+        ));
+        return users;
+    }else{
+        return null;
+    } 
+    }
+    else if(specialization=="vacio" && star=="vacio"){
+        return [];
+    }
+    else{
+        const usersQuery = query(collection(db,"users"), where("doctor","==",true), where("specialty","==", specialization), where("ranking","==",star));
+
+    const results = await getDocs(usersQuery);
+    //comprueba el tamano de users y retorna los usuarios
+    if(results.size>0){
+        const users = results.docs.map((item)=>({
+            ...item.data(),
+            id: item.id,
+        }
+        ));
+        return users;
+    }else{
+        return null;
+    }    
+    }
+
+    
+}
+
+export async function searchDoctorsAvailableByName(doctorName){
+
+    if (doctorName!="vacio") {
+        const usersQuery = query(collection(db,"users"), where("doctor","==",true), where("name","==", doctorName));
+
+    const results = await getDocs(usersQuery);
+    //comprueba el tamano de users y retorna los usuarios
+    if(results.size>0){
+        const users = results.docs.map((item)=>({
+            ...item.data(),
+            id: item.id,
+        }
+        ));
+        return users;
+    }else{
+        return null;
+    }   
+    }
+    
+
+    
+}
+
+
+
 export const updateProfilePic = (user, result) => {
 
     const docRef = doc(db, "users", user.uid)
