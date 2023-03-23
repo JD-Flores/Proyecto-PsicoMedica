@@ -1,7 +1,7 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import { useState } from "react";
 import { ProfileNav } from '../../Componentes/ProfileNav/ProfileNav'
-import { DOC_DETAIL } from '../../constantes/urls'
+import { DOC_DETAIL, RESERVAR_CITA } from '../../constantes/urls'
 import Lupa from "../../imagenes/search-line.png";
 import ArrowDown from "../../imagenes/arrow-down-s-line.png";
 import ArrowUp from "../../imagenes/arrow-up-s-line.png";
@@ -9,6 +9,7 @@ import Star from "../../imagenes/Estrella_amarilla.png";
 import { searchDoctorsAvailable } from '../../firebase/users-service';
 import { DoctorCard } from '../../Componentes/DoctorCard/DoctorCard';
 import { searchDoctorsAvailableByName } from '../../firebase/users-service';
+import { Link } from 'react-router-dom';
 
 export function BuscarDoc() {
 
@@ -138,7 +139,9 @@ export function BuscarDoc() {
       )}
       <div className='flex flex-row flex-wrap justify-evenly items-center mt-5'> 
           {doctors==null ? <div>No hay resultados para su búsqueda</div> :  doctors?.map((doctor, idx) => (
-            <DoctorCard info={doctor} key={idx}/>
+            <>
+            <Link to={`/doctors/${doctor.uid}`}><DoctorCard info={doctor} key={idx}/></Link>
+            </>
           )
           )}
         </div>

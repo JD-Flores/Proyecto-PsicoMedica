@@ -1,8 +1,25 @@
 import React from "react";
 import { ProfileNav } from "../../Componentes/ProfileNav/ProfileNav";
 import paypal from  "../../imagenes/paypal.png";
+import { useParams } from "react-router-dom";
+import { getDoctorById } from "../../firebase/users-service";
+import { useState, useEffect } from "react";
+
 
 export function CheckoutPage() {
+
+  const { doctor_id } = useParams();
+    const [doctor, setDoctor] = useState([]);
+
+    const getDoctor= async (id) => {
+        const data = await getDoctorById(id);
+        setDoctor(data);
+      }
+        
+
+    useEffect(() => {
+        const result = getDoctor(doctor_id);
+      }, []);
   return (
      
 
@@ -20,7 +37,7 @@ export function CheckoutPage() {
                   <h2 className="text-base text-purple font-bold mb-1 mt-1 text-left">
                     Nombre doctor:
                   </h2>
-                  <p className="text-base text-left px-6 font-bold">Nombre doctor</p>
+                  <p className="text-base text-left px-6 font-bold">{doctor.name}</p>
                 </div>
   
                 {/* Input fecha */}
@@ -31,7 +48,7 @@ export function CheckoutPage() {
                         Fecha:
                       </h2>
   
-                      <p className="text-base text-left px-6 font-bold">DD/MM/AAAA</p>
+                      <p className="text-base text-left px-6 font-bold">fecha</p>
                     </div>
                   </label>
   

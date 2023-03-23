@@ -1,8 +1,29 @@
+import { Link } from "react-router-dom"
+import { RESERVAR_CITA } from "../../constantes/urls"
+import { useParams } from "react-router";
+import { getDoctorById } from "../../firebase/users-service";
+import { getDoc } from "firebase/firestore";
+import { useState } from "react";
+import { useEffect } from "react";
 
 
 
+export function DoctorDetail() {
 
-export function doctorDetail() {
+    const { doctor_id } = useParams();
+    const [doctor, setDoctor] = useState([]);
+
+    const getDoctor= async (id) => {
+        const data = await getDoctorById(id);
+        setDoctor(data);
+        console.log(data);
+      }
+
+    useEffect(() => {
+        const result = getDoctor(doctor_id);
+      }, []);
+
+
     return(
         <div id="main-container" className="flex flex-col">
             
@@ -19,11 +40,11 @@ export function doctorDetail() {
                 <div id="right-side">
                     <hr />
                     <h1>Doctor:</h1>
-                    <h2>Nombre doctor</h2>
+                    <h2>Nombre: {doctor.name}</h2>
                     <hr />
-                    <p>Especialidad:</p>
-                    <p>Ranking:</p>
-                    <p>Precio consulta:</p>
+                    <p>Especialidad: {doctor.specialty}</p>
+                    <p>Ranking: {doctor.ranking} estrellas</p>
+                    <p>Precio consulta: {doctor.Price}$</p>
                 </div>
             </div>
             <hr />
@@ -44,6 +65,7 @@ export function doctorDetail() {
                     <p></p>
                 </div>
             </div>
+            <Link to={`/reservas/${doctor.uid}`}>Agendar</Link>
         </div>
     )
 }

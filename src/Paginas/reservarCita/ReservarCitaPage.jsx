@@ -7,6 +7,9 @@ import { useUser } from "../../contexts/UserContext";
 import { arrayUnion, doc, getDoc, onSnapshot, setDoc, Timestamp, updateDoc } from '@firebase/firestore'
 import { db } from "../../firebase/config";
 import { CHECKOUT } from "../../constantes/urls";
+import { useParams } from "react-router-dom";
+import { getDoctorById } from "../../firebase/users-service";
+import { async } from "@firebase/util";
 
 
 export function ReservarCitaPage() {
@@ -14,14 +17,26 @@ export function ReservarCitaPage() {
   const [reservation, setReservation] = useState([])
   const {user}=useUser();
 
-  useEffect(()=>{
-    const unSub = onSnapshot(doc(db,"calendarios","LvHwpji3tQZlcmQQDDoNx1qkqTs2"),(doc)=>{
+  const { doctor_id } = useParams();
+  const [doctor, setDoctor] = useState([]);
+
+  const getDoctor= async (id) => {
+      const data = await getDoctorById(id);
+      setDoctor(data);
+      getDocument();
+      console.log(data);
+    }
+
+
+    const getDocument = async() => {
+      await onSnapshot(doc(db,"calendarios", doctor.uid),(doc)=>{
         doc.exists()&& setReservation(doc.data().citas)
     })
-    return ()=>{
-        unSub()
     }
-},["LvHwpji3tQZlcmQQDDoNx1qkqTs2"])
+
+  useEffect(()=>{
+    getDoctor(doctor_id);
+},[])
   
 
   const {
@@ -32,22 +47,22 @@ export function ReservarCitaPage() {
 
   const onSubmit = async (data) => {
     // busca si el documento exist o ya esta creado
-    const res = await getDoc(doc(db,"calendarios","LvHwpji3tQZlcmQQDDoNx1qkqTs2"));
+    const res = await getDoc(doc(db,"calendarios",doctor.uid));
         try{    
             
           if(!res.exists()){
               //si no esta creado lo creo con el id del Doctor
-              await setDoc(doc(db,"calendarios","LvHwpji3tQZlcmQQDDoNx1qkqTs2"),{citas:[]});   
+              await setDoc(doc(db,"calendarios",doctor.uid),{citas:[]});   
           }
           // Si ya existe o fue creado agrega al array de citas la nueva cita
-            await updateDoc(doc(db,"calendarios","LvHwpji3tQZlcmQQDDoNx1qkqTs2"),{
+            await updateDoc(doc(db,"calendarios",doctor.uid),{
               citas:arrayUnion({
                   title: user.name+":  "+data.motivoCita,
                   start:data.fecha +" "+ data.hora,
                   end:data.fecha +" "+ data.hora2,
                 })
               })
-              navigate(CHECKOUT)
+              navigate(`/checkout/${doctor.uid}`)
           }catch{
 
           }
@@ -74,7 +89,7 @@ export function ReservarCitaPage() {
             <h2 className="text-xl text-black font-bold   mb-1">
               Doctor seleccionado:
             </h2>
-            <p className="text-base">Nombre doctor</p>
+            <p className="text-base">{doctor.name}</p>
           </div>
         
 
