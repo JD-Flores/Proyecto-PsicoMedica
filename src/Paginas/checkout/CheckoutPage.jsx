@@ -1,10 +1,48 @@
 import React from "react";
 import { ProfileNav } from "../../Componentes/ProfileNav/ProfileNav";
-import paypal from  "../../imagenes/paypal.png";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
 import CheckoutForm from "../../Componentes/Checkout/checkout.jsx"
+import { useParams } from "react-router-dom";
+import { getDoctorById } from "../../firebase/users-service";
+import { useState, useEffect } from "react";
+import { docContext } from "../../contexts/DoctorContext";
+import { useContext } from "react";
+import { reserveContext } from "../../contexts/ReserveContext";
+
 
 export function CheckoutPage() {
+
+  const { doctor_id } = useParams();
+    const [context, setContext] = useContext(docContext);
+    const [reservationContext, setReservationContext] = useContext(reserveContext);
+    const [price, setPrice] = useState(0);
+
+    useEffect(() => {
+      setPrice(parseInt(reservationContext.end.split(" ")[1].split(":")[0] - reservationContext.start.split(" ")[1].split(":")[0])*context.Price);
+    }, []);
+
+    // // busca si el documento exist o ya esta creado
+    // const res = await getDoc(doc(db,"calendarios",doctor.uid));
+    //     try{    
+            
+    //       if(!res.exists()){
+    //           //si no esta creado lo creo con el id del Doctor
+    //           await setDoc(doc(db,"calendarios",doctor.uid),{citas:[]});   
+    //       }
+    //       // Si ya existe o fue creado agrega al array de citas la nueva cita
+    //         await updateDoc(doc(db,"calendarios",doctor.uid),{
+    //           citas:arrayUnion({
+    //               title: user.name+":  "+data.motivoCita,
+    //               start:data.fecha +" "+ data.hora,
+    //               end:data.fecha +" "+ data.hora2,
+    //             })
+    //           })
+    //           navigate(`/checkout/${doctor.uid}`)
+    //       }catch{
+
+    //       }
+
+   
   return (
      
 
@@ -22,7 +60,7 @@ export function CheckoutPage() {
                   <h2 className="text-base text-purple font-bold mb-1 mt-1 text-left">
                     Nombre doctor:
                   </h2>
-                  <p className="text-base text-left px-6 font-bold">Nombre doctor</p>
+                  <p className="text-base text-left px-6 font-bold">{context.name}</p>
                 </div>
   
                 {/* Input fecha */}
@@ -33,7 +71,7 @@ export function CheckoutPage() {
                         Fecha:
                       </h2>
   
-                      <p className="text-base text-left px-6 font-bold">DD/MM/AAAA</p>
+                      <p className="text-base text-left px-6 font-bold">{reservationContext.start.split(" ")[0]}</p>
                     </div>
                   </label>
   
@@ -43,7 +81,7 @@ export function CheckoutPage() {
                       <h2 className="text-base text-purple font-bold mb-1 mt-1 text-left">
                         Hora:
                       </h2>
-                      <p className="text-base text-left px-6 font-bold">00:00</p>
+                      <p className="text-base text-left px-6 font-bold">{reservationContext.start.split(" ")[1]}</p>
                     </div>
                   </label>
   
@@ -53,7 +91,7 @@ export function CheckoutPage() {
                       <h2 className="text-base text-purple font-bold mb-1 mt-1 text-left">
                         Duración:
                       </h2>
-                      <p className="text-base text-left px-6 font-bold">minutos</p>
+                      <p className="text-base text-left px-6 font-bold">{reservationContext.end.split(" ")[1].split(":")[0] - reservationContext.start.split(" ")[1].split(":")[0]} horas</p>
                     </div>
                   </label>
   
@@ -63,7 +101,7 @@ export function CheckoutPage() {
                       <h2 className="text-base text-purple font-bold mb-1 mt-1 text-left">
                         Total a pagar:
                       </h2>
-                      <p className="text-base text-left px-6 font-bold">$</p>
+                      <p className="text-base text-left px-6 font-bold">{price}$</p>
                     </div>
                   </label>
                   <label htmlFor="paypal" >

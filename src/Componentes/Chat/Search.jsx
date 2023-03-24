@@ -28,18 +28,14 @@ export function Search() {
     }
     const handleSelect= async()=>{
         //revisa si ya existe chat entre ambos usuarios
-        console.log(user)
-        console.log(user2)
         const combinedID = user.uid > user2.uid ? 
         user.uid + user2.uid : 
         user2.uid + user.uid;
         const res = await getDoc(doc(db,"chats",combinedID));
         try{    
-            console.log("hello")
             
             if(!res.exists()){
                 //crea el chat
-                console.log("hola2")
                 await setDoc(doc(db,"chats",combinedID),{messages:[]});
                 
                 //crea user chats
