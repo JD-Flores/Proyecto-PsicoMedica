@@ -33,6 +33,7 @@ export function RegisterDoctorPage() {
   const [formData,setFormData] =useState({
       doctor:true,  
       name:"",
+      lastname:"",
       email:"",
       phone:"",
       password:"",
@@ -44,7 +45,9 @@ export function RegisterDoctorPage() {
       specialty:"",
       grade:"",
       Experience:"",
-      Price:"",
+      Price:0,
+      ranking:0,
+      biography:""
 
 
   })
@@ -132,12 +135,22 @@ export function RegisterDoctorPage() {
         <div id='leftHalf' className='w-full'>
           <label htmlFor="name" className= "block cursor-pointer">
             <div className='flex flex-row py-1 mt-2'>
-                <h1 className="font-medium text-slate-700 pb-2 text-sm ">Nombre completo</h1><p className='text-red-600'>{errorName}</p>
+                <h1 className="font-medium text-slate-700 pb-2 text-sm ">Nombre</h1><p className='text-red-600'>{errorName}</p>
                 </div>
                 <input 
                 id="name" name="name" type="text" 
                 onChange={handleOnChange}
-                className="w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow text-sm" placeholder="Ingresa tu nombre completo"/>
+                className="w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow text-sm" placeholder="Ingresa tu nombre"/>
+            </label>
+
+            <label htmlFor="lastname" className= "block cursor-pointer">
+            <div className='flex flex-row py-1 mt-2'>
+                <h1 className="font-medium text-slate-700 pb-2 text-sm ">Apellido</h1><p className='text-red-600'>{errorName}</p>
+                </div>
+                <input 
+                id="lastname" name="lastname" type="text" 
+                onChange={handleOnChange}
+                className="w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow text-sm" placeholder="Ingresa tu apellido"/>
             </label>
 
             <label htmlFor="email" className= "block cursor-pointer">

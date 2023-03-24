@@ -12,9 +12,13 @@ import { reserveContext } from "../../contexts/ReserveContext";
 export function CheckoutPage() {
 
   const { doctor_id } = useParams();
-    const [doctor, setDoctor] = useState([]);
     const [context, setContext] = useContext(docContext);
     const [reservationContext, setReservationContext] = useContext(reserveContext);
+    const [price, setPrice] = useState(0);
+
+    useEffect(() => {
+      setPrice(parseInt(reservationContext.end.split(" ")[1].split(":")[0] - reservationContext.start.split(" ")[1].split(":")[0])*context.Price);
+    }, []);
 
     // // busca si el documento exist o ya esta creado
     // const res = await getDoc(doc(db,"calendarios",doctor.uid));
@@ -37,15 +41,7 @@ export function CheckoutPage() {
 
     //       }
 
-    const getDoctor= async (id) => {
-        const data = await getDoctorById(id);
-        setDoctor(data);
-      }
-        
-
-    useEffect(() => {
-        const result = getDoctor(doctor_id);
-      }, []);
+   
   return (
      
 
@@ -74,7 +70,7 @@ export function CheckoutPage() {
                         Fecha:
                       </h2>
   
-                      <p className="text-base text-left px-6 font-bold">{reservationContext.start}</p>
+                      <p className="text-base text-left px-6 font-bold">{reservationContext.start.split(" ")[0]}</p>
                     </div>
                   </label>
   
@@ -84,7 +80,7 @@ export function CheckoutPage() {
                       <h2 className="text-base text-purple font-bold mb-1 mt-1 text-left">
                         Hora:
                       </h2>
-                      <p className="text-base text-left px-6 font-bold">00:00</p>
+                      <p className="text-base text-left px-6 font-bold">{reservationContext.start.split(" ")[1]}</p>
                     </div>
                   </label>
   
@@ -94,7 +90,7 @@ export function CheckoutPage() {
                       <h2 className="text-base text-purple font-bold mb-1 mt-1 text-left">
                         Duración:
                       </h2>
-                      <p className="text-base text-left px-6 font-bold">minutos</p>
+                      <p className="text-base text-left px-6 font-bold">{reservationContext.end.split(" ")[1].split(":")[0] - reservationContext.start.split(" ")[1].split(":")[0]} horas</p>
                     </div>
                   </label>
   
@@ -104,7 +100,7 @@ export function CheckoutPage() {
                       <h2 className="text-base text-purple font-bold mb-1 mt-1 text-left">
                         Total a pagar:
                       </h2>
-                      <p className="text-base text-left px-6 font-bold">$</p>
+                      <p className="text-base text-left px-6 font-bold">{price}$</p>
                     </div>
                   </label>
                   <label htmlFor="paypal" >

@@ -50,7 +50,7 @@ export function DoctorDetail() {
                     <hr />
                     <p>Especialidad: {doctor.specialty}</p>
                     <p>Ranking: {doctor.ranking} estrellas</p>
-                    <p>Precio consulta: {doctor.Price}$</p>
+                    <p>Precio consulta: {doctor.Price}$ por hora</p>
                 </div>
             </div>
             <hr />

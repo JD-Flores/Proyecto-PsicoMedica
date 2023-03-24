@@ -25,23 +25,6 @@ export function ReservarCitaPage() {
   const [context, setContext] = useContext(docContext);
   const [reservationContext, setReservationContext] = useContext(reserveContext);
 
-  const getDoctor= async (id) => {
-      const data = await getDoctorById(id);
-      setDoctor(data);
-      // getDocument();
-    }
-
-
-    // const getDocument = async() => {
-    //   await onSnapshot(doc(db,"calendarios", doctor.uid),(doc)=>{
-    //     doc.exists()&& setReservation(doc.data().citas)
-    // })
-    // }
-
-  useEffect(()=>{
-    getDoctor(doctor_id);
-    console.log(context);
-},[])
   
 
   const {
