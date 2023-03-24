@@ -1,7 +1,7 @@
 import React from "react";
 import { ProfileNav } from "../../Componentes/ProfileNav/ProfileNav";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
-import CheckoutForm from "../../Componentes/Checkout/checkout.jsx"
+import {Checkout} from "../../Componentes/Checkout/checkout.jsx"
 import { useParams } from "react-router-dom";
 import { getDoctorById } from "../../firebase/users-service";
 import { useState, useEffect } from "react";
@@ -111,7 +111,7 @@ export function CheckoutPage() {
                         Método de pago:
                       </h2>
                       <div className="mt-5 flex justify-center h-min">
-                        <CheckoutForm />          
+                        <Checkout price={price} />          
                       </div>
                 
                     </div>

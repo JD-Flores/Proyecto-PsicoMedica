@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react" ;
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 
-const Checkout = () => {
+export function Checkout({price}) {
     const [show, setShow] = useState(false);
     const [success, setSuccess] = useState(false);
     const [ErrorMessage, setErrorMessage] = useState("");
@@ -16,7 +16,7 @@ const Checkout = () => {
                     description: "Terapia",
                     amount: {
                         currency_code: "USD",
-                        value: 20,
+                        value: price,
                     },
                 },
             ],
@@ -58,5 +58,3 @@ const Checkout = () => {
         </PayPalScriptProvider>
     );
 }
-
-export default Checkout
