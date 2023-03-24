@@ -14,7 +14,7 @@ import { async } from "@firebase/util";
 
 export function ReservarCitaPage() {
   const navigate = useNavigate();
-  const [reservation, setReservation] = useState([])
+  // const [reservation, setReservation] = useState([])
   const {user}=useUser();
 
   const { doctor_id } = useParams();
@@ -23,16 +23,15 @@ export function ReservarCitaPage() {
   const getDoctor= async (id) => {
       const data = await getDoctorById(id);
       setDoctor(data);
-      getDocument();
-      console.log(data);
+      // getDocument();
     }
 
 
-    const getDocument = async() => {
-      await onSnapshot(doc(db,"calendarios", doctor.uid),(doc)=>{
-        doc.exists()&& setReservation(doc.data().citas)
-    })
-    }
+    // const getDocument = async() => {
+    //   await onSnapshot(doc(db,"calendarios", doctor.uid),(doc)=>{
+    //     doc.exists()&& setReservation(doc.data().citas)
+    // })
+    // }
 
   useEffect(()=>{
     getDoctor(doctor_id);

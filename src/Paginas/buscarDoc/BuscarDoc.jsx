@@ -29,14 +29,13 @@ export function BuscarDoc() {
 
 
   const searchDoctor= async (star, specialization) => {
-    const data = await searchDoctorsAvailable(star, specialization);
-    console.log(data);
-    setDoctors(data)
+    const data = await searchDoctorsAvailable(star, specialization);;
+    setDoctors(data);
+
   }
 
   const searchDoctorsByName= async (doctorName) => {
     const data = await searchDoctorsAvailableByName(doctorName);
-    console.log(data);
     setDoctors(data)
   }
 

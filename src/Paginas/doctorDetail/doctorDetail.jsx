@@ -1,23 +1,30 @@
 import { Link } from "react-router-dom"
 import { RESERVAR_CITA } from "../../constantes/urls"
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import { getDoctorById } from "../../firebase/users-service";
 import { getDoc } from "firebase/firestore";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useEffect } from "react";
+import { DoctorContext } from "../../contexts/DoctorContext";
 
 
 
 export function DoctorDetail() {
-
+    const navigate = useNavigate();
     const { doctor_id } = useParams();
     const [doctor, setDoctor] = useState([]);
+    const {setDoctorCon} = useContext(DoctorContext)
 
     const getDoctor= async (id) => {
         const data = await getDoctorById(id);
         setDoctor(data);
-        console.log(data);
       }
+    const handleReserve = ()=>{
+        console.log('prueba' + doctor.uid)
+        setDoctorCon(doctor)
+        
+        navigate(`/reservas/${doctor.uid}`)
+    }
 
     useEffect(() => {
         const result = getDoctor(doctor_id);
@@ -65,7 +72,8 @@ export function DoctorDetail() {
                     <p></p>
                 </div>
             </div>
-            <Link to={`/reservas/${doctor.uid}`}>Agendar</Link>
+            <button onClick={handleReserve}>agendar2</button>
+            {/* <Link to={`/reservas/${doctor.uid}`}>Agendar</Link> */}
         </div>
     )
 }
