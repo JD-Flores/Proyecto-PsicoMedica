@@ -27,7 +27,7 @@ export function Calendario() {
   
   useEffect(() => {  
 
-    const events = dates.map((element) =>{
+    const events = dates?.map((element) =>{
         const temp = element.end
         element.end = new Date(temp)
         const temp2 = element.start
@@ -52,7 +52,7 @@ export function Calendario() {
     onSnapshot(doc(db,"calendarios",user.uid),(doc)=>{
       doc.exists()&& setDates(doc.data().citas)
     })
-    const events = dates.map((element) =>{
+    const events = dates?.map((element) =>{
         const temp = element.end
         element.end = new Date(temp)
         const temp2 = element.start
@@ -78,8 +78,6 @@ export function Calendario() {
 
     return (
       <div  className="bigCalendar-container bg-blue-300 text-white h-[400px]">
-        <button onClick={handle}> aqui</button>
-        <button onClick={handle}>aui2</button>
       <Calendar
         localizer={localizer}
         events={reserva}
