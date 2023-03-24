@@ -80,7 +80,7 @@ export function Messages() {
   return (
     
     <div className='flex flex-col w-2/3'>
-        <div className='w-full p-2 bg-black text-white'>
+        <div className='flex items-center w-full p-2 bg-black text-white h-[50px]'>
             <span>{data.user?.name}</span>
         </div>
         <div className='w-full h-full p-2 overflow-y-scroll'>

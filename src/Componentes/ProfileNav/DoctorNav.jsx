@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import {
   CALENDAR,
   CHAT,
+  CHATDOC,
   PERFIL_DOCTOR,
 } from "../../constantes/urls";
 import ArrowDown from "../../imagenes/arrow-down-s-line.png";
@@ -49,13 +50,7 @@ export function DoctorNav() {
             Calendario
           </Link>
           <Link
-            to={CALENDAR}
-            className="flex items-center justify-center bg-[#5974A9] text-white p-1 rounded-md h-10 w-1/5 text-center"
-          >
-            Calendario
-          </Link>
-          <Link
-            to={CHAT}
+            to={CHATDOC}
             className="flex items-center justify-center bg-[#5974A9] text-white p-1 rounded-md h-10 w-1/5 text-center"
           >
             Chats

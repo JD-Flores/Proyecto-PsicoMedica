@@ -21,26 +21,7 @@ export function CheckoutPage() {
       setPrice(parseInt(reservationContext.end.split(" ")[1].split(":")[0] - reservationContext.start.split(" ")[1].split(":")[0])*context.Price);
     }, []);
 
-    // // busca si el documento exist o ya esta creado
-    // const res = await getDoc(doc(db,"calendarios",doctor.uid));
-    //     try{    
-            
-    //       if(!res.exists()){
-    //           //si no esta creado lo creo con el id del Doctor
-    //           await setDoc(doc(db,"calendarios",doctor.uid),{citas:[]});   
-    //       }
-    //       // Si ya existe o fue creado agrega al array de citas la nueva cita
-    //         await updateDoc(doc(db,"calendarios",doctor.uid),{
-    //           citas:arrayUnion({
-    //               title: user.name+":  "+data.motivoCita,
-    //               start:data.fecha +" "+ data.hora,
-    //               end:data.fecha +" "+ data.hora2,
-    //             })
-    //           })
-    //           navigate(`/checkout/${doctor.uid}`)
-    //       }catch{
-
-    //       }
+    
 
    
   return (

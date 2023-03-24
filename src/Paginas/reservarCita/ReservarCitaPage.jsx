@@ -34,13 +34,14 @@ export function ReservarCitaPage() {
   } = useForm();
 
   const onSubmit = (data) => {
+    console.log(context)
     setReservationContext({
       title: user.name+":  "+data.motivoCita,
       start:data.fecha +" "+ data.hora,
       end:data.fecha +" "+ data.hora2,
     }
     )
-    navigate(`/checkout/${doctor.uid}`);
+    navigate(`/checkout/${context.uid}`);
     
   }
 

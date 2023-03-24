@@ -34,12 +34,12 @@ export function Chats() {
         id='userchat' 
         key={chat[0]} 
         onClick={()=>handleSelect(chat[1].userInfo)}
-        className='flex flex-row p-2 items-center gap-3 text-white hover:bg-green-900 cursor-pointer w-full'>
-        <img 
-        src={fotoPerfil} 
-        alt="" 
-        className='w-[24px] h-[24px] rounded-full '/>
-        <div id='userinfo' className='flex flex-col w-full overflow-hidden '>
+        className='flex flex-row p-2 items-center gap-3 text-white hover:bg-green-900 cursor-pointer w-full'>       
+          <img 
+          src={chat[1].userInfo.photoURL} 
+          alt="" 
+          className='w-[24px] h-[24px] rounded-full '/>
+         <div id='userinfo' className='flex flex-col w-full overflow-hidden '>
         <span 
           className='font-bold'>
           {chat[1].userInfo.name}</span>

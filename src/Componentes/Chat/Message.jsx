@@ -54,7 +54,7 @@ export function Message({message}) {
     
     <div className='flex flex-col flex-wrap max-w-[60%] break-words h-auto  '>
             <img src={message.img} alt="" className='max-w-[250px]' />
-            <p className='flex flex-col items-start bg-black text-white p-2 rounded-l rounded-tr  break-all'>
+            <p className='flex flex-col items-start bg-black text-white p-2 rounded-r rounded-tl  break-all'>
             {message.text}
             </p>
             

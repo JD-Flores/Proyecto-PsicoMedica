@@ -1,12 +1,23 @@
 //import { CLIENT_ID } from '../../Config/config.jsx'
-import React, { useState, useEffect } from "react" ;
+import React, { useState, useEffect, useContext } from "react" ;
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
+import { useUser } from "../../contexts/UserContext";
+import { docContext } from "../../contexts/DoctorContext";
+import { useNavigate } from "react-router";
+import { CHAT } from "../../constantes/urls";
+import { reserveContext } from "../../contexts/ReserveContext";
+import { arrayUnion, doc, getDoc, serverTimestamp, setDoc, updateDoc } from "firebase/firestore";
+import { db } from "../../firebase/config";
 
 export function Checkout({price}) {
     const [show, setShow] = useState(false);
     const [success, setSuccess] = useState(false);
     const [ErrorMessage, setErrorMessage] = useState("");
     const [orderID, setOrderID] = useState(false);
+    const {user}=useUser();
+    const [context, setContext] = useContext(docContext);
+    const [reservationContext, setReservationContext] = useContext(reserveContext);
+    const navigate = useNavigate();
 
     // creates a paypal order
     const createOrder = (data, actions) => {
@@ -39,11 +50,66 @@ export function Checkout({price}) {
         setErrorMessage("An Error occured with your payment ");
     };
 
+    const setChatReserve = async ()=>{
+        // genera el chat
+        const combinedID = user.uid > context.uid ? 
+        user.uid + context.uid : 
+        context.uid + user.uid;
+        const res = await getDoc(doc(db,"chats",combinedID));
+        try{    
+            
+            if(!res.exists()){
+                //crea el chat
+                await setDoc(doc(db,"chats",combinedID),{messages:[]});
+            }
+                //crea user chats
+                await updateDoc(doc(db,"userChat",user.uid),{
+                    [combinedID+".userInfo"]:{
+                        uid:context.uid,
+                        name:context.name,
+                        photoURL:context.photoURL
+                    },
+                    [combinedID+".date"]: serverTimestamp()
+                })
+                await updateDoc(doc(db,"userChat",context.uid),{
+                    [combinedID+".userInfo"]:{
+                        uid:user.uid,
+                        name:user.name,
+                        photoURL:user.photoURL
+                    },
+                    [combinedID+".date"]: serverTimestamp()
+                })
+            
+            // busca si el documento exist o ya esta creado
+                const res2 = await getDoc(doc(db,"calendarios",context.uid)); 
+                    
+                if(!res2.exists()){
+                    //si no esta creado lo creo con el id del Doctor
+                    await setDoc(doc(db,"calendarios",context.uid),{citas:[]});   
+                }
+                // Si ya existe o fue creado agrega al array de citas la nueva cita
+                    await updateDoc(doc(db,"calendarios",context.uid),{
+                    citas:arrayUnion({
+                        title: reservationContext.title,
+                        start:reservationContext.start,
+                        end:reservationContext.end,
+                        })
+                    })
+            navigate(CHAT)
+        }catch{
+            console.error("error")
+        }
+        
+
+    }
+
     useEffect(() => {
         if (success) {
             alert("Payment successful!!");
             console.log('Order successful . Your order id is--', orderID);
+            setChatReserve()
         }
+        
     },[success]);
 
     return (

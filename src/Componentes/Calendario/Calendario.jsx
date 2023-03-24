@@ -75,18 +75,7 @@ export function Calendario() {
       locales,
   });
   
-    //array de eventos
-  const myEventsList= [{
-    title: "today",
-    start: new Date('2023-03-03 08:22:00'),
-    end: new Date('2023-03-03 10:42:00')
-  },
-  {
-    title: "string",
-     start: new Date('2019-05-05 12:22:00'),
-    end: new Date('2019-05-05 13:42:00')
-  }]
-    
+
     return (
       <div  className="bigCalendar-container bg-blue-300 text-white h-[400px]">
         <button onClick={handle}> aqui</button>

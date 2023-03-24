@@ -202,7 +202,7 @@ export function RegisterDoctorPage() {
                   <div className='flex flex-row py-1 mt-2'>
                   <h1 className="font-medium text-slate-700 pb-2 text-sm">Precio por consulta</h1><p className='text-red-600'>{errorConfirm}</p>
                   </div>
-                    <input id="Price" name="Price" type="text" 
+                    <input id="Price" name="Price" type="number" 
                     onChange={handleOnChange}
                     className="w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow text-sm" placeholder="Indique un precio"/>
                 </label>

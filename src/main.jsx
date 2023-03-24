@@ -2,7 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import './index.css'
 import { Routes,Route,BrowserRouter} from "react-router-dom"
-import {BUSCAR_DOC, CHAT, HOME_URL, LOGIN_URL, PERFIL_CLIENTE, PERFIL_DOCTOR, REGISTER_DOCTOR_URL, REGISTER_PATIENT_URL, REGISTER_URL, RESERVAR_CITA,DOC_DETAIL, CHECKOUT, CALENDAR } from './constantes/urls'
+import {BUSCAR_DOC, CHAT, HOME_URL, LOGIN_URL, PERFIL_CLIENTE, PERFIL_DOCTOR, REGISTER_DOCTOR_URL, REGISTER_PATIENT_URL, REGISTER_URL, RESERVAR_CITA,DOC_DETAIL, CHECKOUT, CALENDAR, CHATDOC } from './constantes/urls'
 import { Layout } from './Componentes/Layout/Layout'
 import {HomePage} from './Paginas/Home/HomePage'
 import {RegisterPage} from './Paginas/register/RegisterPage'
@@ -41,6 +41,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         {/* Paginas de doctor */}
         <Route path={PERFIL_DOCTOR} element={<PrivateRouteDoc><PerfilDoctorPage/></PrivateRouteDoc>}/>
         <Route path={CALENDAR} element={<PrivateRouteDoc><DoctorCalendarPage/></PrivateRouteDoc>}/>
+        <Route path={CHATDOC} element={<PrivateRouteDoc><Chat/></PrivateRouteDoc>}/>
         {/* TODO CAMBIAR A PRIVADO */}
         <Route path="/*" element={<ErrorPage/>}/>
         </Route>
