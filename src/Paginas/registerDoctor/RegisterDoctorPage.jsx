@@ -46,7 +46,7 @@ export function RegisterDoctorPage() {
       grade:"",
       Experience:"",
       Price:0,
-      ranking:0,
+      ranking:1,
       biography:""
 
 
