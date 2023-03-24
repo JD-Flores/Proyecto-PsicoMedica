@@ -5,7 +5,7 @@ import { getDoctorById } from "../../firebase/users-service";
 import { getDoc } from "firebase/firestore";
 import { useContext, useState } from "react";
 import { useEffect } from "react";
-import { DoctorContext } from "../../contexts/DoctorContext";
+import { docContext,DoctorContext } from "../../contexts/DoctorContext";
 
 
 
@@ -13,15 +13,14 @@ export function DoctorDetail() {
     const navigate = useNavigate();
     const { doctor_id } = useParams();
     const [doctor, setDoctor] = useState([]);
-    const {setDoctorCon} = useContext(DoctorContext)
+    const [context, setContext] = useContext(docContext);
 
     const getDoctor= async (id) => {
         const data = await getDoctorById(id);
         setDoctor(data);
       }
     const handleReserve = ()=>{
-        console.log('prueba' + doctor.uid)
-        setDoctorCon(doctor)
+        setContext(doctor)
         
         navigate(`/reservas/${doctor.uid}`)
     }

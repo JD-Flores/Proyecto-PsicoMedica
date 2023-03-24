@@ -10,6 +10,9 @@ import { CHECKOUT } from "../../constantes/urls";
 import { useParams } from "react-router-dom";
 import { getDoctorById } from "../../firebase/users-service";
 import { async } from "@firebase/util";
+import { docContext,DoctorContext } from "../../contexts/DoctorContext";
+import { reserveContext } from "../../contexts/ReserveContext";
+import { useContext } from "react";
 
 
 export function ReservarCitaPage() {
@@ -19,6 +22,8 @@ export function ReservarCitaPage() {
 
   const { doctor_id } = useParams();
   const [doctor, setDoctor] = useState([]);
+  const [context, setContext] = useContext(docContext);
+  const [reservationContext, setReservationContext] = useContext(reserveContext);
 
   const getDoctor= async (id) => {
       const data = await getDoctorById(id);
@@ -35,6 +40,7 @@ export function ReservarCitaPage() {
 
   useEffect(()=>{
     getDoctor(doctor_id);
+    console.log(context);
 },[])
   
 
@@ -44,27 +50,14 @@ export function ReservarCitaPage() {
     formState: { errors },
   } = useForm();
 
-  const onSubmit = async (data) => {
-    // busca si el documento exist o ya esta creado
-    const res = await getDoc(doc(db,"calendarios",doctor.uid));
-        try{    
-            
-          if(!res.exists()){
-              //si no esta creado lo creo con el id del Doctor
-              await setDoc(doc(db,"calendarios",doctor.uid),{citas:[]});   
-          }
-          // Si ya existe o fue creado agrega al array de citas la nueva cita
-            await updateDoc(doc(db,"calendarios",doctor.uid),{
-              citas:arrayUnion({
-                  title: user.name+":  "+data.motivoCita,
-                  start:data.fecha +" "+ data.hora,
-                  end:data.fecha +" "+ data.hora2,
-                })
-              })
-              navigate(`/checkout/${doctor.uid}`)
-          }catch{
-
-          }
+  const onSubmit = (data) => {
+    setReservationContext({
+      title: user.name+":  "+data.motivoCita,
+      start:data.fecha +" "+ data.hora,
+      end:data.fecha +" "+ data.hora2,
+    }
+    )
+    navigate(`/checkout/${doctor.uid}`);
     
   }
 
@@ -86,9 +79,9 @@ export function ReservarCitaPage() {
         <div className="max-w-lg mx-auto m-4 text-center">
           <div className="selectDoctor">
             <h2 className="text-xl text-black font-bold   mb-1">
-              Doctor seleccionado:
+              Doctor seleccionado: 
             </h2>
-            <p className="text-base">{doctor.name}</p>
+            <p className="text-base">{context.name}</p>
           </div>
         
 

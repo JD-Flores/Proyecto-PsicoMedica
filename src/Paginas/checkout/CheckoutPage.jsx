@@ -4,12 +4,38 @@ import paypal from  "../../imagenes/paypal.png";
 import { useParams } from "react-router-dom";
 import { getDoctorById } from "../../firebase/users-service";
 import { useState, useEffect } from "react";
+import { docContext } from "../../contexts/DoctorContext";
+import { useContext } from "react";
+import { reserveContext } from "../../contexts/ReserveContext";
 
 
 export function CheckoutPage() {
 
   const { doctor_id } = useParams();
     const [doctor, setDoctor] = useState([]);
+    const [context, setContext] = useContext(docContext);
+    const [reservationContext, setReservationContext] = useContext(reserveContext);
+
+    // // busca si el documento exist o ya esta creado
+    // const res = await getDoc(doc(db,"calendarios",doctor.uid));
+    //     try{    
+            
+    //       if(!res.exists()){
+    //           //si no esta creado lo creo con el id del Doctor
+    //           await setDoc(doc(db,"calendarios",doctor.uid),{citas:[]});   
+    //       }
+    //       // Si ya existe o fue creado agrega al array de citas la nueva cita
+    //         await updateDoc(doc(db,"calendarios",doctor.uid),{
+    //           citas:arrayUnion({
+    //               title: user.name+":  "+data.motivoCita,
+    //               start:data.fecha +" "+ data.hora,
+    //               end:data.fecha +" "+ data.hora2,
+    //             })
+    //           })
+    //           navigate(`/checkout/${doctor.uid}`)
+    //       }catch{
+
+    //       }
 
     const getDoctor= async (id) => {
         const data = await getDoctorById(id);
@@ -37,7 +63,7 @@ export function CheckoutPage() {
                   <h2 className="text-base text-purple font-bold mb-1 mt-1 text-left">
                     Nombre doctor:
                   </h2>
-                  <p className="text-base text-left px-6 font-bold">{doctor.name}</p>
+                  <p className="text-base text-left px-6 font-bold">{context.name}</p>
                 </div>
   
                 {/* Input fecha */}
@@ -48,7 +74,7 @@ export function CheckoutPage() {
                         Fecha:
                       </h2>
   
-                      <p className="text-base text-left px-6 font-bold">fecha</p>
+                      <p className="text-base text-left px-6 font-bold">{reservationContext.start}</p>
                     </div>
                   </label>
   
