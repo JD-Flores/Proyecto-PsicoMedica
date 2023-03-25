@@ -27,6 +27,10 @@ const Validacion = (error)=>{
     export function completed(){
       return complete;
     }
+    export function setCompleted(){
+      complete=false;
+      return complete;
+    }
 
 export const signInWithGoogle = async()=>{
     try {

@@ -50,12 +50,6 @@ export function ProfileNav() {
             Buscar Doctor
           </Link>
           <Link
-            to={RESERVAR_CITA}
-            className="flex items-center justify-center bg-[#5974A9] text-white p-1 rounded-md h-10 w-1/5 text-center"
-          >
-            Reservar Cita
-          </Link>
-          <Link
             to={CHAT}
             className="flex items-center justify-center bg-[#5974A9] text-white p-1 rounded-md h-10 w-1/5 text-center"
           >

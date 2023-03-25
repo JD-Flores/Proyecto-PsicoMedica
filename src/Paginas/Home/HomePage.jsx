@@ -10,13 +10,19 @@ import { Dropdown } from "../../Componentes/Dropdown/Dropdown";
 import { DoctorCard } from "../../Componentes/DoctorCard/DoctorCard";
 import { useEffect } from "react";
 import { getDoctorsInfo } from "../../firebase/users-service";
+import { useNavigate } from "react-router";
+import { BuscarDoc } from "../buscarDoc/BuscarDoc";
+import { BUSCAR_DOC, LOGIN_URL } from "../../constantes/urls";
+import { useUser } from "../../contexts/UserContext";
 
 export function HomePage() {
+  const navigate = useNavigate()
   const [faq1, setFaq1] = useState(false);
   const [faq2, setFaq2] = useState(false);
   const [faq3, setFaq3] = useState(false);
   const [faq4, setFaq4] = useState(false);
   const [doctors, setDoctors] = useState([]);
+  const {user} = useUser()
 
   const getDoctors = async () => {
     const data = await getDoctorsInfo();
@@ -27,6 +33,13 @@ export function HomePage() {
   useEffect(() => {
     getDoctors();
   }, []);
+  const handleAgendar = ()=>{
+    if(user){
+      navigate(BUSCAR_DOC)
+    }else{
+      navigate(LOGIN_URL)
+    }
+  }
 
   return (
     <div className="box-border p-0 m-0 scroll-smooth">
@@ -48,7 +61,7 @@ export function HomePage() {
             El autocuidado y la salud mental son clave para mantener una vida
             plena y saludable
           </h4>
-          <button className="text-[12px] sm:text-[16px] lg:text-lg text-white bg-[#EF3D3E] font-comfortaa   border-indigo-500 hover:shadow p-2 rounded-[6px] mt-[15px] mb-[15px]">
+          <button onClick={handleAgendar} className="text-[12px] sm:text-[16px] lg:text-lg text-white bg-[#EF3D3E] font-comfortaa   border-indigo-500 hover:shadow p-2 rounded-[6px] mt-[15px] mb-[15px]">
             Agendar Cita
           </button>
         </div>
