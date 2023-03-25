@@ -19,7 +19,7 @@ export function PerfilClientePage() {
   const [image, setImage] = useState(null);
   const [lastUrl, setLastUrl] = useState("");
 
- 
+
 
   const handleUser = (result) => {
 
@@ -35,7 +35,12 @@ export function PerfilClientePage() {
 
 
   const updatePhoto = async() =>{
-    user.profilePic=null;
+    // user.profilePic=null;
+    console.log("Archivo");
+    console.log(file);
+    if (file!=null) {
+      
+    
     const result = await uploadFile(file);
     if (result==null) {
       const url =  "https://firebasestorage.googleapis.com/v0/b/proyecto-psicomedica-6dbc5.appspot.com/o/11997cb3-d7ea-4d18-bb98-14eded4b7d89?alt=media&token=af1b567a-8a9c-4b35-8305-a702ca72330f";
@@ -51,6 +56,7 @@ export function PerfilClientePage() {
       handleUser(result);
       
     }
+  }
   }
 
   return (
@@ -94,13 +100,13 @@ export function PerfilClientePage() {
             <div id='right-side' className='flex justify-center items-center w-2/4'>
               
                 <div className='flex flex-col items-center'>
-                  <img src={image} alt="Profile picture" className='w-full ' />
+                  <img src={image} alt="Profile picture" className='w-full rounded-full' />
                 </div>
 
                 {editable==false && (
                 <div className='flex flex-col items-center'>
-                  <img src={image} alt="Profile picture" className='w-full ' />
-                  <input type="file" onChange={(e) => {setFile(e.target.files[0]), setImage(URL.createObjectURL(e.target.files[0]))}} className='flex items-center justify-center bg-black text-white p-1  h-14 w-[200px] mt-3' />
+                  <img src={image} alt="Profile picture" className='w-full rounded-full ' />
+                  <input type="file" onChange={(e) => {setFile(e.target.files[0]), setImage(URL.createObjectURL(e.target.files[0], console.log("prueba")))}} className='flex items-center justify-center bg-black text-white p-1  h-14 w-[200px] mt-3' />
                 </div>
                )}
                {/* {editable==true && (

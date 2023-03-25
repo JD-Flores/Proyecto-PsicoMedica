@@ -120,8 +120,6 @@ export function RegisterDoctorPage() {
       }
   }
 
-
-
   
 
   
