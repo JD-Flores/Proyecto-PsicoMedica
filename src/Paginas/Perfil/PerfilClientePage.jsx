@@ -80,7 +80,7 @@ export function PerfilClientePage() {
                )}
                {editable==true && (
                 <div>
-                  <img src={image} alt="Profile picture" className='w-full ' />
+                  <img src={user.profilePic} alt="Profile picture" className='w-full ' />
                 </div>
                )}
             </div>
