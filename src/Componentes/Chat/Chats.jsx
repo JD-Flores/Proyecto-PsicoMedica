@@ -38,14 +38,17 @@ export function Chats() {
           <img 
           src={chat[1].userInfo.photoURL} 
           alt="" 
-          className='w-[24px] h-[24px] rounded-full '/>
+          className='w-[30px] h-[30px] object-cover rounded-[50%]'/>
          <div id='userinfo' className='flex flex-col w-full overflow-hidden '>
         <span 
           className='font-bold'>
           {chat[1].userInfo.name}</span>
         <p 
         className='w-4/5 text-xs text-gray-300 truncate '>
-          {chat[1].lastMessage?.text}</p>
+          {chat[1].lastMessage.text!=""&&
+          chat[1].lastMessage.text}
+          {chat[1].lastMessage.text==""&&
+          "photo."}</p>
         </div>
     </div>
       ))}

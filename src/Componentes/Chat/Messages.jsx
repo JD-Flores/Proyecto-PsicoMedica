@@ -17,10 +17,13 @@ export function Messages() {
     const [text,setText] = useState("");
     const [img,setImg] = useState(null);
     const {user} = useUser();
+    const [loadImg,setLoadImg] = useState()
+
 
     useEffect(()=>{
         const unSub = onSnapshot(doc(db,"chats",data.chatId),(doc)=>{
             doc.exists()&& setMessages(doc.data().messages)
+        
         })
         return ()=>{
             unSub()
@@ -28,14 +31,14 @@ export function Messages() {
     },[data.chatId])
 
     const handleSend = async()=>{
-
+        if(text!=""||img){
         if(img){
             const storageRef = ref(store,uuid())
 
             const uploadTask = uploadBytesResumable(storageRef,img)
+
             uploadTask.on(
                 (error)=>{
-
                 },
                 ()=>{
                     getDownloadURL(uploadTask.snapshot.ref).then(async(downloadURL)=>{
@@ -76,6 +79,7 @@ export function Messages() {
             setText("")
             setImg(null)
     }
+}
 
   return (
     
@@ -88,25 +92,27 @@ export function Messages() {
                 <Message message={m} key={m.id}/>
             ))}
         </div>
-        <div className='flex justify-between'>
-
+        <div className='flex justify-between bg-blue-400 px-4'>
+            <div className='flex items center justify center p-2 w-full'>
             <input 
             type="text" 
             onChange={e=>setText(e.target.value)}
-            placeholder='Inserta un mensaje...'
+            placeholder="Inserta un mensaje..."
             value={text}
-            className=' bg-black p-2 w-full outline-none text-white'
-            />
+            className=' p-2 w-full outline-none text-black rounded bg-white '
+            ></input>
+            {/* <img src={img} alt="" className='w-[50px]'/> */}
+            </div>
             <div id='iconos' className='flex items-center gap-2 '>
-                <img src={file} alt="" className='w-[24px] cursor-pointer'/>
+                {/* <img src={file} alt="" className='w-[24px] cursor-pointer'/> */}
                 <input 
                 type="file" onChange={e=>setImg(e.target.files[0])}
                 id='file' 
                 className='hidden'/>
                 <label htmlFor="file">
-                    <img src={image} alt="" className='w-[48px] cursor-pointer'/>
+                    <img src={image} alt="" className='w-[64px] cursor-pointer'/>
                 </label>
-                <button onClick={handleSend}>Send</button>
+                <button onClick={handleSend} className="text-2xl">Send</button>
             </div>
         </div>
     </div>
