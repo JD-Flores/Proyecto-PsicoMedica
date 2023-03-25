@@ -11,24 +11,26 @@ import { useEffect } from 'react';
 
 export function PerfilClientePage() {
 
-  const{user}=useUser();
+  const{user, setUser}=useUser();
+
 
   const [editable, setEditable] = useState(true);
   const [file, setFile] = useState(null);
   const [image, setImage] = useState(null);
-  const [info, setInfo] = useState(null);
+  const [lastUrl, setLastUrl] = useState("");
 
-  const getInfo = async  () => {
-    const result = await getUserProfile(user.email);
-    // console.log(result.profilePic);
-    return result.profilePic;
+ 
+
+  const handleUser = (result) => {
+
+    user.profilePic = result;
+    console.log(user.profilePic);
+    setUser(user);
+    console.log("prueba " + user.profilePic);
   }
   
   useEffect(() => {  
-    // setInfo(getInfo(user.email));
-    // console.log(info);
-    setImage(user.profilePic);
-    console.log(user.profilePic);
+      setImage(user.profilePic);
    },[]);
 
 
@@ -44,7 +46,10 @@ export function PerfilClientePage() {
     else{
       
       updateProfilePic(user,result);
+      console.log(result);
       console.log("Actualizada foto de perfil a" + result);
+      handleUser(result);
+      
     }
   }
 
