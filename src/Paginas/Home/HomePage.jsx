@@ -179,7 +179,7 @@ export function HomePage() {
                     : "opacity-0 invisible translate-y-[-20px] duration-500"
                 }`}
               >
-                <Dropdown text={`${faq1 ? "Prueba" : ""}`} />
+                <Dropdown text={`${faq1 ? "Para agendar una sesión con un especialista de nuestra plataforma, sólo debes estar registrado, de esta manera podrás encontrar a un psicólogo que se adapte a tus necesidades." : ""}`} />
               </div>
             </div>
             <div>
@@ -196,7 +196,7 @@ export function HomePage() {
                       : "opacity-0 invisible translate-y-[-20px] duration-500"
                   }`}
                 >
-                  <Dropdown text={`${faq2 ? "Prueba" : ""}`} />
+                  <Dropdown text={`${faq2 ? "La duración de cada sesión dependerá de la disponibilidad en el horario del especialista. En caso de que esté disponible y el psicólogo lo vea conveniente, podrás ampliar el tiempo de tu sesión." : ""}`} />
                 </div>
               </div>
             </div>
@@ -214,7 +214,7 @@ export function HomePage() {
                       : "opacity-0 invisible translate-y-[-20px] duration-500"
                   }`}
                 >
-                  <Dropdown text={`${faq3 ? "Prueba" : ""}`} />
+                  <Dropdown text={`${faq3 ? "Nuestros especialistas eligen el costo de la sesión a realizar. Debes escoger el que mejor se adapte a tus necesidades." : ""}`} />
                 </div>
               </div>
             </div>
@@ -232,7 +232,7 @@ export function HomePage() {
                       : "opacity-0 invisible translate-y-[-20px] duration-500"
                   }`}
                 >
-                  <Dropdown text={`${faq4 ? "Prueba" : ""}`} />
+                  <Dropdown text={`${faq4 ? "Contamos con un gran número de psicólogos especializados en distintas áreas. Por ejemplo: Depresión, Ansiedad, Dependencia Emocional, Terapia de pareja, entre otros. Puedes realizar terapia a largo plazo con un mismo especialista." : ""}`} />
                 </div>
               </div>
             </div>
