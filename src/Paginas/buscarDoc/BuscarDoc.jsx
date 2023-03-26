@@ -44,7 +44,6 @@ export function BuscarDoc() {
   
   return (
     <div id='main-container' className=' flex flex-col justify-center items-center gap-[13px] py-[17px] '>
-      <div>{user.name}</div>
       <div id='top-container'className=''>
         <ProfileNav></ProfileNav>
       </div>
