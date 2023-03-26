@@ -44,17 +44,17 @@ export function CheckoutPage() {
 
             <div className=" text-center shadow shadow-slate-300 rounded-xl p-5 mt-7">
               <div className="selectDoctor">
-                <h2 className="text-base text-purple font-bold mb-1 mt-1 text-left">
+                <h2 className="text-base font-bold mb-1 mt-1 text-left text-[#5974A9]">
                   Nombre doctor:
                 </h2>
-                <p className="text-base text-left px-6 font-bold">{context.name}</p>
+                <p className="text-base text-left px-6 font-bold">{context.name} {context.lastname}</p>
               </div>
 
               {/* Input fecha */}
               <form >
                 <label htmlFor="date">
                   <div className="py-1 mt-2">
-                    <h2 className="text-base text-purple font-bold mb-1 mt-1 text-left">
+                    <h2 className="text-base font-bold mb-1 mt-1 text-left text-[#5974A9]">
                       Fecha:
                     </h2>
 
@@ -65,7 +65,7 @@ export function CheckoutPage() {
                 {/* Input Hora */}
                 <label htmlFor="time">
                   <div className="py-1 mt-2">
-                    <h2 className="text-base text-purple font-bold mb-1 mt-1 text-left">
+                    <h2 className="text-base font-bold mb-1 mt-1 text-left text-[#5974A9]">
                       Hora:
                     </h2>
                     <p className="text-base text-left px-6 font-bold">{reservationContext.start.split(" ")[1]}</p>
@@ -75,7 +75,7 @@ export function CheckoutPage() {
                 {/* Input Duración */}
                 <label htmlFor="duration">
                   <div className="py-1 mt-2">
-                    <h2 className="text-base text-purple font-bold mb-1 mt-1 text-left">
+                    <h2 className="text-base text-[#5974A9] font-bold mb-1 mt-1 text-left">
                       Duración:
                     </h2>
                     <p className="text-base text-left px-6 font-bold">{reservationContext.end.split(" ")[1].split(":")[0] - reservationContext.start.split(" ")[1].split(":")[0]} horas</p>
@@ -85,7 +85,7 @@ export function CheckoutPage() {
                 {/* Input Motivo */}
                 <label htmlFor="motive">
                   <div className="py-1 mt-2">
-                    <h2 className="text-base text-purple font-bold mb-1 mt-1 text-left">
+                    <h2 className="text-base text-[#5974A9] font-bold mb-1 mt-1 text-left">
                       Total a pagar:
                     </h2>
                     <p className="text-base text-left px-6 font-bold">{price}$</p>
@@ -94,7 +94,7 @@ export function CheckoutPage() {
                 <label htmlFor="paypal" >
                   <div className="py-1 mt-2">
                     
-                    <h2 className="text-base text-purple font-bold mb-1 mt-1 text-left">
+                    <h2 className="text-base text-[#5974A9] font-bold mb-1 mt-1 text-left">
                       Método de pago:
                     </h2>
                     <div className="mt-5 flex justify-center h-min">
