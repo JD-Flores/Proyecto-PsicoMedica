@@ -36,13 +36,13 @@ export function Chats() {
         onClick={()=>handleSelect(chat[1].userInfo)}
         className='flex flex-row p-2 items-center gap-3 text-white hover:bg-green-900 cursor-pointer w-full'>       
           <img 
-          src={chat[1].userInfo.photoURL} 
+          src={chat[1].userInfo?.photoURL} 
           alt="" 
           className='w-[30px] h-[30px] object-cover rounded-[50%]'/>
          <div id='userinfo' className='flex flex-col w-full overflow-hidden '>
         <span 
           className='font-bold'>
-          {chat[1].userInfo.name}</span>
+          {chat[1].userInfo?.name}</span>
         <p 
         className='w-4/5 text-xs text-gray-300 truncate '>
           {chat[1].lastMessage?.text!=""&&

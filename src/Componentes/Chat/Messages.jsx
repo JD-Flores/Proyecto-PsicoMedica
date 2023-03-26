@@ -55,7 +55,12 @@ export function Messages() {
     useEffect(()=>{
         const unSub = onSnapshot(doc(db,"chats",data.chatId),(doc)=>{
             doc.exists()&& setMessages(doc.data().messages)
-            checkAvailable()
+            console.log(user.doctor)
+            if(user.doctor == false){
+                checkAvailable()
+            }else{
+                setAvailable(false)
+            }
 
         })
         return ()=>{
