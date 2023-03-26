@@ -24,6 +24,7 @@ useEffect(()=>{
     return( <UserContext.Provider 
     value={{
         user,
+        setUser,
         isLoading,
     }}>
         {children}

@@ -3,34 +3,60 @@ import { useUser } from '../../contexts/UserContext';
 import fotoPerfil from '../../imagenes/fotoPerfil.jpg'
 import { ProfileNav } from '../../Componentes/ProfileNav/ProfileNav';
 import { async } from '@firebase/util';
-import { getUserInfo } from '../../firebase/users-service';
+import { getUserInfo, getUserProfile } from '../../firebase/users-service';
 import { updateProfile } from 'firebase/auth';
 import { uploadFile } from '../../firebase/users-service';
 import { updateProfilePic } from '../../firebase/users-service';
+import { useEffect } from 'react';
 
 export function PerfilClientePage() {
 
-  const{user}=useUser();
+  const{user, setUser}=useUser();
+
 
   const [editable, setEditable] = useState(true);
   const [file, setFile] = useState(null);
   const [image, setImage] = useState(null);
+  const [lastUrl, setLastUrl] = useState("");
+
+
+
+  const handleUser = (result) => {
+
+    user.profilePic = result;
+    console.log(user.profilePic);
+    setUser(user);
+    console.log("prueba " + user.profilePic);
+  }
+  
+  useEffect(() => {  
+      setImage(user.profilePic);
+   },[]);
+
 
   const updatePhoto = async() =>{
-    user.profilePic=null;
+    // user.profilePic=null;
+    console.log("Archivo");
+    console.log(file);
+    if (file!=null) {
+      
+    
     const result = await uploadFile(file);
-    console.log(result);
     if (result==null) {
-      const url =  "gs://proyecto-psicomedica-6dbc5.appspot.com/fotoPerfil.jpg";
+      const url =  "https://firebasestorage.googleapis.com/v0/b/proyecto-psicomedica-6dbc5.appspot.com/o/11997cb3-d7ea-4d18-bb98-14eded4b7d89?alt=media&token=af1b567a-8a9c-4b35-8305-a702ca72330f";
       updateProfilePic(user,url);
-      console.log(result);
+      console.log("Error, No se pudo actualizar foto de perfil");
       
     }
     else{
       
       updateProfilePic(user,result);
       console.log(result);
+      console.log("Actualizada foto de perfil a" + result);
+      handleUser(result);
+      
     }
+  }
   }
 
   return (
@@ -71,18 +97,20 @@ export function PerfilClientePage() {
               </label>
             </div>
 
-            <div id='right-side' className='flex justify-center items-center w-2/4 m-2 mt-4'>
+            <div id='right-side' className='flex justify-center items-center w-2/4'>
               {editable==false && (
                 <div className='flex flex-col items-center'>
-                  <img src={image} alt="Profile picture" className='w-full ' />
-                  <input type="file" onChange={(e) => {setFile(e.target.files[0]), setImage(URL.createObjectURL(e.target.files[0]))}} className='flex items-center justify-center bg-black text-white p-1  h-14 w-[200px] mt-3' />
+                  <img src={image} alt="Profile picture" className='w-full rounded-full ' />
+                  <input type="file" onChange={(e) => {setFile(e.target.files[0]), setImage(URL.createObjectURL(e.target.files[0], console.log("prueba")))}} className='flex items-center justify-center bg-black text-white p-1  h-14 w-[200px] mt-3' />
                 </div>
                )}
-               {editable==true && (
+               {/* {editable==true && (
                 <div>
                   <img src={user.profilePic} alt="Profile picture" className='w-full ' />
                 </div>
-               )}
+               )} */}
+               
+              
             </div>
           </div>
 
