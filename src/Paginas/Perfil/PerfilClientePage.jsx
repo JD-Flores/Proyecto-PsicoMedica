@@ -39,9 +39,9 @@ export function PerfilClientePage() {
         <ProfileNav></ProfileNav>
       </div>
       
-      <div id='bottom-container' className='flex flex-col p-4 w-[363px] h-4/5 items-center bg-white rounded-[12px]'>
+      <div id='bottom-container' className='flex flex-col p-4 w-[450px] h-4/5 items-center bg-white rounded-[12px]'>
             
-        <div id='title' className='flex text-left text-2xl  text-[#908989] '>
+        <div id='title' className='flex text-left text-3xl m-2 text-[#908989] '>
           <h1>Datos Personales</h1>
         </div>
 
@@ -71,7 +71,7 @@ export function PerfilClientePage() {
               </label>
             </div>
 
-            <div id='right-side' className='flex justify-center items-center w-2/4'>
+            <div id='right-side' className='flex justify-center items-center w-2/4 m-2 mt-4'>
               {editable==false && (
                 <div className='flex flex-col items-center'>
                   <img src={image} alt="Profile picture" className='w-full ' />
@@ -89,7 +89,7 @@ export function PerfilClientePage() {
           <div id='sub-bottom-container' className='flex flex-col'>
             
             <label htmlFor="email">
-                <p className="font-medium text-[#908989] mt-[5px]">Direccion de correo </p>
+                <p className="font-medium text-[#908989] mt-[5px]">Dirección de correo </p>
                 <input 
                 id="email" name="email" type="email" readOnly={editable}
                 // onChange=""
@@ -99,7 +99,7 @@ export function PerfilClientePage() {
             <div>
               { editable==true &&(
                 <div id='buttons' className='flex flex-row items-center justify-evenly w-full '>
-                  <button onClick={() => {setEditable(false)}} className='flex items-center justify-center bg-[#5974A9] text-white p-1 rounded-md h-14 w-2/5 mt-2' >
+                  <button onClick={() => {setEditable(false)}} className='flex items-center justify-center bg-[#5974A9] text-white p-1 rounded-md h-14 w-2/5 mt-6 font-semibold' >
                     Editar Datos Personales
                   </button>
                 </div>
