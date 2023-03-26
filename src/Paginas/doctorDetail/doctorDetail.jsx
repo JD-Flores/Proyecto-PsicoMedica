@@ -30,40 +30,40 @@ export function DoctorDetail() {
   return (
     <div
       id="main-container"
-      className="max-w-lg mx-auto m-8 bg-white p-10 rounded-xl shadow shadow-slate-300 h-fit mt-10"
+      className="sm:w-[650px] mx-auto m-8 bg-white p-10 rounded-xl shadow shadow-slate-300 h-fit mt-10"
     >
       <div id="top-container" className="flex flex-row">
-        <div id="left-side" className="flex flex-col text-justify">
+        <div id="left-side" className="flex flex-col text-justify ">
           <img id="foto" alt="foto" />
           <button className="cursor-pointer flex items-center justify-center bg-[#5974A9] text-white p-1 rounded-md h-10 w-[180px] text-center text-sm font-medium">
             Reservar Cita
           </button>
         </div>
 
-        <div id="right-side" className="flex flex-col gap-[8px] ml-[50px]   sm:ml-[65px]">
-            <hr />
+        <div id="right-side" className="flex flex-col gap-[8px] lg:ml-[140px] ml-[50px]">
+            <hr className="border-t-8 border-[#5974A9]"/>
             <h1 className="text-[#5974A9] text-3xl font-bold font-comfortaa">
               Doctor
             </h1>
-            <h2 className="font-bold text-2xl font-comfortaa">Albany Avila</h2>
+            <h2 className="font-bold text-2xl font-comfortaa ">Albany Avila</h2>
             {/* <h2 className="font-bold text-2xl font-comfortaa">: {doctor.name}</h2> */}
-            <hr />
+            <hr className="border-t-8 border-[#5974A9]"/>
             <p className="text-[#5974A9] text-base font-bold font-comfortaa">
               Especialidad: depresión
             </p>
             {/* <p className="text-[#5974A9] text-base font-bold font-comfortaa">: {doctor.specialty}</p> */}
             <p className="text-[#5974A9] text-base font-bold font-comfortaa">
-              Ranking
+              Ranking:
             </p>
             <p className="text-[#5974A9] text-base font-bold font-comfortaa">
-              Precio consulta
+              Precio consulta:
             </p>
             {/* <p>Ranking: {doctor.ranking} estrellas</p> */}
             {/* <p>Precio consulta: {doctor.Price}$ por hora</p> */}
           </div>
       </div>
 
-      <hr />
+      <hr className="border-t-8 border-[#5974A9]"/>
 
       <div id="middle-container" className="flex flex-row">
         <div id="bio" className="flex flex-col p-2 text-justify">
@@ -76,8 +76,8 @@ export function DoctorDetail() {
         </div>
       </div>
 
-      <hr />
-      <div id="bottom-container" className="flex flex-col ml-2 mt-2 text-justify">
+      <hr className="border-t-8 border-[#5974A9]"/>
+      <div id="bottom-container" className="flex flex-col mt-2 p-2 text-justify">
         <div id="feedback">
           <h2 className="text-[#5974A9] text-[18px]  font-comfortaa font-bold">Feedback:</h2>
           <p className="font-comfortaa text-[14px]">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Est labore, illo eum asperiores deleniti nisi nihil blanditiis tempora rem quod optio saepe minus maxime repellendus perspiciatis laboriosam aspernatur nobis. Ducimus!</p>
