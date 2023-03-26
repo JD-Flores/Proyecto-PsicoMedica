@@ -3,7 +3,6 @@ import React, { useContext, useEffect, useState } from 'react'
 import { ChatContext } from '../../contexts/chatContext';
 import { useUser } from '../../contexts/UserContext';
 import { db } from '../../firebase/config';
-import fotoPerfil from '../../imagenes/fotoPerfil.jpg'
 
 export function Chats() {
 
@@ -16,6 +15,7 @@ export function Chats() {
       const unsub = onSnapshot(doc(db,"userChat",user.uid),(doc)=>{
         setChats(doc.data())
       });
+      
       return()=>{
         unsub();
       };
@@ -45,10 +45,13 @@ export function Chats() {
           {chat[1].userInfo.name}</span>
         <p 
         className='w-4/5 text-xs text-gray-300 truncate '>
-          {chat[1].lastMessage.text!=""&&
-          chat[1].lastMessage.text}
-          {chat[1].lastMessage.text==""&&
-          "photo."}</p>
+          {chat[1].lastMessage?.text!=""&&
+          chat[1].lastMessage?.text
+          }
+          {chat[1].lastMessage?.text==""&&
+          "photo."
+          }
+          </p>
         </div>
     </div>
       ))}

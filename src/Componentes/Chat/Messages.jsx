@@ -18,11 +18,23 @@ export function Messages() {
     const [img,setImg] = useState(null);
     const {user} = useUser();
     const [loadImg,setLoadImg] = useState()
+    const [available,setAvailable]=useState("true")
+    const [dates,setDates]=useState()
 
+      const findDate=()=>{
+        onSnapshot(doc(db,"calendarios",data.user.uid),(doc)=>{
+            doc.exists()&& setDates(doc.data().citas)
+          })
+        
+      }
 
     useEffect(()=>{
         const unSub = onSnapshot(doc(db,"chats",data.chatId),(doc)=>{
             doc.exists()&& setMessages(doc.data().messages)
+            // findDate()
+            
+            //   console.log(dates)
+          
         
         })
         return ()=>{
@@ -99,6 +111,7 @@ export function Messages() {
             onChange={e=>setText(e.target.value)}
             placeholder="Inserta un mensaje..."
             value={text}
+            readOnly={available}
             className=' p-2 w-full outline-none text-black rounded bg-white '
             ></input>
             {/* <img src={img} alt="" className='w-[50px]'/> */}

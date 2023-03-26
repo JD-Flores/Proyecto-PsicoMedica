@@ -7,6 +7,7 @@ import { getUserInfo } from '../../firebase/users-service';
 import { updateProfile } from 'firebase/auth';
 import { uploadFile } from '../../firebase/users-service';
 import { updateProfilePic } from '../../firebase/users-service';
+import { setSeconds } from 'date-fns';
 
 export function PerfilClientePage() {
 
@@ -16,6 +17,7 @@ export function PerfilClientePage() {
   const [file, setFile] = useState(null);
   const [image, setImage] = useState(null);
 
+  
   const updatePhoto = async() =>{
     user.profilePic=null;
     const result = await uploadFile(file);
