@@ -3,7 +3,7 @@ import { Message } from './Message'
 import file from '../../imagenes/attach.png'
 import image from '../../imagenes/imageicon.png'
 import { ChatContext } from '../../contexts/chatContext'
-import { arrayUnion, doc, onSnapshot, serverTimestamp, Timestamp, updateDoc } from '@firebase/firestore'
+import { arrayUnion, doc, getDoc, getDocFromServer, getDocs, onSnapshot, onSnapshotsInSync, query, serverTimestamp, Timestamp, updateDoc } from '@firebase/firestore'
 import { db,store  } from '../../firebase/config'
 // import { async } from '@firebase/util'
 import { v4 as uuid} from "uuid";
@@ -18,24 +18,45 @@ export function Messages() {
     const [img,setImg] = useState(null);
     const {user} = useUser();
     const [loadImg,setLoadImg] = useState()
-    const [available,setAvailable]=useState("true")
-    const [dates,setDates]=useState()
+    const [available,setAvailable]=useState(true)
+    const [found,setFound]=useState(false)
+    const [click,setClick]=useState(0)
+    
 
-      const findDate=()=>{
-        onSnapshot(doc(db,"calendarios",data.user.uid),(doc)=>{
-            doc.exists()&& setDates(doc.data().citas)
-          })
+      const checkAvailable= async()=>{
+        const citas = await getDoc(doc(db,"calendarios",data.user.uid))
+        const dates=citas.data().citas
+        setFound(false)
+        setAvailable(true)
+        dates.map((date)=>(
+            check(date)
+        ))
+        
+      }
+      const check = (date)=>{
+        const hour = new Date()
+        if(date?.uid==user.uid){
+            const reserveTime = new Date(date.info.start)
+            const reserveEndTime = new Date(date.info.end);
+            if(reserveTime<hour & reserveEndTime>hour){
+                setAvailable(false)
+                setFound(true)
+            }else{
+                if(found!=true){
+                setAvailable(true)
+
+                }
+            }
+            
+        }
         
       }
 
     useEffect(()=>{
         const unSub = onSnapshot(doc(db,"chats",data.chatId),(doc)=>{
             doc.exists()&& setMessages(doc.data().messages)
-            // findDate()
-            
-            //   console.log(dates)
-          
-        
+            checkAvailable()
+
         })
         return ()=>{
             unSub()
@@ -98,6 +119,7 @@ export function Messages() {
     <div className='flex flex-col w-2/3'>
         <div className='flex items-center w-full p-2 bg-black text-white h-[50px]'>
             <span>{data.user?.name}</span>
+            {/* <button onClick={}>Actualizar</button> */}
         </div>
         <div className='w-full h-full p-2 overflow-y-scroll'>
             {messages.map((m)=>(
@@ -121,6 +143,7 @@ export function Messages() {
                 <input 
                 type="file" onChange={e=>setImg(e.target.files[0])}
                 id='file' 
+                disabled={available}
                 className='hidden'/>
                 <label htmlFor="file">
                     <img src={image} alt="" className='w-[64px] cursor-pointer'/>
