@@ -4,7 +4,7 @@ import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 import { useUser } from "../../contexts/UserContext";
 import { docContext } from "../../contexts/DoctorContext";
 import { useNavigate } from "react-router";
-import { CHAT } from "../../constantes/urls";
+import { BUSCAR_DOC, CHAT } from "../../constantes/urls";
 import { reserveContext } from "../../contexts/ReserveContext";
 import { arrayUnion, doc, getDoc, serverTimestamp, setDoc, updateDoc } from "firebase/firestore";
 import { db } from "../../firebase/config";
@@ -63,11 +63,13 @@ export function Checkout({price}) {
                 await setDoc(doc(db,"chats",combinedID),{messages:[]});
             }
                 //crea user chats
+                console.log(user)
+                console.log(context)
                 await updateDoc(doc(db,"userChat",user.uid),{
                     [combinedID+".userInfo"]:{
                         uid:context.uid,
                         name:context.name,
-                        photoURL:context.photoURL
+                        photoURL:context.profilePic
                     },
                     [combinedID+".date"]: serverTimestamp()
                 })
@@ -75,7 +77,7 @@ export function Checkout({price}) {
                     [combinedID+".userInfo"]:{
                         uid:user.uid,
                         name:user.name,
-                        photoURL:user.photoURL
+                        photoURL:user.profilePic
                     },
                     [combinedID+".date"]: serverTimestamp()
                 })
@@ -113,7 +115,9 @@ export function Checkout({price}) {
     },[success]);
 
     return (
-        <PayPalScriptProvider options={{ "client-id": "AXm3WFSs3svhfaRCWAVdgFsCyc0_GJ12yG3OXCHBZ6a7bO-d9DcKv8cCPTW_Vv6t2bt9Gt0XtTdqTU5H" }}>
+        <div>
+        {context &&
+            <PayPalScriptProvider options={{ "client-id": "AXm3WFSs3svhfaRCWAVdgFsCyc0_GJ12yG3OXCHBZ6a7bO-d9DcKv8cCPTW_Vv6t2bt9Gt0XtTdqTU5H" }}>
             <div>
                 <PayPalButtons
                     style={{ layout: "vertical" }}
@@ -122,5 +126,10 @@ export function Checkout({price}) {
                 />
             </div>
         </PayPalScriptProvider>
+    }
+    {context == null && 
+    navigate(BUSCAR_DOC)}
+    </div>
+        
     );
 }

@@ -10,13 +10,19 @@ import { Dropdown } from "../../Componentes/Dropdown/Dropdown";
 import { DoctorCard } from "../../Componentes/DoctorCard/DoctorCard";
 import { useEffect } from "react";
 import { getDoctorsInfo } from "../../firebase/users-service";
+import { useNavigate } from "react-router";
+import { BuscarDoc } from "../buscarDoc/BuscarDoc";
+import { BUSCAR_DOC, LOGIN_URL } from "../../constantes/urls";
+import { useUser } from "../../contexts/UserContext";
 
 export function HomePage() {
+  const navigate = useNavigate();
   const [faq1, setFaq1] = useState(false);
   const [faq2, setFaq2] = useState(false);
   const [faq3, setFaq3] = useState(false);
   const [faq4, setFaq4] = useState(false);
   const [doctors, setDoctors] = useState([]);
+  const { user } = useUser();
 
   const getDoctors = async () => {
     const data = await getDoctorsInfo();
@@ -27,6 +33,13 @@ export function HomePage() {
   useEffect(() => {
     getDoctors();
   }, []);
+  const handleAgendar = () => {
+    if (user) {
+      navigate(BUSCAR_DOC);
+    } else {
+      navigate(LOGIN_URL);
+    }
+  };
 
   return (
     <div className="box-border p-0 m-0 scroll-smooth">
@@ -48,7 +61,10 @@ export function HomePage() {
             El autocuidado y la salud mental son clave para mantener una vida
             plena y saludable
           </h4>
-          <button className="text-[12px] sm:text-[16px] lg:text-lg text-white bg-[#EF3D3E] font-comfortaa   border-indigo-500 hover:shadow p-2 rounded-[6px] mt-[15px] mb-[15px]">
+          <button
+            onClick={handleAgendar}
+            className="text-[12px] sm:text-[16px] lg:text-lg text-white bg-[#EF3D3E] font-comfortaa   border-indigo-500 hover:shadow p-2 rounded-[6px] mt-[15px] mb-[15px]"
+          >
             Agendar Cita
           </button>
         </div>
@@ -62,6 +78,26 @@ export function HomePage() {
           />
         </div>
       </div>
+      <svg
+        width="fit"
+        height="fit"
+        viewBox="0 0 1440 85"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <g clip-path="url(#clip0_6_37)">
+          <path d="M1440 0H1.22156V71.3532H1440V0Z" fill="#5974A9" />
+          <path
+            d="M1439.19 57.8445C1419.04 58.1685 1398.64 58.4529 1377.98 58.6981C1154.35 61.325 902.814 58.462 740.248 49.9574C628.837 44.1257 566.263 36.2643 484.459 29.2045C402.655 22.1447 285.87 15.3217 130.746 14.0279C89.5299 13.6865 40.9991 13.5021 0.00744629 12.8979V84.9934H1439.09L1439.19 57.8445Z"
+            fill="white"
+          />
+        </g>
+        <defs>
+          <clipPath id="clip0_6_37">
+            <rect width="1440" height="85" fill="white" />
+          </clipPath>
+        </defs>
+      </svg>
       <div className="flex flex-col bg-white items-center justify-center h-[320px] sm:h-[400px]">
         {" "}
         {/*Contenedor de descripción de la app*/}
@@ -122,6 +158,34 @@ export function HomePage() {
           </div>
         </div>
       </div>
+      <svg
+        width="fit"
+        height="fit"
+        viewBox="0 0 1440 85"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <g clip-path="url(#clip0_8_55)">
+          <path
+            d="M4.57764e-05 85L1438.78 85V13.6468L4.57764e-05 13.6468V85Z"
+            fill="#5974A9"
+          />
+          <path
+            d="M0.809353 27.1555C20.958 26.8315 41.3615 26.547 62.0197 26.3019C285.653 23.6749 537.186 26.538 699.752 35.0426C811.164 40.8743 873.738 48.7357 955.541 55.7955C1037.34 62.8553 1154.13 69.6783 1309.25 70.972C1350.47 71.3135 1399 71.4979 1439.99 72.1021V0.00652989L0.91437 0.00652989L0.809353 27.1555Z"
+            fill="white"
+          />
+        </g>
+        <defs>
+          <clipPath id="clip0_8_55">
+            <rect
+              width="1440"
+              height="85"
+              fill="white"
+              transform="matrix(-1 0 0 -1 1440 85)"
+            />
+          </clipPath>
+        </defs>
+      </svg>
       <div className="flex flex-row flex-wrap justify-evenly items-center h-fit mt-[30px] p-2  gap-6">
         {doctors?.map((doctor, idx) => (
           <DoctorCard info={doctor} key={idx} />
@@ -179,7 +243,13 @@ export function HomePage() {
                     : "opacity-0 invisible translate-y-[-20px] duration-500"
                 }`}
               >
-                <Dropdown text={`${faq1 ? "Prueba" : ""}`} />
+                <Dropdown
+                  text={`${
+                    faq1
+                      ? "Para agendar una sesión con un especialista de nuestra plataforma, sólo debes estar registrado, de esta manera podrás encontrar a un psicólogo que se adapte a tus necesidades."
+                      : ""
+                  }`}
+                />
               </div>
             </div>
             <div>
@@ -196,7 +266,13 @@ export function HomePage() {
                       : "opacity-0 invisible translate-y-[-20px] duration-500"
                   }`}
                 >
-                  <Dropdown text={`${faq2 ? "Prueba" : ""}`} />
+                  <Dropdown
+                    text={`${
+                      faq2
+                        ? "La duración de cada sesión dependerá de la disponibilidad en el horario del especialista. En caso de que esté disponible y el psicólogo lo vea conveniente, podrás ampliar el tiempo de tu sesión."
+                        : ""
+                    }`}
+                  />
                 </div>
               </div>
             </div>
@@ -214,7 +290,13 @@ export function HomePage() {
                       : "opacity-0 invisible translate-y-[-20px] duration-500"
                   }`}
                 >
-                  <Dropdown text={`${faq3 ? "Prueba" : ""}`} />
+                  <Dropdown
+                    text={`${
+                      faq3
+                        ? "Nuestros especialistas eligen el costo de la sesión a realizar. Debes escoger el que mejor se adapte a tus necesidades."
+                        : ""
+                    }`}
+                  />
                 </div>
               </div>
             </div>
@@ -232,7 +314,13 @@ export function HomePage() {
                       : "opacity-0 invisible translate-y-[-20px] duration-500"
                   }`}
                 >
-                  <Dropdown text={`${faq4 ? "Prueba" : ""}`} />
+                  <Dropdown
+                    text={`${
+                      faq4
+                        ? "Contamos con un gran número de psicólogos especializados en distintas áreas. Por ejemplo: Depresión, Ansiedad, Dependencia Emocional, Terapia de pareja, entre otros. Puedes realizar terapia a largo plazo con un mismo especialista."
+                        : ""
+                    }`}
+                  />
                 </div>
               </div>
             </div>
@@ -248,10 +336,8 @@ export function HomePage() {
           </div>
         </div>
       </div>
-      <div className="flex flex-col items-center bg-white h-[180px]">
-        {" "}
-        {/*Contenedor de calificación*/}
-        <h1 className="text-[30px] sm:text-[35px] mt-[30px] font-bold">4,9/5</h1>
+      <div className="flex flex-col items-center bg-white">
+        <h1 className="text-[30px] sm:text-[35px] font-bold">4,9/5</h1>
         <div className="flex flex-row w-[25px] justify-center mt-1">
           <img src={estrella} alt="" />
           <img src={estrella} alt="" />
@@ -259,7 +345,26 @@ export function HomePage() {
           <img src={estrella} alt="" />
           <img src={estrella} alt="" />
         </div>
-        <p className="mt-1 text-[12px] sm:text-[16px]">Valoración global de las sesiones</p>
+        <p className="text-[12px] sm:text-[16px]">
+          Valoración global de las sesiones
+        </p>
+        <svg
+          width="fit"
+          height="fit"
+          viewBox="0 0 1440 389"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path d="M1440 0H0V388.319H1440V0Z" fill="white" />
+          <path
+            d="M1439.99 0H1439.83C1277.74 2.88052 1114.97 46.6639 1013.39 116.805C981.347 138.927 954.85 163.382 923.283 185.706C855.948 233.35 762.918 271.49 656.389 284.654C549.86 297.818 430.04 283.502 352.588 240.841C299.511 211.604 269.706 172.226 230.736 136.825C191.766 101.423 136.124 67.2309 62.2497 60.7497C42.6223 59.0214 19.4999 58.1285 0 54.9887V388.727H1440L1439.99 0Z"
+            fill="#5974A9"
+          />
+          <path
+            d="M1440 359.184C1419.84 360.383 1399.43 361.422 1378.76 362.3C1155.01 371.876 903.294 361.444 740.646 330.479C629.167 309.279 566.561 280.697 484.705 254.98C402.848 229.264 285.969 204.467 130.813 199.762C89.5661 198.508 41.0145 197.86 0 195.581V388.727H1440V359.184Z"
+            fill="#6CEACA"
+          />
+        </svg>
       </div>
     </div>
   );

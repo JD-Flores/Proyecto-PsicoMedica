@@ -136,7 +136,7 @@ export function BuscarDoc() {
         
       </div>
       )}
-      <div className='flex flex-row flex-wrap justify-evenly items-center mt-5'> 
+      <div className='flex flex-row flex-wrap justify-evenly overflow-y-scroll items-center mt-5'> 
           {doctors==null ? <div>No hay resultados para su búsqueda</div> :  doctors?.map((doctor, idx) => (
             <>
             <Link to={`/doctors/${doctor.uid}`}><DoctorCard info={doctor} key={idx}/></Link>

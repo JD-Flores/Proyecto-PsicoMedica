@@ -38,8 +38,8 @@ export function PerfilDoctorPage() {
           <DoctorNav></DoctorNav>
         </div>
 
-        <div id="bottom-container" className="flex flex-col p-4 w-[363px] h-4/5 items-center bg-white rounded-[12px]">
-          <div id='title' className='flex text-left text-2xl  text-[#908989] '>
+        <div id="bottom-container" className="flex flex-col p-4 w-[450px] h-fit items-center bg-white rounded-[12px] m-2">
+          <div id='title' className='flex text-left text-3xl  text-[#908989] m-2'>
             <h1>Datos Personales</h1>
           </div>
           <div id='clientData' className='flex flex-col'>
@@ -68,16 +68,16 @@ export function PerfilDoctorPage() {
               </label>
             </div>
 
-            <div id='right-side' className='flex justify-center items-center w-2/4'>
+            <div id='right-side' className='flex justify-center items-center w-2/4 m-2 mt-4'>
               {editable==false && (
-                <div className='flex flex-col items-center'>
-                  <img src={image} alt="Profile picture" className='w-full ' />
+                <div className='flex flex-col items-center '>
+                  <img src={image} alt="Profile picture" className='w-full' />
                   <input type="file" onChange={(e) => {setFile(e.target.files[0]), setImage(URL.createObjectURL(e.target.files[0]))}} className='flex items-center justify-center bg-black text-white p-1  h-14 w-[200px] mt-3' />
                 </div>
                )}
                {editable==true && (
                 <div>
-                  <img src={image} alt="Profile picture" className='w-full ' />
+                  <img src={user.profilePic} alt="Profile picture" className='w-full ' />
                 </div>
                )}
             </div>
@@ -86,7 +86,7 @@ export function PerfilDoctorPage() {
           <div id='sub-bottom-container' className='flex flex-col'>
             
             <label htmlFor="email">
-                <p className="font-medium text-[#908989] mt-[5px]">Direccion de correo </p>
+                <p className="font-medium text-[#908989] mt-[5px]">Dirección de correo </p>
                 <input 
                 id="email" name="email" type="email" readOnly={editable}
                 // onChange=""
@@ -132,7 +132,7 @@ export function PerfilDoctorPage() {
                 
               <label htmlFor="genero">
                 <p className="font-medium text-[#908989] mt-[5px]">
-                Genero
+                Género
                 </p>
                 
                 <input 
@@ -170,7 +170,7 @@ export function PerfilDoctorPage() {
             <div>
               { editable==true &&(
                 <div id='buttons' className='flex flex-row items-center justify-evenly w-full '>
-                  <button onClick={() => {setEditable(false)}} className='flex items-center justify-center bg-[#5974A9] text-white p-1 rounded-md h-14 w-2/5 mt-2' >
+                  <button onClick={() => {setEditable(false)}} className='flex items-center justify-center bg-[#5974A9] text-white p-1 rounded-md h-14 w-2/5 mt-6 font-semibold' >
                     Editar Datos Personales
                   </button>
                 </div>
