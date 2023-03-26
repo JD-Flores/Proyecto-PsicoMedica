@@ -104,6 +104,7 @@ export function PerfilClientePage() {
                   <input type="file" onChange={(e) => {setFile(e.target.files[0]), setImage(URL.createObjectURL(e.target.files[0], console.log("prueba")))}} className='flex items-center justify-center bg-black text-white p-1  h-14 w-[200px] mt-3' />
                 </div>
                )}
+               
                {/* {editable==true && (
                 <div>
                   <img src={user.profilePic} alt="Profile picture" className='w-full ' />
