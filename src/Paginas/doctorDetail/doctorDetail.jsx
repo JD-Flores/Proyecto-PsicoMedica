@@ -8,24 +8,24 @@ import { useEffect } from "react";
 import { docContext, DoctorContext } from "../../contexts/DoctorContext";
 
 export function DoctorDetail() {
-  // const navigate = useNavigate();
-  // const { doctor_id } = useParams();
-  // const [doctor, setDoctor] = useState([]);
-  // const [context, setContext] = useContext(docContext);
+  const navigate = useNavigate();
+  const { doctor_id } = useParams();
+  const [doctor, setDoctor] = useState([]);
+  const [context, setContext] = useContext(docContext);
 
-  // const getDoctor= async (id) => {
-  //     const data = await getDoctorById(id);
-  //     setDoctor(data);
-  //   }
-  // const handleReserve = ()=>{
-  //     setContext(doctor)
+  const getDoctor= async (id) => {
+      const data = await getDoctorById(id);
+      setDoctor(data);
+    }
+  const handleReserve = ()=>{
+      setContext(doctor)
 
-  //     navigate(`/reservas/${doctor.uid}`)
-  // }
+      navigate(`/reservas/${doctor.uid}`)
+  }
 
-  // useEffect(() => {
-  //     const result = getDoctor(doctor_id);
-  //   }, []);
+  useEffect(() => {
+      const result = getDoctor(doctor_id);
+    }, []);
 
   return (
     <div
@@ -34,57 +34,55 @@ export function DoctorDetail() {
     >
       <div id="top-container" className="flex flex-row">
         <div id="left-side" className="flex flex-col text-justify ">
-          <img id="foto" alt="foto" />
-          <button className="cursor-pointer flex items-center justify-center bg-[#5974A9] text-white p-1 rounded-md h-10 w-[180px] text-center text-sm font-medium">
+          <img id="foto" alt="foto" src={doctor.profilePic} className="w-[250px] h-[220px] mb-4"/>
+          <button
+          onClick={handleReserve}
+          className="cursor-pointer flex items-center justify-center bg-[#5974A9] text-white p-1 rounded-md h-10 w-[180px] text-center text-sm font-medium">
             Reservar Cita
           </button>
         </div>
 
-        <div id="right-side" className="flex flex-col gap-[8px] lg:ml-[140px] ml-[50px]">
-            <hr className="border-t-8 border-[#5974A9]"/>
+        <div id="right-side" className="flex flex-col gap-[6px] lg:ml-[100px] ml-[50px]">
+            <hr className="border-t-8 border-[#5974A9] mt-2"/>
             <h1 className="text-[#5974A9] text-3xl font-bold font-comfortaa">
               Doctor
             </h1>
-            <h2 className="font-bold text-2xl font-comfortaa ">Albany Avila</h2>
-            {/* <h2 className="font-bold text-2xl font-comfortaa">: {doctor.name}</h2> */}
-            <hr className="border-t-8 border-[#5974A9]"/>
+            <h2 className="font-bold text-2xl font-comfortaa"> {doctor.name} {doctor.lastname}</h2>
+            <hr className="border-t-8 border-[#5974A9] mt-2"/>
             <p className="text-[#5974A9] text-base font-bold font-comfortaa">
-              Especialidad: depresión
+              Especialidad:
             </p>
-            {/* <p className="text-[#5974A9] text-base font-bold font-comfortaa">: {doctor.specialty}</p> */}
+            <p className="text-base font-bold font-comfortaa"> {doctor.specialty}</p>
+            <p className="text-[#5974A9] text-base font-bold font-comfortaa">Ranking:</p>
+            <p className="text-base font-bold font-comfortaa"> {doctor.ranking} estrellas</p>
+              
+            
             <p className="text-[#5974A9] text-base font-bold font-comfortaa">
-              Ranking:
+              Precio consulta: 
             </p>
-            <p className="text-[#5974A9] text-base font-bold font-comfortaa">
-              Precio consulta:
+            <p className="text-base font-bold font-comfortaa">
+            ${doctor.Price} por hora
             </p>
-            {/* <p>Ranking: {doctor.ranking} estrellas</p> */}
-            {/* <p>Precio consulta: {doctor.Price}$ por hora</p> */}
+            
           </div>
       </div>
 
-      <hr className="border-t-8 border-[#5974A9]"/>
+      <hr className="border-t-8 border-[#5974A9] mt-2"/>
 
       <div id="middle-container" className="flex flex-row">
         <div id="bio" className="flex flex-col p-2 text-justify">
           <h2 className="text-[#5974A9] text-[18px] font-comfortaa font-bold">Biografía:</h2>
-          <p className="font-comfortaa text-[14px]">Lorem ipsum dolor sit amet consectetur adipisicing elit. Similique eius obcaecati itaque quasi ullam deserunt ratione eum laboriosam magni ipsum commodi quibusdam numquam vel accusamus, vero repellendus, molestiae quaerat quod.</p>
-        </div>
-        <div id="descripcion" className="flex flex-col p-2 ml-2 text-justify">
-          <h2  className="text-[#5974A9] text-[18px]  font-comfortaa font-bold">Descripción:</h2>
-          <p className="font-comfortaa text-[14px]">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Velit et iste, iure dolor illo fuga, officiis ut quia laboriosam commodi voluptas dignissimos labore repellat atque nam. Ipsa at veniam minima.</p>
+          <p className="font-comfortaa text-[14px]">{doctor.biography}</p>
         </div>
       </div>
 
-      <hr className="border-t-8 border-[#5974A9]"/>
+      <hr className="border-t-8 border-[#5974A9] mt-2"/>
       <div id="bottom-container" className="flex flex-col mt-2 p-2 text-justify">
         <div id="feedback">
           <h2 className="text-[#5974A9] text-[18px]  font-comfortaa font-bold">Feedback:</h2>
-          <p className="font-comfortaa text-[14px]">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Est labore, illo eum asperiores deleniti nisi nihil blanditiis tempora rem quod optio saepe minus maxime repellendus perspiciatis laboriosam aspernatur nobis. Ducimus!</p>
+          <p className="font-comfortaa text-[14px]"></p>
         </div>
       </div>
-      {/* <button onClick={handleReserve}>agendar2</button>
-            <Link to={`/reservas/${doctor.uid}`}>Agendar</Link> */}
     </div>
   );
 }

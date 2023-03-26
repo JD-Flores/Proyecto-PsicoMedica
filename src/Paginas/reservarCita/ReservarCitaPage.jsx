@@ -36,7 +36,7 @@ export function ReservarCitaPage() {
   const onSubmit = (data) => {
     console.log(context)
     setReservationContext({
-      title: user.name+":  "+data.motivoCita,
+      title: user.name +"  "+data.motivoCita,
       start:data.fecha +" "+ data.hora,
       end:data.fecha +" "+ data.hora2,
     }
@@ -65,7 +65,7 @@ export function ReservarCitaPage() {
             <h2 className="text-xl text-black font-bold   mb-1">
               Doctor seleccionado: 
             </h2>
-            <p className="text-base">{context.name}</p>
+            <p className="text-base">{context.name} {context.lastname}</p>
           </div>
         
 

@@ -34,7 +34,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         <Route path={REGISTER_PATIENT_URL} element={<RegisterPatientPage/>}/>
         <Route path={PERFIL_CLIENTE} element={<PrivateRoute><PerfilClientePage/></PrivateRoute>}/>
         <Route path={BUSCAR_DOC} element={<PrivateRoute><BuscarDoc/></PrivateRoute>}/>
-        {/* <Route path='/doctors/:doctor_id' element={<PrivateRoute><DoctorDetail/></PrivateRoute>}/> */}
+        <Route path='/doctors/:doctor_id' element={<PrivateRoute><DoctorDetail/></PrivateRoute>}/>
         <Route path={DOC_DETAIL} element={<DoctorDetail/>}/>
         <Route path='/reservas/:doctor_id' element={<PrivateRoute><ReservarCitaPage/></PrivateRoute>}/>
         <Route path={CHAT} element={<PrivateRoute><Chat/></PrivateRoute>}/>
