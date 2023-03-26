@@ -17,7 +17,7 @@ import { ReservarCitaPage } from './Paginas/reservarCita/ReservarCitaPage'
 import { Chat } from './Paginas/chat/Chat'
 import { PerfilDoctorPage } from './Paginas/Perfil/PerfilDoctorPage'
 import { PrivateRouteDoc } from './Componentes/PrivateRoutes/PrivateRouteDoc'
-import { DoctorDetail } from './Paginas/doctorDetail/DoctorDetail'
+import { DoctorDetail } from './Paginas/doctorDetail/doctorDetail'
 import { CheckoutPage } from './Paginas/checkout/CheckoutPage'
 import DoctorCalendarPage from './Paginas/DoctorCalendar/DoctorCalendarPage'
 
@@ -34,7 +34,8 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         <Route path={REGISTER_PATIENT_URL} element={<RegisterPatientPage/>}/>
         <Route path={PERFIL_CLIENTE} element={<PrivateRoute><PerfilClientePage/></PrivateRoute>}/>
         <Route path={BUSCAR_DOC} element={<PrivateRoute><BuscarDoc/></PrivateRoute>}/>
-        <Route path='/doctors/:doctor_id' element={<PrivateRoute><DoctorDetail/></PrivateRoute>}/>
+        {/* <Route path='/doctors/:doctor_id' element={<PrivateRoute><DoctorDetail/></PrivateRoute>}/> */}
+        <Route path={DOC_DETAIL} element={<DoctorDetail/>}/>
         <Route path='/reservas/:doctor_id' element={<PrivateRoute><ReservarCitaPage/></PrivateRoute>}/>
         <Route path={CHAT} element={<PrivateRoute><Chat/></PrivateRoute>}/>
         <Route path='/checkout/:doctor_id' element={<PrivateRoute><CheckoutPage/></PrivateRoute>}/>
