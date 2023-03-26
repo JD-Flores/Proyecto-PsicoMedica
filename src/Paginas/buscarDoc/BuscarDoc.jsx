@@ -11,8 +11,8 @@ import { DoctorCard } from '../../Componentes/DoctorCard/DoctorCard';
 import { searchDoctorsAvailableByName } from '../../firebase/users-service';
 import { Link } from 'react-router-dom';
 
-export function BuscarDoc() {
 
+export function BuscarDoc() {
   const [isOpenBA, setIsOpenBA] = useState(false)
   const [star, setStar]  = useState("vacio");
   const [specialization, setSpecialization] = useState("vacio");
@@ -44,7 +44,7 @@ export function BuscarDoc() {
   
   return (
     <div id='main-container' className=' flex flex-col justify-center items-center gap-[13px] py-[17px] '>
-      
+      <div>{user.name}</div>
       <div id='top-container'className=''>
         <ProfileNav></ProfileNav>
       </div>

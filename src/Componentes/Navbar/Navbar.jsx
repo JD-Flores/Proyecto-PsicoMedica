@@ -12,7 +12,7 @@ import { logout } from "../../firebase/auth-service";
 import { uploadFile } from "../../firebase/users-service";
 
 export function Navbar() {
-  const { user } = useUser();
+  const { user, setUser } = useUser();
   const handleLogout = async () => {
     await logout();
   };

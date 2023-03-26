@@ -79,13 +79,11 @@ export function HomePage() {
         </div>
       </div>
       <svg
-        width="fit"
-        height="fit"
         viewBox="0 0 1440 85"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
       >
-        <g clip-path="url(#clip0_6_37)">
+        <g clipPath="url(#clip0_6_37)">
           <path d="M1440 0H1.22156V71.3532H1440V0Z" fill="#5974A9" />
           <path
             d="M1439.19 57.8445C1419.04 58.1685 1398.64 58.4529 1377.98 58.6981C1154.35 61.325 902.814 58.462 740.248 49.9574C628.837 44.1257 566.263 36.2643 484.459 29.2045C402.655 22.1447 285.87 15.3217 130.746 14.0279C89.5299 13.6865 40.9991 13.5021 0.00744629 12.8979V84.9934H1439.09L1439.19 57.8445Z"
@@ -159,13 +157,12 @@ export function HomePage() {
         </div>
       </div>
       <svg
-        width="fit"
-        height="fit"
+       
         viewBox="0 0 1440 85"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
       >
-        <g clip-path="url(#clip0_8_55)">
+        <g clipPath="url(#clip0_8_55)">
           <path
             d="M4.57764e-05 85L1438.78 85V13.6468L4.57764e-05 13.6468V85Z"
             fill="#5974A9"
@@ -228,7 +225,7 @@ export function HomePage() {
         <h1 className="text-[17px] sm:text-[28px]  mt-8 mb-10 text-[#5974A9] text-center font-semibold font-comfortaa">
           Preguntas Frecuentes
         </h1>
-        <div className="flex flex box">
+        <div className="flex">
           <div className="p-8 font-comfortaa font-bold text-[12px] sm:text-[18px]">
             <div
               onClick={() => {
@@ -325,7 +322,7 @@ export function HomePage() {
               </div>
             </div>
           </div>
-          <div className="flex flex box w-[600px] h-[300px] ">
+          <div className="flex w-[600px] h-[300px] ">
             {" "}
             {/*Lado derecho de la vista con imagen*/}
             <img
@@ -349,8 +346,6 @@ export function HomePage() {
           Valoración global de las sesiones
         </p>
         <svg
-          width="fit"
-          height="fit"
           viewBox="0 0 1440 389"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"

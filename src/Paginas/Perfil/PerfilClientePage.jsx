@@ -24,7 +24,6 @@ export function PerfilClientePage() {
   const handleUser = (result) => {
 
     user.profilePic = result;
-    console.log(user.profilePic);
     setUser(user);
     console.log("prueba " + user.profilePic);
   }
@@ -98,6 +97,11 @@ export function PerfilClientePage() {
             </div>
 
             <div id='right-side' className='flex justify-center items-center w-2/4'>
+
+            <div className='flex flex-col items-center'>
+                  <img src={image} alt="Profile picture" className='w-full rounded-full' />
+                </div>
+
               {editable==false && (
                 <div className='flex flex-col items-center'>
                   <img src={image} alt="Profile picture" className='w-full rounded-full ' />
