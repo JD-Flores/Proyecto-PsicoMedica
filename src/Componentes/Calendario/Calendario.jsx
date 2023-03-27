@@ -28,10 +28,11 @@ export function Calendario() {
   useEffect(() => {  
 
     const events = dates?.map((element) =>{
-        const temp = element.end
+        const temp = element.info.end
         element.end = new Date(temp)
-        const temp2 = element.start
+        const temp2 = element.info.start
         element.start = new Date(temp2)
+        element.title = element.info.title
         setReserva(dates)
     }) 
     
@@ -41,28 +42,27 @@ export function Calendario() {
      onSnapshot(doc(db,"calendarios",user.uid),(doc)=>{
       doc.exists()&& setDates(doc.data().citas)
     })
-
     
    },[]);
 
-   const handle=()=>{
-    console.log(dates)
-   }
-   const handleClick= async ()=>{
-    onSnapshot(doc(db,"calendarios",user.uid),(doc)=>{
-      doc.exists()&& setDates(doc.data().citas)
-    })
-    const events = dates?.map((element) =>{
-        const temp = element.end
-        element.end = new Date(temp)
-        const temp2 = element.start
-        element.start = new Date(temp2)
-        setDates(dates)
-        console.log(dates)
-    })
+//    const handle=()=>{
+//     console.log(dates)
+//    }
+//    const handleClick= async ()=>{
+//     onSnapshot(doc(db,"calendarios",user.uid),(doc)=>{
+//       doc.exists()&& setDates(doc.data().citas)
+//     })
+//     const events = dates?.map((element) =>{
+//         const temp = element.info.end
+//         element.end = new Date(temp)
+//         const temp2 = element.info.start
+//         element.start = new Date(temp2)
+//         setDates(dates)
+//         console.log(dates)
+//     })
 
     
-};
+// };
    
   
 

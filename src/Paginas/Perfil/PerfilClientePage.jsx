@@ -7,6 +7,7 @@ import { getUserInfo, getUserProfile } from '../../firebase/users-service';
 import { updateProfile } from 'firebase/auth';
 import { uploadFile } from '../../firebase/users-service';
 import { updateProfilePic } from '../../firebase/users-service';
+import { setSeconds } from 'date-fns';
 import { useEffect } from 'react';
 
 export function PerfilClientePage() {
@@ -33,6 +34,7 @@ export function PerfilClientePage() {
    },[]);
 
 
+  
   const updatePhoto = async() =>{
     // user.profilePic=null;
     console.log("Archivo");
