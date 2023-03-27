@@ -37,6 +37,7 @@ export function ReservarCitaPage() {
   const [day, setDay] = useState();
   const [datePassed, setDatePassed] = useState();
   const [scheduledDate, setScheduleDate] = useState();
+  const [stateFlag, setStateFlag] = useState();
   const hora= watch("hora");
   const hora2= watch("hora2");
   const fecha= watch("fecha");
@@ -46,7 +47,14 @@ export function ReservarCitaPage() {
   const obtenerCitas = async () => {
     const calendar = await getCalendar(context.uid);
     const dates= calendar.data().citas;
-    dates?.map((date)=> (validarReserva(date)))
+    let flag = dates?.map((date)=> (validarReserva(date)));
+    flag = flag.find((value) => value==true);
+    if(flag==true){
+      return true;
+    }
+    else{
+      return false;
+    }
   }
 
   const validarReserva = (date) =>{
@@ -54,22 +62,24 @@ export function ReservarCitaPage() {
     const fechaEnd = new Date(date.info.end);
     const inicio =  new Date(fecha);
     const fin =  new Date(fecha);
+    
     inicio.setHours(hora.split(":")[0]);
     fin.setHours(hora2.split(":")[0]);
-    if (inicio>fechaInicio && inicio<fechaEnd || fin>fechaInicio && fin<fechaEnd) {
+    
+    inicio.setDate(fecha.split("-")[2]);
+    fin.setDate(fecha.split("-")[2]);
+
+
+    if (inicio>=fechaInicio && inicio<=fechaEnd || fin>=fechaInicio && fin<=fechaEnd) {
       return true;
-    }
-    else{
-      return false;
     }
     
   }
 
   
 
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
     if(hora>hora2){
-      console.log("el valor de inicio no puede ser mayor al final");
       setStart(true);
       return "";
     }
@@ -80,8 +90,6 @@ export function ReservarCitaPage() {
     }
     const year = new Date().getFullYear();
     const currentDate = `${year}-${month}-${dia}`;
-    console.log(currentDate);
-    console.log(fecha);
     if(fecha==currentDate){
       setDay(true);
       return "";
@@ -90,19 +98,16 @@ export function ReservarCitaPage() {
     const dateArray = fecha.split("-");
     if (dateArray[0]<year) {
       setDatePassed(true);
-      console.log("prueba año " + dateArray[0]);
       return "";
     }
     else{
       if (dateArray[1]<month) {
         setDatePassed(true);
-        console.log("prueba mes " + dateArray[1]);
         return "";
       }
       else{
         if (dateArray[2]<dia && dateArray[1]==month ) {
           setDatePassed(true);
-          console.log("prueba dia " + dateArray[2]);
           return "";
         }
       }
@@ -113,7 +118,12 @@ export function ReservarCitaPage() {
       return "";
     }
 
-    setScheduleDate(obtenerCitas()); 
+    const result = await obtenerCitas();
+    if(result==true){
+      setScheduleDate(true);
+      return "";
+    }
+
     // citas?.map((cita) => (validarReserva(cita)));
 
 
@@ -202,7 +212,7 @@ export function ReservarCitaPage() {
                   <option value="09:00:00">9:00 AM</option>
                   <option value="10:00:00">10:00 AM</option>
                   <option value="11:00:00">11:00 AM</option>
-                  <option value="12:00:00">12:00 AM</option>
+                  <option value="12:00:00">12:00 PM</option>
                   <option value="13:00:00">1:00 PM</option>
                   <option value="14:00:00">2:00 PM</option>
                   <option value="15:00:00">3:00 PM</option>
@@ -237,7 +247,7 @@ export function ReservarCitaPage() {
                   <option value="09:00:00">9:00 AM</option>
                   <option value="10:00:00">10:00 AM</option>
                   <option value="11:00:00">11:00 AM</option>
-                  <option value="12:00:00">12:00 AM</option>
+                  <option value="12:00:00">12:00 PM</option>
                   <option value="13:00:00">1:00 PM</option>
                   <option value="14:00:00">2:00 PM</option>
                   <option value="15:00:00">3:00 PM</option>
