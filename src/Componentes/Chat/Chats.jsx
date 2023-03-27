@@ -11,6 +11,7 @@ export function Chats() {
   const {dispatch} = useContext(ChatContext)
 
   useEffect(()=>{
+    dispatch({type:"CHANGE_USER",payload:user})
     const getChats = ()=>{
       const unsub = onSnapshot(doc(db,"userChat",user.uid),(doc)=>{
         setChats(doc.data())
@@ -28,20 +29,20 @@ export function Chats() {
   }
 
   return (
-    <div className='w-full overflow-hidden text-ellipsis p-1'>
+    <div className='w-full overflow-hidden text-ellipsis border-y-2 border-gray-300'>
       {Object.entries(chats)?.sort((a,b)=>b[1].date-a[1].date).map((chat)=>(
         <div 
         id='userchat' 
         key={chat[0]} 
         onClick={()=>handleSelect(chat[1].userInfo)}
-        className='flex flex-row p-2 items-center gap-3 text-white hover:bg-green-900 cursor-pointer w-full'>       
+        className='flex flex-row p-2 items-center gap-3 text-white hover:bg-blue-900 cursor-pointer w-full'>       
           <img 
           src={chat[1].userInfo?.photoURL} 
           alt="" 
-          className='w-[30px] h-[30px] object-cover rounded-[50%]'/>
+          className='w-[50px] h-[50px] object-cover rounded-[50%]'/>
          <div id='userinfo' className='flex flex-col w-full overflow-hidden '>
         <span 
-          className='font-bold'>
+          className='font-bold text-xl'>
           {chat[1].userInfo?.name}</span>
         <p 
         className='w-4/5 text-xs text-gray-300 truncate '>

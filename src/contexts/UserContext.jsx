@@ -13,7 +13,6 @@ useEffect(()=>{
         setIsLoading(true)
         if(firebaseUser){
             const profile = await getUserProfile(firebaseUser.email)
-            console.log(profile);
             setUser(profile);
         }else{
            setUser(null); 
