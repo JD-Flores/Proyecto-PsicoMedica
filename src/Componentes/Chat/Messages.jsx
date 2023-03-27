@@ -23,7 +23,7 @@ export function Messages() {
     const [loadImg,setLoadImg] = useState()
     const [available,setAvailable]=useState(true)
     const [found,setFound]=useState(false)
-    const [click,setClick]=useState(0)
+    const [timer,setTimer]=useState(false)
     
 
       const checkAvailable= async()=>{
