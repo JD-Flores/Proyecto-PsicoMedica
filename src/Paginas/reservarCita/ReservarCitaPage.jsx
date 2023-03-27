@@ -20,20 +20,80 @@ export function ReservarCitaPage() {
   // const [reservation, setReservation] = useState([])
   const {user}=useUser();
 
-  const { doctor_id } = useParams();
-  const [doctor, setDoctor] = useState([]);
-  const [context, setContext] = useContext(docContext);
-  const [reservationContext, setReservationContext] = useContext(reserveContext);
-
-  
-
   const {
     register,
     handleSubmit,
     formState: { errors },
+    watch,
   } = useForm();
 
+  const { doctor_id } = useParams();
+  const [doctor, setDoctor] = useState([]);
+  const [context, setContext] = useContext(docContext);
+  const [reservationContext, setReservationContext] = useContext(reserveContext);
+  const [duration, setDuration] = useState(null);
+  const [start, setStart] = useState();
+  const [day, setDay] = useState();
+  const [datePassed, setDatePassed] = useState();
+  const hora= watch("hora");
+  const hora2= watch("hora2");
+  const fecha= watch("fecha");
+
+  
+
+  
+
   const onSubmit = (data) => {
+    if(hora>hora2){
+      console.log("el valor de inicio no puede ser mayor al final");
+      setStart(true);
+      return "";
+    }
+    const dia = new Date().getDate();
+    let month = new Date().getMonth()+1;
+    if(month[1]==null){
+      month= `0${month}`;
+    }
+    const year = new Date().getFullYear();
+    const currentDate = `${year}-${month}-${dia}`;
+    console.log(currentDate);
+    console.log(fecha);
+    if(fecha==currentDate){
+      setDay(true);
+      return "";
+    }
+
+    const dateArray = fecha.split("-");
+    if (dateArray[0]<year) {
+      setDatePassed(true);
+      console.log("prueba año " + dateArray[0]);
+      return "";
+    }
+    else{
+      if (dateArray[1]<month) {
+        setDatePassed(true);
+        console.log("prueba mes " + dateArray[1]);
+        return "";
+      }
+      else{
+        if (dateArray[2]<dia && dateArray[1]==month ) {
+          setDatePassed(true);
+          console.log("prueba dia " + dateArray[2]);
+          return "";
+        }
+      }
+    }
+  
+    if(parseInt(hora2)-parseInt(hora)>2){
+      setDuration(true);
+      return "";
+    }
+
+
+    console.log(dia);
+    console.log(month);
+    console.log(year);
+
     console.log(context)
     setReservationContext({
       title: user.name +"  "+data.motivoCita,
@@ -45,6 +105,15 @@ export function ReservarCitaPage() {
     
   }
 
+  
+
+  const patterns = {
+    startTime: "8:00 AM",
+  }
+
+  const messages = {
+    startMessage: "La hora seleccionada ya se encuentra reservada",
+  }
 
   return (
     <div
@@ -65,7 +134,6 @@ export function ReservarCitaPage() {
             <h2 className="text-xl text-black font-bold   mb-1">
               Doctor seleccionado: 
             </h2>
-            <p className="text-base">{context.name} {context.lastname}</p>
           </div>
         
 
@@ -86,6 +154,8 @@ export function ReservarCitaPage() {
               {errors.fecha?.type === "required" && 
                 (<p className="text-red-600">El campo es requerido</p>)
             }
+            {day==true ? <p className="text-red-600">La cita no puede ser agendada el mismo día</p>: ""}
+            {datePassed==true ? <p className="text-red-600">La cita no puede ser agendada en una fecha previa a hoy</p>: ""}
             </div>
           </label>
 
@@ -103,6 +173,7 @@ export function ReservarCitaPage() {
                   required: true,
                 })}
               >
+                  <option value=""></option>
                   <option value="08:00:00">8:00 AM</option>
                   <option value="09:00:00">9:00 AM</option>
                   <option value="10:00:00">10:00 AM</option>
@@ -118,6 +189,8 @@ export function ReservarCitaPage() {
                   <option value="20:00:00">8:00 PM</option>
               </select>
               {errors.hora?.type === "required" && <p className="text-red-600">El campo es requerido</p>}
+              {start==true ? <p className="text-red-600">El tiempo de inicio no puede ser mayor al final</p>: ""}
+              
             </div>
           </label>
 
@@ -135,6 +208,7 @@ export function ReservarCitaPage() {
                   required: true,
                 })}
               >
+                  <option value=""></option>
                   <option value="08:00:00">8:00 AM</option>
                   <option value="09:00:00">9:00 AM</option>
                   <option value="10:00:00">10:00 AM</option>
@@ -150,6 +224,8 @@ export function ReservarCitaPage() {
                   <option value="20:00:00">8:00 PM</option>
               </select>
               {errors.hora2?.type === "required" && <p className="text-red-600">El campo es requerido</p>}
+              {duration==true ? <p className="text-red-600">La duración de la cita no puede ser mayor a 2 horas</p>: ""}
+              
             </div>
           </label>
 
