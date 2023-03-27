@@ -13,6 +13,7 @@ import { async } from "@firebase/util";
 import { docContext,DoctorContext } from "../../contexts/DoctorContext";
 import { reserveContext } from "../../contexts/ReserveContext";
 import { useContext } from "react";
+import { getCalendar } from "../../firebase/users-service";
 
 
 export function ReservarCitaPage() {
@@ -35,11 +36,34 @@ export function ReservarCitaPage() {
   const [start, setStart] = useState();
   const [day, setDay] = useState();
   const [datePassed, setDatePassed] = useState();
+  const [scheduledDate, setScheduleDate] = useState();
   const hora= watch("hora");
   const hora2= watch("hora2");
   const fecha= watch("fecha");
 
-  
+
+
+  const obtenerCitas = async () => {
+    const calendar = await getCalendar(context.uid);
+    const dates= calendar.data().citas;
+    dates?.map((date)=> (validarReserva(date)))
+  }
+
+  const validarReserva = (date) =>{
+    const fechaInicio = new Date(date.info.start);
+    const fechaEnd = new Date(date.info.end);
+    const inicio =  new Date(fecha);
+    const fin =  new Date(fecha);
+    inicio.setHours(hora.split(":")[0]);
+    fin.setHours(hora2.split(":")[0]);
+    if (inicio>fechaInicio && inicio<fechaEnd || fin>fechaInicio && fin<fechaEnd) {
+      return true;
+    }
+    else{
+      return false;
+    }
+    
+  }
 
   
 
@@ -89,12 +113,12 @@ export function ReservarCitaPage() {
       return "";
     }
 
+    setScheduleDate(obtenerCitas()); 
+    // citas?.map((cita) => (validarReserva(cita)));
 
-    console.log(dia);
-    console.log(month);
-    console.log(year);
 
-    console.log(context)
+
+
     setReservationContext({
       title: user.name +"  "+data.motivoCita,
       start:data.fecha +" "+ data.hora,
@@ -254,6 +278,7 @@ export function ReservarCitaPage() {
               {errors.motivoCita?.type === "maxLength" && (
                 <p className="text-red-600">El motivo debe tener máximo 200 caracteres</p>
               )}
+              {scheduledDate==true ? <p className="text-red-600">El horario seleccionado se encuentra ocupado</p>: ""}
             </div>
           </label>
 

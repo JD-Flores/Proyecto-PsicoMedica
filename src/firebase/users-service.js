@@ -1,6 +1,6 @@
 import { async } from "@firebase/util";
 import { getAuth, updateProfile } from "firebase/auth";
-import{collection, doc,setDoc, where,query,getDocs, updateDoc} from "firebase/firestore"
+import{collection, doc,setDoc, where,query,getDocs, updateDoc, getDoc} from "firebase/firestore"
 import{db} from "./config"
 import { ref, uploadBytes,getDownloadURL } from "firebase/storage"
 import { store } from "../firebase/config"
@@ -145,8 +145,14 @@ export async function searchDoctorsAvailableByName(doctorName){
     }   
     }
     
+   
 
     
+}
+
+    export const getCalendar = async (uid) =>{
+    const calendar= await getDoc(doc(db, "calendarios", uid ));
+    return calendar;
 }
 
 
