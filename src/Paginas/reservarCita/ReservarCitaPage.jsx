@@ -14,6 +14,9 @@ import { docContext,DoctorContext } from "../../contexts/DoctorContext";
 import { reserveContext } from "../../contexts/ReserveContext";
 import { useContext } from "react";
 import { getCalendar } from "../../firebase/users-service";
+import { BUSCAR_DOC } from "../../constantes/urls";
+
+
 
 
 export function ReservarCitaPage() {
@@ -42,7 +45,12 @@ export function ReservarCitaPage() {
   const hora2= watch("hora2");
   const fecha= watch("fecha");
 
-
+  useEffect(() => {
+    if(context!=null){
+  }else{
+    navigate(BUSCAR_DOC)
+  }
+  }, []);
 
   const obtenerCitas = async () => {
     const calendar = await getCalendar(context.uid);
@@ -154,6 +162,7 @@ export function ReservarCitaPage() {
       id="container"
       className="h-full"
     >
+      
       <ProfileNav></ProfileNav>
 
       <div className="max-w-lg mx-auto m-8 bg-white p-10 rounded-xl shadow shadow-slate-300 w-[500px] h-fit">
@@ -166,7 +175,7 @@ export function ReservarCitaPage() {
         <div className="max-w-lg mx-auto m-4 text-center">
           <div className="selectDoctor">
             <h2 className="text-xl text-black font-bold   mb-1">
-              Doctor seleccionado: 
+              Doctor seleccionado: {context.name} {context.lastname}
             </h2>
           </div>
         
