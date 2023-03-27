@@ -20,7 +20,10 @@ export function PerfilClientePage() {
   const [image, setImage] = useState(null);
   const [lastUrl, setLastUrl] = useState("");
 
-
+  const [nombre, setNombre] = useState("");
+  const [numero, setNumero] = useState("");
+  const [edad, setEdad] = useState("");
+  const [correo, setCorreo] = useState("");
 
   const handleUser = (result) => {
 
@@ -33,7 +36,10 @@ export function PerfilClientePage() {
       setImage(user.profilePic);
    },[]);
 
-
+  const updateData = async() =>{
+    console.log(nombre, numero, edad, correo);
+    
+  }
   
   const updatePhoto = async() =>{
     // user.profilePic=null;
@@ -79,21 +85,21 @@ export function PerfilClientePage() {
                 <p className="font-medium text-[#908989] mt-[5px]">Nombre</p>
                 <input 
                 id="name" name="name" type="text" readOnly={editable}
-                // onChange=""
+                onChange={(e) => {setNombre(e.target.value)}}
                 className="text-black w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow" placeholder={user.name}/>
               </label>
               <label htmlFor="number">
                 <p className="font-medium text-[#908989] mt-[5px]">Número telefónico</p>
                 <input 
                 id="number" name="number" type="text" readOnly={editable}
-                // onChange=""
+                onChange={(e) => {setNumero(e.target.value)}}
                 className="text-black w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow" placeholder={user.phone}/>
               </label>
               <label htmlFor="age">
                 <p className="font-medium text-[#908989] mt-[5px]">Edad</p>
                 <input 
                 id="age" name="age" type="age" readOnly={editable}
-                // onChange=""
+                onChange={(e) => {setEdad(e.target.value)}}
                 className="w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow" placeholder={user.age}/>
               </label>
             </div>
@@ -127,7 +133,7 @@ export function PerfilClientePage() {
                 <p className="font-medium text-[#908989] mt-[5px]">Dirección de correo </p>
                 <input 
                 id="email" name="email" type="email" readOnly={editable}
-                // onChange=""
+                onChange={(e) => {setCorreo(e.target.value)}}
                 className="w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow" placeholder={user.email}/>
             </label>
             
@@ -142,7 +148,7 @@ export function PerfilClientePage() {
             </div>
               { editable==false &&(
                 <div className='flex items-center justify-center'>
-                <button onClick={() => {setEditable(true), updatePhoto()}} className='flex items-center justify-center bg-black text-white p-1 rounded-md h-14 w-2/5 mt-2' >
+                <button onClick={() => {setEditable(true), updateData(), updatePhoto()}} className='flex items-center justify-center bg-black text-white p-1 rounded-md h-14 w-2/5 mt-2' >
                 Actualizar
               </button>
               </div>
