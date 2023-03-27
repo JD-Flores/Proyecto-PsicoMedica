@@ -7,8 +7,11 @@ import { store } from "../firebase/config"
 import { v4 } from "uuid";
 
 export async function createUserProfile(userId,data){
+    console.log(data)
      setDoc(doc(db,'userChat',userId),{});
-     setDoc(doc(db,'calendarios',userId),{reservaciones:[]});
+     if(data.doctor != false){
+     setDoc(doc(db,'calendarios',userId),{citas:[]});
+     }
     return setDoc(doc(db,'users',userId),data);
 }
 
