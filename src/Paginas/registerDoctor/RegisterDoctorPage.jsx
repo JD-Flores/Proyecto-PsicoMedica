@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router';
 import { Nacionalidad } from '../../Componentes/ListasInputs/Nacionalidad';
-import { completed, registerWithEmailAndPassword, returnError, signInWithGoogle } from '../../firebase/auth-service';
+import { completed, registerWithEmailAndPassword, returnError, setCompleted, signInWithGoogle } from '../../firebase/auth-service';
 import { Link } from 'react-router-dom';
 import { LOGIN_URL, PERFIL_DOCTOR, REGISTER_DOCTOR_URL } from '../../constantes/urls';
 import { Telefono } from '../../Componentes/ListasInputs/Telefono';
@@ -94,6 +94,7 @@ export function RegisterDoctorPage() {
         
       await registerWithEmailAndPassword(email,password,confirmPassword,extraData);
       if(completed()){
+        setCompleted()
         navigate(PERFIL_DOCTOR)
       }else{
         setError(returnError())
@@ -119,8 +120,6 @@ export function RegisterDoctorPage() {
       })
       }
   }
-
-
 
   
 

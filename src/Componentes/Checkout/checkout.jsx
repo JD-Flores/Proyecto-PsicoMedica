@@ -4,10 +4,11 @@ import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 import { useUser } from "../../contexts/UserContext";
 import { docContext } from "../../contexts/DoctorContext";
 import { useNavigate } from "react-router";
-import { CHAT } from "../../constantes/urls";
+import { BUSCAR_DOC, CHAT } from "../../constantes/urls";
 import { reserveContext } from "../../contexts/ReserveContext";
 import { arrayUnion, doc, getDoc, serverTimestamp, setDoc, updateDoc } from "firebase/firestore";
 import { db } from "../../firebase/config";
+import { v4 as uuid} from "uuid";
 
 export function Checkout({price}) {
     const [show, setShow] = useState(false);
@@ -56,18 +57,20 @@ export function Checkout({price}) {
         user.uid + context.uid : 
         context.uid + user.uid;
         const res = await getDoc(doc(db,"chats",combinedID));
-        try{    
+        // try{    
             
             if(!res.exists()){
                 //crea el chat
                 await setDoc(doc(db,"chats",combinedID),{messages:[]});
-            }
+            
                 //crea user chats
+                console.log(user)
+                console.log(context)
                 await updateDoc(doc(db,"userChat",user.uid),{
                     [combinedID+".userInfo"]:{
                         uid:context.uid,
                         name:context.name,
-                        photoURL:context.photoURL
+                        photoURL:context.profilePic
                     },
                     [combinedID+".date"]: serverTimestamp()
                 })
@@ -75,11 +78,12 @@ export function Checkout({price}) {
                     [combinedID+".userInfo"]:{
                         uid:user.uid,
                         name:user.name,
-                        photoURL:user.photoURL
+                        photoURL:user.profilePic
                     },
                     [combinedID+".date"]: serverTimestamp()
                 })
-            
+                
+            }
             // busca si el documento exist o ya esta creado
                 const res2 = await getDoc(doc(db,"calendarios",context.uid)); 
                     
@@ -90,22 +94,26 @@ export function Checkout({price}) {
                 // Si ya existe o fue creado agrega al array de citas la nueva cita
                     await updateDoc(doc(db,"calendarios",context.uid),{
                     citas:arrayUnion({
-                        title: reservationContext.title,
+                        ["id"]:uuid(),
+                        ["completed"]:false,
+                        ["ranked"]:false,
+                        ["uid"]:user.uid,
+                        ["info"]:{title: reservationContext.title,
                         start:reservationContext.start,
-                        end:reservationContext.end,
+                        end:reservationContext.end,}
                         })
                     })
             navigate(CHAT)
-        }catch{
-            console.error("error")
-        }
+        // }catch{
+        //     console.error("error")
+        // }
         
 
     }
 
     useEffect(() => {
         if (success) {
-            alert("Payment successful!!");
+            
             console.log('Order successful . Your order id is--', orderID);
             setChatReserve()
         }
@@ -113,7 +121,9 @@ export function Checkout({price}) {
     },[success]);
 
     return (
-        <PayPalScriptProvider options={{ "client-id": "AXm3WFSs3svhfaRCWAVdgFsCyc0_GJ12yG3OXCHBZ6a7bO-d9DcKv8cCPTW_Vv6t2bt9Gt0XtTdqTU5H" }}>
+        <div>
+        {context &&
+            <PayPalScriptProvider options={{ "client-id": "AXm3WFSs3svhfaRCWAVdgFsCyc0_GJ12yG3OXCHBZ6a7bO-d9DcKv8cCPTW_Vv6t2bt9Gt0XtTdqTU5H" }}>
             <div>
                 <PayPalButtons
                     style={{ layout: "vertical" }}
@@ -122,5 +132,10 @@ export function Checkout({price}) {
                 />
             </div>
         </PayPalScriptProvider>
+    }
+    {context == null && 
+    navigate(BUSCAR_DOC)}
+    </div>
+        
     );
 }

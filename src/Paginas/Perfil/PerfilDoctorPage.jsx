@@ -5,30 +5,52 @@ import { DoctorNav } from "../../Componentes/ProfileNav/DoctorNav";
 import { uploadFile } from '../../firebase/users-service';
 import { updateProfilePic } from '../../firebase/users-service';
 import { useUser } from '../../contexts/UserContext';
+import { useEffect } from "react";
 
 export function PerfilDoctorPage() {
-  const{user}=useUser();
+  const{user, setUser}=useUser();
 
   const [editable, setEditable] = useState(true);
   const [file, setFile] = useState(null);
   const [image, setImage] = useState(null);
 
-  const updatePhoto = async() =>{
-    user.profilePic=null;
+  const handleUser = (result) => {
+
+    user.profilePic = result;
+    setUser(user);
+    console.log("prueba " + user.profilePic);
+  }
+  
+  useEffect(() => {  
+      setImage(user.profilePic);
+   },[]);
+
+   
+   const updatePhoto = async() =>{
+    // user.profilePic=null;
+    console.log("Archivo");
+    console.log(file);
+    if (file!=null) {
+      
+    
     const result = await uploadFile(file);
-    console.log(result);
     if (result==null) {
-      const url =  "gs://proyecto-psicomedica-6dbc5.appspot.com/fotoPerfil.jpg";
+      const url =  "https://firebasestorage.googleapis.com/v0/b/proyecto-psicomedica-6dbc5.appspot.com/o/11997cb3-d7ea-4d18-bb98-14eded4b7d89?alt=media&token=af1b567a-8a9c-4b35-8305-a702ca72330f";
       updateProfilePic(user,url);
-      console.log(result);
+      console.log("Error, No se pudo actualizar foto de perfil");
       
     }
     else{
       
       updateProfilePic(user,result);
       console.log(result);
+      console.log("Actualizada foto de perfil a" + result);
+      handleUser(result);
+      
     }
   }
+  }
+  
  
   return (
     
@@ -38,8 +60,8 @@ export function PerfilDoctorPage() {
           <DoctorNav></DoctorNav>
         </div>
 
-        <div id="bottom-container" className="flex flex-col p-4 w-[363px] h-4/5 items-center bg-white rounded-[12px]">
-          <div id='title' className='flex text-left text-2xl  text-[#908989] '>
+        <div id="bottom-container" className="flex flex-col p-4 w-[450px] h-fit items-center bg-white rounded-[12px] m-2">
+          <div id='title' className='flex text-left text-3xl  text-[#908989] m-2'>
             <h1>Datos Personales</h1>
           </div>
           <div id='clientData' className='flex flex-col'>
@@ -68,25 +90,30 @@ export function PerfilDoctorPage() {
               </label>
             </div>
 
-            <div id='right-side' className='flex justify-center items-center w-2/4'>
+            <div id='right-side' className='flex justify-center items-center w-2/4 m-2 mt-4'>
+
+            <div className='flex flex-col items-center'>
+                  <img src={image} alt="Profile picture" className='w-full rounded-full' />
+                </div>
+
               {editable==false && (
-                <div className='flex flex-col items-center'>
-                  <img src={image} alt="Profile picture" className='w-full ' />
+                <div className='flex flex-col items-center '>
+                  <img src={image} alt="Profile picture" className='w-full' />
                   <input type="file" onChange={(e) => {setFile(e.target.files[0]), setImage(URL.createObjectURL(e.target.files[0]))}} className='flex items-center justify-center bg-black text-white p-1  h-14 w-[200px] mt-3' />
                 </div>
                )}
-               {editable==true && (
+               {/* {editable==true && (
                 <div>
-                  <img src={image} alt="Profile picture" className='w-full ' />
+                  <img src={user.profilePic} alt="Profile picture" className='w-full ' />
                 </div>
-               )}
+               )} */}
             </div>
           </div>
 
           <div id='sub-bottom-container' className='flex flex-col'>
             
             <label htmlFor="email">
-                <p className="font-medium text-[#908989] mt-[5px]">Direccion de correo </p>
+                <p className="font-medium text-[#908989] mt-[5px]">Dirección de correo </p>
                 <input 
                 id="email" name="email" type="email" readOnly={editable}
                 // onChange=""
@@ -132,7 +159,7 @@ export function PerfilDoctorPage() {
                 
               <label htmlFor="genero">
                 <p className="font-medium text-[#908989] mt-[5px]">
-                Genero
+                Género
                 </p>
                 
                 <input 
@@ -170,7 +197,7 @@ export function PerfilDoctorPage() {
             <div>
               { editable==true &&(
                 <div id='buttons' className='flex flex-row items-center justify-evenly w-full '>
-                  <button onClick={() => {setEditable(false)}} className='flex items-center justify-center bg-[#5974A9] text-white p-1 rounded-md h-14 w-2/5 mt-2' >
+                  <button onClick={() => {setEditable(false)}} className='flex items-center justify-center bg-[#5974A9] text-white p-1 rounded-md h-14 w-2/5 mt-6 font-semibold' >
                     Editar Datos Personales
                   </button>
                 </div>
