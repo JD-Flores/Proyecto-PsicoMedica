@@ -15,7 +15,7 @@ import { Link } from 'react-router-dom';
 export function BuscarDoc() {
   const [isOpenBA, setIsOpenBA] = useState(false)
   const [star, setStar]  = useState("vacio");
-  const [specialization, setSpecialization] = useState("vacio");
+  const [specialization, setSpecialization] = useState("");
   const [doctorName, setDoctorName] = useState("vacio");
   const [doctors, setDoctors] = useState([]);
 
@@ -75,7 +75,11 @@ export function BuscarDoc() {
           <div id='sub-bottom-container' className='flex flex-row justify-center  gap-x-[20px] '>
             <div id='ranking'className='flex flex-col gap-y-[4px]'>
               <p className="flex justify-center text-[#908989] items-center w-[155px] h-[30px] px-[13px] ">Ranking</p>
-              <div id='stars-selection' className='flex flex-col justify-center items-center w-[155px] h-[130px] bg-[#5974A9] rounded-[12px] '>
+              <div id='stars-selection' className='flex flex-col justify-center items-center w-[155px]  bg-[#5974A9] rounded-[12px] '>
+                
+              <button id='vacio' onClick= {() => setStar("vacio")} className='flex flex-row justify-center items-center h-full w-full hover:bg-[#908989] rounded-[12px]'>
+                  <h1 className='text-white'>Deseleccionar</h1>
+                </button>
                 <button id='1-star' onClick= {() => setStar(1)} className='flex flex-row justify-center items-center h-full w-full hover:bg-[#908989] rounded-[12px]'>
                   <img  className="w-[24px] h-[24px]" src={Star} alt="" />
                 </button>
@@ -109,7 +113,8 @@ export function BuscarDoc() {
               <p className="flex justify-center text-[#908989] items-center w-[155px] h-[30px] px-[13px]">Especialidad</p>
 
               <select id='especialidad-selection'onChange={handleOnChange} className='w-[155px] h-[50px] bg-[#5974A9] rounded-[12px] text-white text-xs p-[3px] truncate'>
-                
+
+              <option  value=""></option> 
               <option  value="Depresión">Depresión</option>
               <option  value="Trastorno bipolar">Trastorno bipolar</option>
               <option  value="Ansiedad">Ansiedad</option>
