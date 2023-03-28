@@ -6,6 +6,7 @@ import { uploadFile } from '../../firebase/users-service';
 import { updateProfilePic } from '../../firebase/users-service';
 import { useUser } from '../../contexts/UserContext';
 import { useEffect } from "react";
+import { FeedbackCard } from "../../Componentes/FeedbackCard/FeedbackCard";
 
 export function PerfilDoctorPage() {
   const{user, setUser}=useUser();

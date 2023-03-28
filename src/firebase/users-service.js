@@ -80,7 +80,7 @@ export async function searchDoctorsAvailable(star, specialization){
     const results = await getDocs(usersQuery);
     //comprueba el tamano de users y retorna los usuarios
     if(results.size>0){
-        const users = results.docs.map((item)=>({
+        const users = results.docs.map((item, idx)=>({
             ...item.data(),
             id: item.id,
         }
@@ -90,13 +90,13 @@ export async function searchDoctorsAvailable(star, specialization){
         return null;
     }   
     }
-    else if(specialization == "vacio"){
+    else if(specialization == ""){
         const usersQuery = query(collection(db,"users"), where("doctor","==",true), where("ranking","==",star));
 
     const results = await getDocs(usersQuery);
     //comprueba el tamano de users y retorna los usuarios
     if(results.size>0){
-        const users = results.docs.map((item)=>({
+        const users = results.docs.map((item,idx)=>({
             ...item.data(),
             id: item.id,
         }
@@ -106,7 +106,7 @@ export async function searchDoctorsAvailable(star, specialization){
         return null;
     } 
     }
-    else if(specialization=="vacio" && star=="vacio"){
+    else if(specialization=="" && star=="vacio"){
         return [];
     }
     else{
@@ -115,7 +115,7 @@ export async function searchDoctorsAvailable(star, specialization){
     const results = await getDocs(usersQuery);
     //comprueba el tamano de users y retorna los usuarios
     if(results.size>0){
-        const users = results.docs.map((item)=>({
+        const users = results.docs.map((item,idx)=>({
             ...item.data(),
             id: item.id,
         }
@@ -160,14 +160,14 @@ export async function searchDoctorsAvailableByName(doctorName){
             var lastNameResults = await getDocs(usersQueryLastName);
 
             if(results.size>0){
-                users = results.docs.map((item)=>({
+                users = results.docs.map((item,idx)=>({
                     ...item.data(),
                     id: item.id,
                 }
                 ));
             }else{users=[]};
             if(lastNameResults.size>0){
-                users2 = lastNameResults.docs.map((item)=>({
+                users2 = lastNameResults.docs.map((item,idx)=>({
                     ...item.data(),
                     id: item.id,
                 }
