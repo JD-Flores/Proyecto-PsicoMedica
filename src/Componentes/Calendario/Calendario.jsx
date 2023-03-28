@@ -16,10 +16,9 @@ import { date } from "date-arithmetic";
 
 
 
-export function Calendario() {
+export function Calendario({userid}) {
   const [dates,setDates]=useState([]);
-  const [reserva,setReserva]=useState([])
-  const {user}=useUser();
+  const [reserva,setReserva]=useState([]);
 
   function useDates(){
     
@@ -38,8 +37,8 @@ export function Calendario() {
     
    },[dates]);
 
-   useEffect(() => {  
-     onSnapshot(doc(db,"calendarios",user.uid),(doc)=>{
+  useEffect(() => {  
+     onSnapshot(doc(db,"calendarios",userid),(doc)=>{
       doc.exists()&& setDates(doc.data().citas)
     })
     

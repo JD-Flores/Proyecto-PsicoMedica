@@ -8,6 +8,7 @@ import { BUSCAR_DOC, CHAT } from "../../constantes/urls";
 import { reserveContext } from "../../contexts/ReserveContext";
 import { arrayUnion, doc, getDoc, serverTimestamp, setDoc, updateDoc } from "firebase/firestore";
 import { db } from "../../firebase/config";
+import { v4 as uuid} from "uuid";
 
 export function Checkout({price}) {
     const [show, setShow] = useState(false);
@@ -93,6 +94,9 @@ export function Checkout({price}) {
                 // Si ya existe o fue creado agrega al array de citas la nueva cita
                     await updateDoc(doc(db,"calendarios",context.uid),{
                     citas:arrayUnion({
+                        ["id"]:uuid(),
+                        ["completed"]:false,
+                        ["ranked"]:false,
                         ["uid"]:user.uid,
                         ["info"]:{title: reservationContext.title,
                         start:reservationContext.start,
@@ -109,7 +113,7 @@ export function Checkout({price}) {
 
     useEffect(() => {
         if (success) {
-            alert("Payment successful!!");
+            
             console.log('Order successful . Your order id is--', orderID);
             setChatReserve()
         }

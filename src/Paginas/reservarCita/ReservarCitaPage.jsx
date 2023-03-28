@@ -15,7 +15,7 @@ import { reserveContext } from "../../contexts/ReserveContext";
 import { useContext } from "react";
 import { getCalendar } from "../../firebase/users-service";
 import { BUSCAR_DOC } from "../../constantes/urls";
-
+import { Calendario } from '../../Componentes/Calendario/Calendario';
 
 
 
@@ -300,6 +300,11 @@ export function ReservarCitaPage() {
               {scheduledDate==true ? <p className="text-red-600">El horario seleccionado se encuentra ocupado</p>: ""}
             </div>
           </label>
+
+          <div className="py-1 mt-1">
+            <h2 className="text-xl text-black font-bold  mb-1">Disponibilidad de {context.name} {context.lastname}:</h2>
+            <Calendario	userid={context.uid} />
+          </div>
 
           {/* Enviar form */}
 

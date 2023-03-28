@@ -6,6 +6,7 @@ import { getDoc } from "firebase/firestore";
 import { useContext, useState } from "react";
 import { useEffect } from "react";
 import { docContext, DoctorContext } from "../../contexts/DoctorContext";
+import { Calendario } from "../../Componentes/Calendario/Calendario";
 
 export function DoctorDetail() {
   const navigate = useNavigate();
@@ -83,6 +84,15 @@ export function DoctorDetail() {
           <p className="font-comfortaa text-[14px]"></p>
         </div>
       </div>
+
+      <hr className="border-t-8 border-[#5974A9] mt-2"/>
+      <div id="bottom-container" className="flex flex-col mt-2 p-2 text-justify">
+        <div id="feedback">
+          <h2 className="text-[#5974A9] text-[18px]  font-comfortaa font-bold">Agenda:</h2>
+          <Calendario userid={doctor_id} />
+        </div>
+      </div>
+
     </div>
   );
 }
