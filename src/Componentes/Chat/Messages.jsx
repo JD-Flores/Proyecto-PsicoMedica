@@ -12,6 +12,10 @@ import { getDownloadURL, ref, uploadBytesResumable } from '@firebase/storage'
 import { useUser } from '../../contexts/UserContext'
 import { Link } from 'react-router-dom'
 import { BUSCAR_DOC } from '../../constantes/urls'
+import { completed } from '../../firebase/auth-service'
+import { updateCompleted } from '../../firebase/users-service'
+import { PopupFeedback } from '../Popup/PopupFeedback'
+
 
 
 export function Messages() {
@@ -20,15 +24,15 @@ export function Messages() {
     const [text,setText] = useState("");
     const [img,setImg] = useState(null);
     const {user} = useUser();
-    const [loadImg,setLoadImg] = useState()
     const [available,setAvailable]=useState(true)
     const [found,setFound]=useState(false)
-    const [timer,setTimer]=useState(false)
+    const [open, setOpen] = useState(false)
+    const [cita,setCita]=useState([])
     
 
       const checkAvailable= async()=>{
         const citas = await getDoc(doc(db,"calendarios",data.user.uid))
-        const dates=citas.data().citas
+        const dates=citas.data()?.citas
         setFound(false)
         setAvailable(true)
         dates?.map((date)=>(
@@ -37,20 +41,32 @@ export function Messages() {
         
       }
       const check = (date)=>{
+        // date.completed=true;
         const hour = new Date()
-        if(date?.uid==user.uid){
+        if(date?.uid==user.uid & date?.completed == false){
             const reserveTime = new Date(date.info.start)
             const reserveEndTime = new Date(date.info.end);
-            if(reserveTime<hour & reserveEndTime>hour){
+            // reserveEndTime.setDate(26)
+            if(reserveTime<hour & reserveEndTime>hour){ //la reserva esta en curso y desbloquea el input
                 setAvailable(false)
                 setFound(true)
-            }else{
+            }if (reserveEndTime<hour) {
+                updateCompleted(data.user,true,date.id)// reserva ya paso y se pone el estado completado en true
+                
+            } else {
                 if(found!=true){
-                setAvailable(true)
-
-                }
+                    setAvailable(true)// reserva no ha pasado y bloquea el input
+                    }
             }
             
+        }if (date?.uid==user.uid & date.completed==true & date.ranked =="undefined") {
+            //aqui que se agregue a una lista de citas por rankear
+            // alert("")
+            setOpen(true)
+            setCita(date)
+        } else {
+            // console.log("resto")
+            // console.log(date)
         }
         
       }
@@ -126,6 +142,7 @@ export function Messages() {
   return (
     
     <div className='flex flex-col w-2/3 '>
+        <PopupFeedback setOpen={setOpen} open={open} cita={cita} doctor={data.user} user={user} />
         <div className='flex items-center w-full text-3xl p-2 bg-blue-800 text-white h-[70px]'>
             <span>{data.user?.name}</span>
             
