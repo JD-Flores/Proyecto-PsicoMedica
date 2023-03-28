@@ -23,6 +23,7 @@
     "react-paypal-js": "^0.0.1-security",
     "react-router-dom": "^6.8.1",
     "react-scripts": "5.0.0",
+    "reactjs-popup": "^2.0.5",
     "uuid": "^9.0.0"
   },
   "devDependencies": {

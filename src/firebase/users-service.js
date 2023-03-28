@@ -1,6 +1,6 @@
 import { async } from "@firebase/util";
 import { getAuth, updateProfile, updateEmail, updatePassword } from "firebase/auth";
-import{collection, doc,setDoc, where,query,getDocs, updateDoc, getDoc} from "firebase/firestore"
+import{collection, doc,setDoc, where,query,getDocs, updateDoc, getDoc, arrayUnion} from "firebase/firestore"
 import{db} from "./config"
 import { ref, uploadBytes,getDownloadURL } from "firebase/storage"
 import { store } from "../firebase/config"
@@ -208,6 +208,57 @@ export const updateProfilePic = (user, result) => {
     console.log("A New Document Field has been added to an existing document");
 })
     
+}
+
+export const updateCompleted = async (user, result,id) => {
+    const dbRef = doc(db, "calendarios",user.uid);
+    const docRef = await getDoc(dbRef)
+    let objectCitas  = docRef.data().citas;
+       if(objectCitas.length>0){
+        const resultArray = objectCitas.findIndex(element => element.id == id)
+        objectCitas[resultArray].completed= result;
+        const data= {
+            citas: objectCitas,
+          }
+          updateDoc(dbRef, data).then(docRef => {
+            console.log("A New Document Field has been added to an existing document");
+        }) 
+    }else{
+        console.log("Error de busqueda")
+    }   
+}
+export const feedbackDecision = async (user, result,id) => {
+    const dbRef = doc(db, "calendarios",user.uid);
+    const docRef = await getDoc(dbRef)
+    let objectCitas  = docRef.data().citas;
+       if(objectCitas.length>0){
+        const resultArray = objectCitas.findIndex(element => element.id == id)
+        objectCitas[resultArray].ranked= result;
+        const data= {
+            citas: objectCitas,
+          }
+          updateDoc(dbRef, data).then(docRef => {
+            console.log("A New Document Field has been added to an existing document");
+        }) 
+    }else{
+        console.log("Error de busqueda")
+    }   
+}
+export const handleFeedbackRating = async (doctor,user,date,review,rating)=>{
+    const response = await getDoc(doc(db,"feedback",doctor.uid)); 
+                    
+        if(!response.exists()){
+            await setDoc(doc(db,"feedback",doctor.uid),{ratings:[]});   
+        }
+        await updateDoc(doc(db,"feedback",doctor.uid),{
+            ratings:arrayUnion({
+                ["Name"]:user.name,
+                // ["Lastname"]:user.lastname,
+                ["date"]:date,
+                ["review"]:review,
+                ["rating"]:rating,
+                })
+            })
 }
 
 
