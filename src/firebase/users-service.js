@@ -1,5 +1,5 @@
 import { async } from "@firebase/util";
-import { getAuth, updateProfile } from "firebase/auth";
+import { getAuth, updateProfile, updateEmail, updatePassword } from "firebase/auth";
 import{collection, doc,setDoc, where,query,getDocs, updateDoc, getDoc} from "firebase/firestore"
 import{db} from "./config"
 import { ref, uploadBytes,getDownloadURL } from "firebase/storage"
@@ -169,6 +169,45 @@ export const updateProfilePic = (user, result) => {
     console.log("A New Document Field has been added to an existing document");
 })
     
+}
+
+
+export const updateInfoClient = (user, result) => {
+
+    const docRef = doc(db, "users", user.uid)
+    const data= {
+      email: result.newMail,
+      name: result.newName,
+      lastname: result.newLastName,
+      password: result.newPassword,
+      phone: result.newNumber,
+    }
+
+    updateDoc(docRef, data).then(docRef => {
+    console.log("A New Document Field has been added to an existing document");
+
+    const auth = getAuth();
+
+
+        updateEmail(auth.currentUser, result.newMail).then(() => {
+        console.log("actualizado el email")
+        updatePassword(auth.currentUser, result.newPassword).then(() => {
+            // Update successful.
+            console.log("actualizado el password")
+        });
+        // ...
+        }).catch((error) => {
+        console.log("error mail");
+        // ...
+        });
+
+        
+
+        
+
+        
+
+})
 }
 
 export const uploadFile = async (file) => {
