@@ -25,12 +25,12 @@ export function RegisterPage() {
               <div id="cliente" className="flex w-full  justify-center items-center">
                 <Link to={REGISTER_DOCTOR_URL}>
                 <img src={imagenPsicologo} alt="" className="rounded-full h-32 lg:h-40 "/>
-                <p className="text-white font-bold">Soy Psicologo</p>
+                <p className="text-white font-bold">Soy Psicólogo</p>
                 </Link>
               </div>
           </div>
           <div id="footer" className="h-1/5 flex justify-center items-end p-6">
-             <p className="text-center text-white">Ya tienes una cuenta? <Link to={LOGIN_URL} className="text-indigo-600 font-medium inline-flex space-x-1 items-center"><span>Inicia sesion! </span><span><svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+             <p className="text-center text-white">¿Ya tienes una cuenta? <Link to={LOGIN_URL} className="text-indigo-600 font-medium inline-flex space-x-1 items-center underline"><span>Inicia sesión. </span><span><svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
               </svg></span></Link></p>
           </div>

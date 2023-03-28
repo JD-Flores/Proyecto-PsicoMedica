@@ -4,8 +4,8 @@ export function Nacionalidad({handle}) {
 
   return (
 
-    <select id="country" name="country" onChange={handle} className=" w-full py-3 border bg-white border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow ">
-    <option>Elija su pais de residencia</option>
+    <select id="country" name="country" onChange={handle} className=" w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow text-sm">
+    <option>Elije tu país de residencia</option>
     <option value="Afghanistan">Afganistán</option>
     <option value="Aland Islands">Islas Aland</option>
     <option value="Albania">Albania</option>

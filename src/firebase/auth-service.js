@@ -33,9 +33,9 @@ export const signInWithGoogle = async()=>{
         const result = await signInWithPopup(auth,googleProvider)//abre la ventana de login de google
         
         const {isNewUser}=getAdditionalUserInfo(result);
-        complete=true;
         if(isNewUser){
           await createUserProfile(result.user.uid,{
+            uid:result.user.uid,
             email: result.user.email,
             name: result.user.displayName,
             doctor:false,
@@ -43,6 +43,7 @@ export const signInWithGoogle = async()=>{
             
           })
         }
+        complete=true;
     } catch (error) {
       Validacion(error) 
     }
@@ -67,6 +68,7 @@ export const registerWithEmailAndPassword = async(
   try {
     const result = await createUserWithEmailAndPassword(auth,email,password);
     await createUserProfile(result.user.uid,{
+      uid:result.user.uid,
       email,
       password,
       ...extraData,
