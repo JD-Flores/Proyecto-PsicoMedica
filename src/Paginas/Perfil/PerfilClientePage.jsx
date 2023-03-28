@@ -65,6 +65,9 @@ export function PerfilClientePage() {
     updateInfoClient(user,result);
     setUploadConfirmmed(true);
     setUpdate(true);
+    setEditable(!editable)
+    setUpdate(false);
+    updatePhoto();
     
   }
 
@@ -299,11 +302,6 @@ export function PerfilClientePage() {
             </div>
             </label>
 
-            
-
-             
-          {editable==false && < button className=" cursor-pointer flex items-center justify-center bg-black text-white p-1 rounded-md h-10 w-[180px] text-center text-sm font-medium" type="submit" >Actualizar</button>}  
-
           {/* <input className=" cursor-pointer flex items-center justify-center bg-black text-white p-1 rounded-md h-10 w-[180px] text-center text-sm font-medium" type="submit" value="Confirmar cambios" /> */}
 
 
@@ -323,7 +321,7 @@ export function PerfilClientePage() {
             )} */}
 
             </div>
-
+            
             <div
               id="right-side"
               className="flex justify-center items-center w-2/4"
@@ -371,6 +369,11 @@ export function PerfilClientePage() {
             
 
             <div>
+              
+              <div className="flex items-center justify-center w-full">
+                {editable==false && < button className=" cursor-pointer flex items-center justify-center bg-black text-white p-1 rounded-md h-10 w-[180px] text-center text-sm font-medium" type="submit" >Actualizar</button>}  
+              </div>
+
               {editable == true && (
                 <div
                   id="buttons"
@@ -378,7 +381,8 @@ export function PerfilClientePage() {
                 >
                   <button
                     onClick={() => {
-                      setEditable(!editable);
+                      setEditable(!editable),
+                      setUploadConfirmmed(false);
                     }}
                     className="flex items-center justify-center bg-[#5974A9] text-white p-1 rounded-md h-14 w-2/5 mt-6 font-semibold"
                   >
@@ -393,24 +397,9 @@ export function PerfilClientePage() {
                   id="buttons"
                   className="flex flex-row items-center justify-evenly w-full "
                 >
-                  {update==true ? 
-                  <button
-                  onClick={() => {
-                    setEditable(!editable)
-                    setUpdate(false);
-                    updatePhoto();
-                    }}
-
-                  className="flex items-center justify-center bg-[#5974A9] text-white p-1 rounded-md h-14 w-2/5 mt-6 font-semibold"
-                >
-                  Guardar cambios
-                </button>  
-              : <p>Actualiza primero sus cambios</p>
+                  {update == false && (<p>Actualiza primero sus cambios</p>)}
                 
-                
-                }
-                
-                {uploadConfirmmed ? <p>Actualización de datos exitosa</p>: ""}
+                  {uploadConfirmmed ? <p>Actualización de datos exitosa</p>: ""}
                   
                 </div>
               )}
