@@ -3,17 +3,17 @@ import { useState } from "react";
 import { useUser } from "../../contexts/UserContext";
 import { Link } from "react-router-dom";
 import {
-  BUSCAR_DOC,
+  CALENDAR,
   CHAT,
-  PERFIL_CLIENTE,
-  RESERVAR_CITA,
+  CHATDOC,
+  PERFIL_DOCTOR,
 } from "../../constantes/urls";
 import ArrowDown from "../../imagenes/arrow-down-s-line.png";
 import ArrowUp from "../../imagenes/arrow-up-s-line.png";
 
-export function ProfileNav() {
-  const { user } = useUser();
-  const [isOpen, setIsOpen] = useState(false)
+export function DoctorNav() {
+    const { user } = useUser();
+    const [isOpen, setIsOpen] = useState(false)
 
   return (
     <div id="main-container" className=" flex flex-col gap-y-[13px] w-full items-center ">
@@ -38,19 +38,19 @@ export function ProfileNav() {
           className="flex flex-row items-center justify-evenly  text-xs mb-2"
         >
           <Link
-            to={PERFIL_CLIENTE}
+            to={PERFIL_DOCTOR}
             className="flex items-center justify-center bg-[#5974A9] text-white p-1 rounded-md h-10 w-1/5 text-center"
           >
             Perfil
           </Link>
           <Link
-            to={BUSCAR_DOC}
+            to={CALENDAR}
             className="flex items-center justify-center bg-[#5974A9] text-white p-1 rounded-md h-10 w-1/5 text-center"
           >
-            Buscar Doctor
+            Calendario
           </Link>
           <Link
-            to={CHAT}
+            to={CHATDOC}
             className="flex items-center justify-center bg-[#5974A9] text-white p-1 rounded-md h-10 w-1/5 text-center"
           >
             Chats
@@ -59,5 +59,5 @@ export function ProfileNav() {
       </div>
       )}
     </div>
-  );
+  )
 }

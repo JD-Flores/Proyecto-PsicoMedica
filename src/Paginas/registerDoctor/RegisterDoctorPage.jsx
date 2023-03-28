@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router';
 import { Nacionalidad } from '../../Componentes/ListasInputs/Nacionalidad';
-import { completed, registerWithEmailAndPassword, returnError, signInWithGoogle } from '../../firebase/auth-service';
+import { completed, registerWithEmailAndPassword, returnError, setCompleted, signInWithGoogle } from '../../firebase/auth-service';
 import { Link } from 'react-router-dom';
 import { LOGIN_URL, PERFIL_DOCTOR, REGISTER_DOCTOR_URL } from '../../constantes/urls';
 import { Telefono } from '../../Componentes/ListasInputs/Telefono';
@@ -33,6 +33,7 @@ export function RegisterDoctorPage() {
   const [formData,setFormData] =useState({
       doctor:true,  
       name:"",
+      lastname:"",
       email:"",
       phone:"",
       password:"",
@@ -44,7 +45,9 @@ export function RegisterDoctorPage() {
       specialty:"",
       grade:"",
       Experience:"",
-      Price:"",
+      Price:0,
+      ranking:1,
+      biography:""
 
 
   })
@@ -91,6 +94,7 @@ export function RegisterDoctorPage() {
         
       await registerWithEmailAndPassword(email,password,confirmPassword,extraData);
       if(completed()){
+        setCompleted()
         navigate(PERFIL_DOCTOR)
       }else{
         setError(returnError())
@@ -117,8 +121,6 @@ export function RegisterDoctorPage() {
       }
   }
 
-
-
   
 
   
@@ -132,12 +134,22 @@ export function RegisterDoctorPage() {
         <div id='leftHalf' className='w-full'>
           <label htmlFor="name" className= "block cursor-pointer">
             <div className='flex flex-row py-1 mt-2'>
-                <h1 className="font-medium text-slate-700 pb-2 text-sm ">Nombre completo</h1><p className='text-red-600'>{errorName}</p>
+                <h1 className="font-medium text-slate-700 pb-2 text-sm ">Nombre</h1><p className='text-red-600'>{errorName}</p>
                 </div>
                 <input 
                 id="name" name="name" type="text" 
                 onChange={handleOnChange}
-                className="w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow text-sm" placeholder="Ingresa tu nombre completo"/>
+                className="w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow text-sm" placeholder="Ingresa tu nombre"/>
+            </label>
+
+            <label htmlFor="lastname" className= "block cursor-pointer">
+            <div className='flex flex-row py-1 mt-2'>
+                <h1 className="font-medium text-slate-700 pb-2 text-sm ">Apellido</h1><p className='text-red-600'>{errorName}</p>
+                </div>
+                <input 
+                id="lastname" name="lastname" type="text" 
+                onChange={handleOnChange}
+                className="w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow text-sm" placeholder="Ingresa tu apellido"/>
             </label>
 
             <label htmlFor="email" className= "block cursor-pointer">
@@ -189,7 +201,7 @@ export function RegisterDoctorPage() {
                   <div className='flex flex-row py-1 mt-2'>
                   <h1 className="font-medium text-slate-700 pb-2 text-sm">Precio por consulta</h1><p className='text-red-600'>{errorConfirm}</p>
                   </div>
-                    <input id="Price" name="Price" type="text" 
+                    <input id="Price" name="Price" type="number" 
                     onChange={handleOnChange}
                     className="w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow text-sm" placeholder="Indique un precio"/>
                 </label>
@@ -221,7 +233,7 @@ export function RegisterDoctorPage() {
                 <select id="gender" name="gender" 
                 onChange={handleOnChange}
                 className=" w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow text-sm" placeholder="nacionalidad">
-                  <option>Elije tu género</option>
+                  <option>Elige tu género</option>
                   <option value="Masculino">Masculino</option>
                   <option value="Femenino">Femenino</option>
                   <option value="Otro">Otro</option>
