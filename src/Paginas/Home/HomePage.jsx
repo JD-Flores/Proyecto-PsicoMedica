@@ -99,7 +99,7 @@ export function HomePage() {
       <div className="flex flex-col bg-white items-center justify-center h-[320px] sm:h-[400px]">
         {" "}
         {/*Contenedor de descripción de la app*/}
-        <h1 className="text-[17px] sm:text-[28px]  mb-[15px] sm:mb-[40px] font-semibold text-[#5974A9] font-comfortaa">
+        <h1 className="text-[17px] sm:text-[22px] lg:text-[28px] mb-[15px] sm:mb-[40px] font-semibold text-[#5974A9] font-comfortaa">
           Encuentra al psicólogo que se adapte más a ti
         </h1>
         <div className=" flex mt-[-5px] flex-row ml-4 p-4">
@@ -225,8 +225,9 @@ export function HomePage() {
         <h1 className="text-[17px] sm:text-[28px]  mt-8 mb-10 text-[#5974A9] text-center font-semibold font-comfortaa">
           Preguntas Frecuentes
         </h1>
-        <div className="flex">
-          <div className="p-8 font-comfortaa font-bold text-[12px] sm:text-[18px]">
+
+        <div className="flex flex-box">
+          <div className="p-8 font-comfortaa font-black text-[13px] sm:text-[18px] w-[1200px]">
             <div
               onClick={() => {
                 setFaq1(!faq1);
@@ -236,7 +237,7 @@ export function HomePage() {
               <div
                 className={`${
                   faq1
-                    ? "opacity-100 visible translate-y-0 duration-500"
+                    ? "opacity-100 visible translate-y-0 duration-500 text-justify"
                     : "opacity-0 invisible translate-y-[-20px] duration-500"
                 }`}
               >
@@ -259,7 +260,7 @@ export function HomePage() {
                 <div
                   className={`${
                     faq2
-                      ? "opacity-100 visible translate-y-0 duration-500"
+                      ? "opacity-100 visible translate-y-0 duration-500 text-justify"
                       : "opacity-0 invisible translate-y-[-20px] duration-500"
                   }`}
                 >
@@ -283,7 +284,7 @@ export function HomePage() {
                 <div
                   className={`${
                     faq3
-                      ? "opacity-100 visible translate-y-0 duration-500"
+                      ? "opacity-100 visible translate-y-0 duration-500 text-justify"
                       : "opacity-0 invisible translate-y-[-20px] duration-500"
                   }`}
                 >
@@ -307,8 +308,8 @@ export function HomePage() {
                 <div
                   className={`${
                     faq4
-                      ? "opacity-100 visible translate-y-0 duration-500"
-                      : "opacity-0 invisible translate-y-[-20px] duration-500"
+                      ? "opacity-100 visible translate-y-0 duration-500 text-justify"
+                      : "opacity-0 invisible translate-y-[-20px] duration-500 "
                   }`}
                 >
                   <Dropdown
@@ -322,17 +323,20 @@ export function HomePage() {
               </div>
             </div>
           </div>
-          <div className="flex w-[600px] h-[300px] ">
+          <div className="w-[1000px] h-[400px] lg:w-[950px]">
             {" "}
             {/*Lado derecho de la vista con imagen*/}
             <img
               src={imgpreguntas}
               alt="Imagen"
-              className=" w-[300px] h-[200px] sm:h-[250px] sm:w-[600px] lg:h-[300px] lg:w-[420px] lg:ml-[150px] mt-[17px] lg:mt-[1px]"
+              className="w-[400px] h-[150px] sm:h-[250px] sm:w-[600px] lg:h-[300px] lg:w-[400px] lg:ml-[150px] mt-[35px] lg:mt-[1px]"
             />
           </div>
         </div>
+
       </div>
+
+      
       <div className="flex flex-col items-center bg-white">
         <h1 className="text-[30px] sm:text-[35px] font-bold">4,9/5</h1>
         <div className="flex flex-row w-[25px] justify-center mt-1">
