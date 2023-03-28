@@ -8,9 +8,11 @@ export default function DoctorCalendarPage() {
   const [uid, SetUid]=useState(user.uid);
 
   return (
-    <div>
+    <div className=''>
     <DoctorNav></DoctorNav>
-    <Calendario userid={uid} />
+    <div className='xl:px-20 md:px-10 p-5'>
+      <Calendario userid={uid} />
+    </div>
     </div>
   )
 }

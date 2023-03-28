@@ -113,7 +113,7 @@ export function Checkout({price}) {
 
     useEffect(() => {
         if (success) {
-            alert("Payment successful!!");
+            
             console.log('Order successful . Your order id is--', orderID);
             setChatReserve()
         }
