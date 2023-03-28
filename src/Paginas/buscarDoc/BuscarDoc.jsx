@@ -67,7 +67,7 @@ export function BuscarDoc() {
       </button>
 
       {isOpenBA && (
-        <div id='sub-main-container' className="flex flex-col w-[363px] h-[225px]  bg-white rounded-[12px] ">
+        <div id='sub-main-container' className="flex flex-col p-4 h-[225px]  bg-white rounded-[12px] ">
           <div id='sub-top-container' className='px-[13px] py-[10px]'>
             <p className="text-[#908989]">Buscar por:</p>
           </div>
@@ -75,12 +75,20 @@ export function BuscarDoc() {
           <div id='sub-bottom-container' className='flex flex-row justify-center  gap-x-[20px] '>
             <div id='ranking'className='flex flex-col gap-y-[4px]'>
               <p className="flex justify-center text-[#908989] items-center w-[155px] h-[30px] px-[13px] ">Ranking</p>
-              <div id='stars-selection' className='flex flex-col justify-center items-center w-[155px]  bg-[#5974A9] rounded-[12px] '>
+              <div id='stars-selection' className='flex flex-col justify-center items-center   bg-[#5974A9] rounded-[12px] '>
                 
               <button id='vacio' onClick= {() => setStar("vacio")} className='flex flex-row justify-center items-center h-full w-full hover:bg-[#908989] rounded-[12px]'>
-                  <h1 className='text-white'>Deseleccionar</h1>
+                  <h1 className='text-white font-bold text-lg'>Deseleccionar</h1>
                 </button>
-                <button id='1-star' onClick= {() => setStar(1)} className='flex flex-row justify-center items-center h-full w-full hover:bg-[#908989] rounded-[12px]'>
+                <div className="flex items-center flex-row-reverse cursor-pointer flex-row-reverse gap-2">
+                    <svg aria-hidden="true" onClick={() =>setStar(5)} className="w-8 h-8 peer text-gray-300 peer-hover:text-yellow-400 hover:text-yellow-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+                    <svg aria-hidden="true" onClick={() =>setStar(4)} className="w-8 h-8 peer text-gray-300 peer-hover:text-yellow-400 hover:text-yellow-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+                    <svg aria-hidden="true" onClick={() =>setStar(3)} className="w-8 h-8 peer text-gray-300 peer-hover:text-yellow-400 hover:text-yellow-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+                    <svg aria-hidden="true" onClick={() =>setStar(2)} className="w-8 h-8 peer text-gray-300 peer-hover:text-yellow-400 hover:text-yellow-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+                    <svg aria-hidden="true" onClick={() =>setStar(1)} className="w-8 h-8 peer text-gray-300 peer-hover:text-yellow-400 hover:text-yellow-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+                  </div>
+                  <p className='text-xl font-bold text-white'>{star}/5</p>
+                {/* <button id='1-star' onClick= {() => setStar(1)} className='flex flex-row justify-center items-center h-full w-full hover:bg-[#908989] rounded-[12px]'>
                   <img  className="w-[24px] h-[24px]" src={Star} alt="" />
                 </button>
                 <button id='2-star' onClick={() => setStar(2)} className='flex flex-row justify-center items-center h-full w-full hover:bg-[#908989] rounded-[12px]'>
@@ -104,7 +112,7 @@ export function BuscarDoc() {
                   <img className="w-[24px] h-[24px]" src={Star} alt="" />
                   <img className="w-[24px] h-[24px]" src={Star} alt="" />
                   <img className="w-[24px] h-[24px]" src={Star} alt="" />
-                </button>
+                </button> */}
               </div>
 
             </div>
