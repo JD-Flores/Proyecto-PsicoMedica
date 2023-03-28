@@ -27,7 +27,7 @@ export function RegisterDoctorPage() {
   const [image, setImage] = useState(null);
   const [imageUrl, setImageUrl] = useState("");
   const [file, setFile] = useState(null);
-  const [formData, setFormData] = useState();
+  // const [formData, setFormData] = useState();
 
   function calculateAge(date) {
     const now = new Date();
@@ -39,36 +39,38 @@ export function RegisterDoctorPage() {
   const {
     register,
     handleSubmit,
+    getValues,
     watch,
     formState: { errors },
   } = useForm({
-    doctor: true,
-    name: "",
-    lastname: "",
-    email: "",
-    phone: "",
-    password: "",
-    confirmPassword: "",
-    country: "",
-    age: "",
-    gender: "",
-    profilePic: "",
-    specialty: "",
-    grade: "",
-    Experience: "",
-    Price: 0,
-    ranking: 1,
-    biography: "",
+    defaultValues: {
+      doctor: true,
+      name: "",
+      lastname: "",
+      email: "",
+      phone: "",
+      password: "",
+      confirmPassword: "",
+      country: "",
+      age: "",
+      gender: "",
+      profilePic:
+        "https://firebasestorage.googleapis.com/v0/b/proyecto-psicomedica-6dbc5.appspot.com/o/11997cb3-d7ea-4d18-bb98-14eded4b7d89?alt=media&token=af1b567a-8a9c-4b35-8305-a702ca72330f",
+      specialty: "",
+      grade: "",
+      Experience: "",
+      Price: 1,
+      ranking: 1,
+      biography: "",
+    },
   });
 
   // Para validar que las contraseñas sean iguales
   const password = useRef({});
   password.current = watch("password", "");
 
-
   const onSubmit = async (data) => {
     const { email, password, confirmPassword, ...extraData } = data; //form destructurado
-    console.log(country.data);
 
     await registerWithEmailAndPassword(
       email,
@@ -84,21 +86,23 @@ export function RegisterDoctorPage() {
   };
 
   //en cada input utiliza la info del campo para agregarla al form existente
-  const handleOnChange = (event) => {
-    const { name, value } = event.target;
+  // const handleSubmit = (event) => {
+  //   const { name, value } = event.target;
+  //   console.log(formData.age)
 
-    if (name == "age") {
-      setFormData({
-        ...formData,
-        [name]: calculateAge(new Date(value)),
-      });
-    } else {
-      setFormData({
-        ...formData,
-        [name]: value,
-      });
-    }
-  };
+    // if (name == "age") {
+    //   setFormData({
+    //     ...formData,
+    //     [name]: calculateAge(new Date(value)),
+    //   });
+
+    // } else {
+    //   setFormData({
+    //     ...formData,
+    //     [name]: value,
+    //   });
+    // }
+  // };
 
   return (
     <div className="flex justify-center items-center m-3 py-9">
@@ -123,7 +127,6 @@ export function RegisterDoctorPage() {
                   id="name"
                   name="name"
                   type="text"
-                  onChange={handleOnChange}
                   className="w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow text-sm"
                   placeholder="Ingresa tu nombre"
                   {...register("name", {
@@ -149,7 +152,6 @@ export function RegisterDoctorPage() {
                   id="lastname"
                   name="lastname"
                   type="text"
-                  onChange={handleOnChange}
                   className="w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow text-sm"
                   placeholder="Ingresa tu apellido"
                   {...register("lastname", {
@@ -175,7 +177,6 @@ export function RegisterDoctorPage() {
                   id="email"
                   name="email"
                   type="email"
-                  onChange={handleOnChange}
                   className="w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow text-sm"
                   placeholder="Ingresa tu correo"
                   {...register("email", {
@@ -200,12 +201,10 @@ export function RegisterDoctorPage() {
                       Teléfono
                     </h1>
                   </div>
-                  {/* <Telefono></Telefono> */}
                   <input
                     id="phone"
                     name="phone"
                     type="text"
-                    onChange={handleOnChange}
                     className="w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow text-sm"
                     placeholder="Ingresa tu número de teléfono"
                     {...register("phone", {
@@ -243,7 +242,6 @@ export function RegisterDoctorPage() {
                   id="password"
                   name="password"
                   type="password"
-                  onChange={handleOnChange}
                   className="w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow text-sm"
                   placeholder="Ingresa tu contraseña"
                   {...register("password", {
@@ -270,7 +268,6 @@ export function RegisterDoctorPage() {
                   id="confirmPassword"
                   name="confirmPassword"
                   type="password"
-                  onChange={handleOnChange}
                   className="w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow text-sm"
                   placeholder="Ingresa nuevamente la contraseña"
                   {...register("confirmPassword", {
@@ -301,7 +298,6 @@ export function RegisterDoctorPage() {
                   id="Experience"
                   name="Experience"
                   type="text"
-                  onChange={handleOnChange}
                   className="w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow text-sm"
                   placeholder="Ingrese sus años de experiencia"
                   {...register("Experience", {
@@ -326,36 +322,43 @@ export function RegisterDoctorPage() {
                   id="Price"
                   name="Price"
                   type="number"
-                  onChange={handleOnChange}
                   className="w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow text-sm"
                   placeholder="Indique un precio"
                   {...register("Price", {
                     required: true,
+                    min: 1,
                   })}
                 />
                 {errors.Price?.type === "required" && (
                   <p className="text-red-600">El campo es requerido</p>
                 )}
+                {errors.Price?.type === "min" && (
+                  <p className="text-red-600">
+                    El precio ingresado es inválido
+                  </p>
+                )}
               </label>
             </div>
 
             <div id="rightHalf" className="w-full">
-              <div>
+              {/* <div>
                 <label htmlFor="country">
                   <div className="flex flex-row py-1 mt-2">
                     <h1 className="font-medium text-slate-700 pb-2 text-sm">
                       Nacionalidad
                     </h1>
                   </div>
-                  <Nacionalidad
-                  handle={handleOnChange}></Nacionalidad>
-                    
+                  <input>
+                  
+                  </input>
+                  
+                  {...register("country")}
                  
                 </label>
                 {errors.country?.type === "required" && (
                   <p className="text-red-600">El campo es requerido</p>
                 )}
-              </div>
+              </div> */}
 
               <label htmlFor="age">
                 <div className="flex flex-row py-1 mt-2">
@@ -367,7 +370,8 @@ export function RegisterDoctorPage() {
                   id="age"
                   name="age"
                   type="date"
-                  onChange={handleOnChange}
+                  min="1930-01-01"
+                  max="2005-03-28"
                   className="w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow text-sm"
                   {...register("age", {
                     required: true,
@@ -388,7 +392,6 @@ export function RegisterDoctorPage() {
                 <select
                   id="gender"
                   name="gender"
-                  onChange={handleOnChange}
                   className=" w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow text-sm"
                   {...register("gender", {
                     required: "Elige tu género",
@@ -414,7 +417,6 @@ export function RegisterDoctorPage() {
                 <select
                   id="specialty"
                   name="specialty"
-                  onChange={handleOnChange}
                   className=" w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow text-sm"
                   {...register("specialty", {
                     required: "Indica tu especialidad",
@@ -464,7 +466,6 @@ export function RegisterDoctorPage() {
                 <select
                   id="grade"
                   name="grade"
-                  onChange={handleOnChange}
                   className=" w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow text-sm"
                   {...register("grade", {
                     required: "Indica tu grado",
