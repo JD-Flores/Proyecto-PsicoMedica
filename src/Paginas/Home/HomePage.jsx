@@ -21,6 +21,8 @@ export function HomePage() {
   const [faq2, setFaq2] = useState(false);
   const [faq3, setFaq3] = useState(false);
   const [faq4, setFaq4] = useState(false);
+  const [faq5, setFaq5] = useState(false);
+  const [faq6, setFaq6] = useState(false);
   const [doctors, setDoctors] = useState([]);
   const { user } = useUser();
 
@@ -321,6 +323,53 @@ export function HomePage() {
                 </div>
               </div>
             </div>
+            <div
+                onClick={() => {
+                  setFaq5(!faq5);
+                }}
+              >
+                Si soy especialista en el área de salud mental, ¿Cómo puedo unirme a la comunidad?
+                <div
+                  className={`${
+                    faq5
+                      ? "opacity-100 visible translate-y-0 duration-500 text-justify"
+                      : "opacity-0 invisible translate-y-[-20px] duration-500"
+                  }`}
+                >
+                  <Dropdown
+                    text={`${
+                      faq5
+                        ? "PsicoMedica es una plataforma que ofrece servicios de terapia psicológica en línea, donde tienes la oportunidad de conectar con personas de todo el mundo. El registro es gratuito y te permite controlar tu propio horario y organizar tu tiempo. Nosotros nos encargamos de encontrar pacientes y usted podrá atenderlos remotamente a través de chats privados."
+                        : ""
+                    }`}
+                  />
+                </div>
+            </div>
+            <div
+                onClick={() => {
+                  setFaq6(!faq6);
+                }}
+              >
+                Si ya me admitieron como especialista, ¿qué datos debo completar?
+                <div
+                  className={`${
+                    faq6
+                      ? "opacity-100 visible translate-y-0 duration-500 text-justify"
+                      : "opacity-0 invisible translate-y-[-20px] duration-500"
+                  }`}
+                >
+                  <Dropdown
+                    text={`${
+                      faq6
+                        ? "Una vez hayas realizado el registro como especialista, debes llenar algunos detalles en tu perfil para que los pacientes puedan encontrarte y agendar sus citas. Estas características incluyen: especialidades, precio de consulta, años de experiencia y una breve descripción."
+                        : ""
+                    }`}
+                  />
+                </div>
+              
+            </div>
+            
+
           </div>
           <div className="hidden lg:block lg:h-[400px] lg:w-[1100px] sm:w-[800px]">
             {" "}
