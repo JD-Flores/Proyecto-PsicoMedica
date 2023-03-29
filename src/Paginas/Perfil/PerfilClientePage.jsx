@@ -182,60 +182,44 @@ export function PerfilClientePage() {
                   </div>
                 </label>
 
-                {/* <input className=" cursor-pointer flex items-center justify-center bg-black text-white p-1 rounded-md h-10 w-[180px] text-center text-sm font-medium" type="submit" value="Confirmar cambios" /> */}
-
-                {/* {editable == false && (
-              <div className="flex items-center justify-center">
-                <input
-                  type="submit"
-                  value="Actualizar"
-                  onClick={() => {
-                    setEditable(true), updatePhoto();
-                  }}
-                  className="flex items-center justify-center bg-black text-white p-1 rounded-md h-14 w-2/5 mt-2" 
-                  
-                />
-              
-              </div>
-            )} */}
-              </div>
-
-              <div
-                id="rightSidePicture"
-                className="flex justify-center items-center w-2/4"
-              >
-                <div id="picture" className="flex flex-col items-center">
-                  <img
-                    src={image}
-                    alt="Profile picture"
-                    className=" h-[160px] w-[160px] rounded-[50%]
-                    md:h-[200px] md:w-[200px]
-                    lg:h-[230px] lg:w-[230px]"
-                  />
                 </div>
-
-                {editable == false && (
-                  <div className="flex flex-col items-center">
-                    <img
-                      src={image}
-                      alt="Profile picture"
-                      className=" h-[160px] w-[178px] rounded-[50%]"
-                    />
-                    <input
-                      type="file"
-                      onChange={(e) => {
-                        setFile(e.target.files[0]),
-                          setImage(
-                            URL.createObjectURL(
-                              e.target.files[0],
-                              console.log("prueba")
-                            )
-                          );
-                      }}
-                      className="flex items-center justify-center bg-black text-white p-1  h-14 w-[200px] mt-3"
-                    />
-                  </div>
-                )}
+                <div
+                  id="rightSidePicture"
+                  className="flex justify-center items-center w-2/4"
+                >
+                  {editable == true && (
+                    <div id="picture" className="flex flex-col items-center">
+                      <img
+                        src={image}
+                        alt="Profile picture"
+                        className=" h-[160px] w-[160px] rounded-[50%]
+                        md:h-[200px] md:w-[200px]
+                        lg:h-[230px] lg:w-[230px]"
+                      />
+                    </div>
+                  )}
+                  {editable == false && (
+                    <div className="flex flex-col items-center">
+                      <img
+                        src={image}
+                        alt="Profile picture"
+                        className=" h-[160px] w-[178px] rounded-[50%]"
+                      />
+                      <input
+                        type="file"
+                        onChange={(e) => {
+                          setFile(e.target.files[0]),
+                            setImage(
+                              URL.createObjectURL(
+                                e.target.files[0],
+                                console.log("prueba")
+                              )
+                            );
+                        }}
+                        className="flex items-center justify-center bg-black text-white p-1  h-14 w-[200px] mt-3"
+                      />
+                    </div>
+                  )}
 
                 {/* {editable==true && (
                 <div>
