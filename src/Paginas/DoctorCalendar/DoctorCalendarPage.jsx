@@ -1,18 +1,27 @@
-import React, { useState } from 'react'
-import { Calendario } from '../../Componentes/Calendario/Calendario'
-import { DoctorNav } from '../../Componentes/ProfileNav/DoctorNav'
+import React, { useState } from "react";
+import { Calendario } from "../../Componentes/Calendario/Calendario";
+import { DoctorNav } from "../../Componentes/ProfileNav/DoctorNav";
 import { useUser } from "../../contexts/UserContext";
 
 export default function DoctorCalendarPage() {
-  const {user}=useUser();
-  const [uid, SetUid]=useState(user.uid);
+  const { user } = useUser();
+  const [uid, SetUid] = useState(user.uid);
 
   return (
-    <div className=''>
-    <DoctorNav></DoctorNav>
-    <div className='xl:px-20 md:px-10 p-5'>
-      <Calendario userid={uid} />
+    <div id="main-container" className="flex flex-col justify-center items-center gap-[13px] py-[17px]">
+      
+      <div id="top-container">
+        <DoctorNav></DoctorNav>
+      </div>
+      
+      <div id="bottom-container">
+        <div className="bg-white rounded-[12px] w-[363px] p-2 
+        md:w-[583px]
+        lg:w-[683px]
+        xl:w-[763px]">
+          <Calendario userid={uid} />
+        </div>
+      </div>
     </div>
-    </div>
-  )
+  );
 }

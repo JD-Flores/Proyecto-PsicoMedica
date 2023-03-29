@@ -165,18 +165,21 @@ export function ReservarCitaPage() {
       
       <ProfileNav></ProfileNav>
 
-      <div className="max-w-lg mx-auto m-8 bg-white p-10 rounded-xl shadow shadow-slate-300 w-[500px] h-fit">
+      <div className="md:max-w-lg max-w-sm mx-auto bg-white p-10 rounded-xl shadow shadow-slate-300 mt-6">
         <div>
-          <h1 className="text-4xl text-gray-500 text-justify p-1">
+          <h1 className="text-3xl lg:text-4xl text-gray-500 text-justify p-1">
             Reservar Cita
           </h1>
         </div>
 
         <div className="max-w-lg mx-auto m-4 text-center">
           <div className="selectDoctor">
-            <h2 className="text-xl text-black font-bold   mb-1">
-              Doctor seleccionado: {context.name} {context.lastname}
+            <h2 className="text-base lg:text-xl text-black font-bold mb-1">
+              Doctor seleccionado: 
+              
+              
             </h2>
+            <p className="text-base lg:text-xl">{context.name} {context.lastname}</p>
           </div>
         
 
@@ -184,7 +187,7 @@ export function ReservarCitaPage() {
           {/* Input fecha */}
           <label htmlFor="fecha" className="block cursor-pointer">
             <div className="py-1 mt-1">
-              <h2 className="text-xl text-black font-bold  mb-1">Fecha:</h2>
+              <h2 className="text-base lg:text-xl text-black font-bold mb-1">Fecha:</h2>
 
               <input
                 className="w-[300px] p-3 border border-slate-200 rounded-lg focus:outline-none focus:border-slate-500 hover:shadow text-sm"
@@ -206,7 +209,7 @@ export function ReservarCitaPage() {
 
           <label htmlFor="hora" className="block cursor-pointer">
             <div className="py-1 mt-1">
-              <h2 className="text-xl text-black font-bold  mb-1">Hora Inicio:</h2>
+              <h2 className="text-base lg:text-xl text-black font-bold mb-1">Hora Inicio:</h2>
 
               <select
               id="hora" placeholder="Indique una hora"
@@ -216,7 +219,7 @@ export function ReservarCitaPage() {
                   required: true,
                 })}
               >
-                  <option value=""></option>
+                  <option value="">Hora Inicio</option>
                   <option value="08:00:00">8:00 AM</option>
                   <option value="09:00:00">9:00 AM</option>
                   <option value="10:00:00">10:00 AM</option>
@@ -241,7 +244,7 @@ export function ReservarCitaPage() {
 
           <label htmlFor="hora2" className="block cursor-pointer">
             <div className="py-1 mt-1">
-              <h2 className="text-xl text-black font-bold  mb-1">Hora Fin:</h2>
+              <h2 className="text-base lg:text-xl text-black font-bold mb-1">Hora Fin:</h2>
 
               <select
               id="hora2"
@@ -251,7 +254,7 @@ export function ReservarCitaPage() {
                   required: true,
                 })}
               >
-                  <option value=""></option>
+                  <option value="">Hora Fin</option>
                   <option value="08:00:00">8:00 AM</option>
                   <option value="09:00:00">9:00 AM</option>
                   <option value="10:00:00">10:00 AM</option>
@@ -276,7 +279,7 @@ export function ReservarCitaPage() {
 
           <label htmlFor="motivoCita" className="block cursor-pointer">
             <div className="py-1 mt-1">
-              <h2 className="text-xl text-black font-bold  mb-1">Motivo:</h2>
+              <h2 className="text-base lg:text-xl text-black font-bold mb-1">Motivo:</h2>
               <textarea
               id="motivoCita"
                 className="w-[300px] h-[170px] p-3 border border-slate-200 rounded-lg focus:outline-none focus:border-slate-500 hover:shadow text-sm resize-none"
@@ -302,7 +305,7 @@ export function ReservarCitaPage() {
           </label>
 
           <div className="py-1 mt-1">
-            <h2 className="text-xl text-black font-bold  mb-1">Disponibilidad de {context.name} {context.lastname}:</h2>
+            <h2 className="text-base lg:text-xl text-black font-bold mb-2">Disponibilidad de {context.name} {context.lastname}:</h2>
             <Calendario	userid={context.uid} />
           </div>
 

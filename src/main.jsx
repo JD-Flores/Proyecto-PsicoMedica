@@ -2,7 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import './index.css'
 import { Routes,Route,BrowserRouter} from "react-router-dom"
-import {BUSCAR_DOC, CHAT, HOME_URL, LOGIN_URL, PERFIL_CLIENTE, PERFIL_DOCTOR, REGISTER_DOCTOR_URL, REGISTER_PATIENT_URL, REGISTER_URL, RESERVAR_CITA,DOC_DETAIL, CHECKOUT, CALENDAR, CHATDOC, FEEDBACK } from './constantes/urls'
+import {BUSCAR_DOC, CHAT, HOME_URL, LOGIN_URL, PERFIL_CLIENTE, PERFIL_DOCTOR, REGISTER_DOCTOR_URL, REGISTER_PATIENT_URL, REGISTER_URL, RESERVAR_CITA,DOC_DETAIL, CHECKOUT, CALENDAR, CHATDOC, FEEDBACK, FAQ_URL } from './constantes/urls'
 import { Layout } from './Componentes/Layout/Layout'
 import {HomePage} from './Paginas/Home/HomePage'
 import {RegisterPage} from './Paginas/register/RegisterPage'
@@ -21,6 +21,7 @@ import { DoctorDetail } from './Paginas/doctorDetail/doctorDetail'
 import { CheckoutPage } from './Paginas/checkout/CheckoutPage'
 import { Feedback } from './Paginas/Feedback/Feedback'
 import DoctorCalendarPage from './Paginas/DoctorCalendar/DoctorCalendarPage'
+import {FAQ} from './Componentes/FAQ/FAQ'
 
 
 ReactDOM.createRoot(document.getElementById('root')).render(
@@ -29,6 +30,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
       <Routes>
         <Route element={<Layout/>}>
         <Route path={HOME_URL} element={<HomePage/>}/>
+        <Route path={FAQ_URL} element={<FAQ/>}/>
         <Route path={REGISTER_URL} element={<RegisterPage/>}/>
         <Route path={LOGIN_URL} element={<LoginPage/>}/>
         <Route path={REGISTER_DOCTOR_URL} element={<RegisterDoctorPage/>}/>

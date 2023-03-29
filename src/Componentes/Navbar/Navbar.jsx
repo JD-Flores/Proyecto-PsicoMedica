@@ -6,6 +6,7 @@ import {
   LOGIN_URL,
   PERFIL_CLIENTE,
   REGISTER_URL,
+  FAQ_URL
 } from "../../constantes/urls";
 import { useUser } from "../../contexts/UserContext";
 import { logout } from "../../firebase/auth-service";
@@ -19,11 +20,11 @@ export function Navbar() {
   return (
     <nav
       id="header"
-      className="w-full z-30 top-10 py-1 border-slate-500 bg-[#5974A9] font-comfortaa text-[14px]"
+      className="w-full z-30 top-10 py-1 border-slate-500 bg-[#5974A9] font-comfortaa text-[12px] lg:text-[14px]"
     >
       <div className="w-full flex items-center justify-between mt-0 px-6 py-2">
         <div className="group md:hidden block">
-          <button className="outline-none focus:outline-none border px-3 py-1 bg-white rounded-sm flex items-center min-w-32 h-[48px] w-[100px]">
+          <button className="outline-none focus:outline-none border px-3 py-1 bg-white rounded-sm flex items-center min-w-32 h-[38px] lg:h-[48px] w-[80px] lg:w-[100px]">
             <span className="pr-1 font-semibold flex-1">Menu</span>
             <span>
               <svg
@@ -47,7 +48,7 @@ export function Navbar() {
               <Link to={HOME_URL}>Nosotros</Link>
             </li>
             <li className="rounded-sm px-3 py-1 hover:bg-gray-100">
-              <Link to={HOME_URL}>FAQ</Link>
+              <Link to={FAQ_URL}>FAQ</Link>
             </li>
           </ul>
         </div>
@@ -75,7 +76,7 @@ export function Navbar() {
               </li>
               <li>
                 <Link
-                  to={HOME_URL}
+                  to={FAQ_URL}
                   className="inline-block no-underline hover:text-black text-lg py-2 px-4 lg:-ml-2"
                 >
                   FAQ
@@ -89,21 +90,21 @@ export function Navbar() {
             className="order-2 md:order-3 flex flex-wrap items-center justify-end mr-0 md:mr-4"
             id="nav-content"
           >
-            <div className="auth flex items-center w-full md:w-full">
+            <div className="auth flex items-center w-full md:w-full ">
               
                 <Link to={PERFIL_CLIENTE}>
-                  <div className="flex bg-white p-2 rounded border border-gray-300 mr-4 hover:bg-gray-100 hover:text-gray-700 font-bold text-blue-600">
+                  <div className="h-[38px] lg:h-[48px] flex bg-white p-2 rounded border border-gray-300 mr-4 hover:bg-gray-100 hover:text-gray-700 font-bold text-blue-600">
                     <img
-                      className="rounded-full w-[30px] h-[30px] block mr-[8px]"
+                      className="rounded-full lg:w-[30px] lg:h-[30px] block mr-[8px]"
                       src={user.profilePic}
                     />
-                    <p className="mt-1">{user.name}</p>
+                    <p className="lg:mt-[4px] mt-[0.5px]">{user.name}</p>
                   </div>
                 </Link>
 
               <button
                 onClick={handleLogout}
-                className="h-[48px] bg-blue-600 text-gray-200  p-2 rounded  hover:bg-blue-500 hover:text-gray-100 font-bold"
+                className="h-[38px] lg:h-[48px] bg-blue-600 text-gray-200  p-2 rounded  hover:bg-blue-500 hover:text-gray-100 font-bold"
               >
                 Cerrar Sesión{" "}
               </button>

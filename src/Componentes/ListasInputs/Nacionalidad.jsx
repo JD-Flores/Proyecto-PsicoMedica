@@ -1,11 +1,13 @@
 import React from 'react'
 
-export function Nacionalidad({handle}) {
+export function Nacionalidad({first, editable, handle}) {
 
   return (
 
-    <select id="country" name="country" onChange={handle} className=" w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow text-sm">
-    <option>Elije tu país de residencia</option>
+    <select id="country" name="country" onChange={handle} disabled={editable}
+    defaultValue={first}
+    className=" md:text-xl text-black w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow">
+    <option disabled hidden value={first}>{first}</option>
     <option value="Afghanistan">Afganistán</option>
     <option value="Aland Islands">Islas Aland</option>
     <option value="Albania">Albania</option>

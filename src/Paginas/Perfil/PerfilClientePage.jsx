@@ -33,17 +33,17 @@ export function PerfilClientePage() {
   const newLastName = watch("lastname");
   const newPassword = watch("password");
   const newNumber = watch("number");
-  
+  const newAge = watch("age");
+
   const patterns = {
     name: /^[A-Za-z]+$/i,
     mail: /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/,
     phone: /^[0-9]+$/i,
-    password: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])([A-Za-z\d$@$!%*?&]|[^ ]){8,15}$/
-   };
-  
+    password:
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])([A-Za-z\d$@$!%*?&]|[^ ]){8,15}$/,
+  };
 
-  
-   const messages = {
+  const messages = {
     name: "El formato introducido no es el correcto",
     phone: "Debes introducir un número correcto",
     mail: "Debes introducir una dirección correcta",
@@ -54,22 +54,25 @@ export function PerfilClientePage() {
     Al menos una letra minucula
     Al menos un dígito
     No espacios en blanco
-    Al menos 1 caracter especial `
-    
-   }
-
-  
+    Al menos 1 caracter especial `,
+  };
 
   const onSubmit = (data) => {
-    const result={newMail, newName, newLastName, newNumber, newPassword};
-    updateInfoClient(user,result);
+    const result = {
+      newMail,
+      newName,
+      newLastName,
+      newNumber,
+      newPassword,
+      newAge,
+    };
+    updateInfoClient(user, result);
     setUploadConfirmmed(true);
     setUpdate(true);
-    setEditable(!editable)
+    setEditable(!editable);
     setUpdate(false);
     updatePhoto();
-    
-  }
+  };
 
   const handleUser = (result) => {
     user.profilePic = result;
@@ -77,9 +80,9 @@ export function PerfilClientePage() {
     console.log("prueba " + user.profilePic);
   };
 
-  const pruebaPrint = () =>{
+  const pruebaPrint = () => {
     console.log("HOLA");
-  }
+  };
 
   useEffect(() => {
     setImage(user.profilePic);
@@ -116,297 +119,310 @@ export function PerfilClientePage() {
 
       <div
         id="bottom-container"
-        className="flex flex-col p-4 w-[450px] h-4/5 items-center bg-white rounded-[12px]"
+        className="flex flex-col p-4 w-[363px] h-4/5 bg-white rounded-[12px] 
+        md:w-[583px]
+        lg:w-[683px]
+        xl:w-[763px] "
       >
-        <div id="title" className="flex text-left text-3xl m-2 text-[#908989] ">
+        <div
+          id="title"
+          className="flex text-2xl m-2 text-[#908989] md:text-3xl lg:text-4xl"
+        >
           <h1>Datos Personales</h1>
         </div>
 
-        <div id="clientData" className="flex flex-col">
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <div id="sub-top-container" className="flex flex-row gap-[10px]">
-            <div id="left-side" className="w-2/4 ">
+        <div id="clientData" className="flex flex-col ">
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <div id="sub-top-container" className="flex flex-row gap-[10px]">
+              <div id="leftSideNameLastName" className="w-2/4 ">
+                <label htmlFor="name" className="block cursor-pointer">
+                  <div className="py-1 mt-1">
+                    <h2 className="text-lg md:text-xl text-[#908989] mt-[5px] mb-1">
+                      Nombre
+                    </h2>
 
-              
+                    <input
+                      className="md:text-xl text-black w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow"
+                      placeholder={user.name}
+                      id="name"
+                      name="name"
+                      type="text"
+                      readOnly={editable}
+                      {...register("name", {
+                        required: true,
+                        pattern: {
+                          value: patterns.name,
+                          message: messages.name,
+                        },
+                      })}
+                    />
+                    {errors.name?.type === "required" && (
+                      <p className="text-red-600">El campo es requerido</p>
+                    )}
+                    {errors.name && <p>{errors.name.message}</p>}
+                  </div>
+                </label>
 
-              <label htmlFor="name" className="block cursor-pointer">
-            <div className="py-1 mt-1">
-              <h2 className="text-xl text-black font-bold  mb-1">Nombre</h2>
+                <label htmlFor="lastname" className="block cursor-pointer">
+                  <div className="py-1 md:py-3 lg:py-6 mt-1">
+                    <h2 className="text-lg md:text-xl text-[#908989] mt-[5px] mb-1">
+                      Apellido
+                    </h2>
 
-              <input
-                className="w-[200px] p-3 border border-slate-200 rounded-lg focus:outline-none focus:border-slate-500 hover:shadow text-sm"
-                placeholder={user.name}
-                id="name"
-                name="name"
-                type="text"
-                readOnly={editable}
-                {...register("name", {
-                  required: true,
-                  pattern: {
-                    value: patterns.name,
-                    message: messages.name
-                  }
-                })}
-              />
-              {errors.name?.type === "required" && 
-                (<p className="text-red-600">El campo es requerido</p>)
-            }
-            {errors.name && <p>{errors.name.message}</p>}
-            </div>
-            </label>
-            
-
-            <label htmlFor="lastname" className="block cursor-pointer">
-            <div className="py-1 mt-1">
-              <h2 className="text-lg text-black font-bold  mb-1">Apellido</h2>
-
-              <input
-                className="w-[200px] p-3 border border-slate-200 rounded-lg focus:outline-none focus:border-slate-500 hover:shadow text-sm"
-                id="lastname"
-                name="lastname"
-                type="text"
-                readOnly={editable}
-                {...register("lastname", {
-                  required: true,
-                  pattern: {
-                    value: patterns.name,
-                    message: messages.name
-                  }
-                })}
-              />
-              {errors.lastname?.type === "required" && 
-                (<p className="text-red-600">El campo es requerido</p>)
-            }
-            {errors.lastname && <p>{errors.lastname.message}</p>}
-            </div>
-            </label>
-
-            <label htmlFor="number" className="block cursor-pointer">
-            <div className="py-1 mt-1">
-              <h2 className="text-lg text-black font-bold  mb-1">Número</h2>
-
-              <input
-                className="w-[200px] p-3 border border-slate-200 rounded-lg focus:outline-none focus:border-slate-500 hover:shadow text-sm"
-                placeholder={user.phone}
-                id="number"
-                name="number"
-                type="tel"
-                readOnly={editable}
-                {...register("number", {
-                  required: true,
-                  minLength: {
-                    value: 11,
-                    message: messages.phone
-                  },
-                  maxLength: {
-                    value: 11,
-                    message: messages.phone
-                  },
-                  pattern: {
-                    value: patterns.phone,
-                    message: messages.phone
-                  }
-                })}
-              />
-              {errors.number?.type === "required" && 
-                (<p className="text-red-600">El campo es requerido</p>)
-            }
-            {errors.number && <p>{errors.number.message}</p>}
-            </div>
-            </label>
-
-            <label htmlFor="age" className="block cursor-pointer">
-            <div className="py-1 mt-1">
-              <h2 className="text-lg text-black font-bold  mb-1">Edad</h2>
-
-              <input
-                placeholder={user.age}
-                className="w-[200px] p-3 border border-slate-200 rounded-lg focus:outline-none focus:border-slate-500 hover:shadow text-sm"
-                id="age"
-                name="age"
-                type="tel"
-                readOnly={editable}
-                {...register("age", {
-                  required: true,
-                  minLength: {
-                    value: 1,
-                    message: messages.phone
-                  },
-                  maxLength: {
-                    value: 3,
-                    message: messages.phone
-                  },
-                  pattern: {
-                    value: patterns.phone,
-                    message: messages.phone,
-                  }
-                })}
-              />
-              {errors.age?.type === "required" && 
-                (<p className="text-red-600">El campo es requerido</p>)
-            }
-            {errors.age && <p>{errors.age.message}</p>}
-            </div>
-            </label>
-
-            <label htmlFor="age" className="block cursor-pointer">
-            <div className="py-1 mt-1">
-              <h2 className="text-lg text-black font-bold  mb-1">Contraseña</h2>
-
-              <input
-                placeholder={user.password}
-                className="w-[200px] p-3 border border-slate-200 rounded-lg focus:outline-none focus:border-slate-500 hover:shadow text-sm"
-                id="password"
-                name="password"
-                type="password"
-                readOnly={editable}
-                {...register("password", {
-                  required: true,
-                  pattern: {
-                    value: patterns.password,
-                    message: messages.password,
-                  }
-                })}
-              />
-              {errors.password?.type === "required" && 
-                (<p className="text-red-600">El campo es requerido</p>)
-            }
-            {errors.password && <p>{errors.password.message}</p>}
-            </div>
-            </label>
-
-
-            <label htmlFor="email" className="block cursor-pointer">
-            <div className="py-1 mt-1">
-              <h2 className="text-xl text-black font-bold  mb-1">Email</h2>
-
-              <input
-                className="w-[200px] p-3 border border-slate-200 rounded-lg focus:outline-none focus:border-slate-500 hover:shadow text-sm"
-                placeholder={user.email}
-                id="email"
-                name="email"
-                type="text"
-                readOnly={editable}
-                {...register("mail", {
-                  required: true,
-                  pattern: {
-                    value: patterns.mail,
-                    message: messages.mail
-                  }
-                })}
-              />
-              {errors.mail?.type === "required" && 
-                (<p className="text-red-600">El campo es requerido</p>)
-            }
-            {errors.mail && <p>{errors.mail.message}</p>}
-            </div>
-            </label>
-
-          {/* <input className=" cursor-pointer flex items-center justify-center bg-black text-white p-1 rounded-md h-10 w-[180px] text-center text-sm font-medium" type="submit" value="Confirmar cambios" /> */}
-
-
-          {/* {editable == false && (
-              <div className="flex items-center justify-center">
-                <input
-                  type="submit"
-                  value="Actualizar"
-                  onClick={() => {
-                    setEditable(true), updatePhoto();
-                  }}
-                  className="flex items-center justify-center bg-black text-white p-1 rounded-md h-14 w-2/5 mt-2" 
-                  
-                />
-              
+                    <input
+                      className="md:text-xl text-black w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow"
+                      id="lastname"
+                      name="lastname"
+                      type="text"
+                      readOnly={editable}
+                      placeholder={user.lastname}
+                      {...register("lastname", {
+                        required: true,
+                        pattern: {
+                          value: patterns.name,
+                          message: messages.name,
+                        },
+                      })}
+                    />
+                    {errors.lastname?.type === "required" && (
+                      <p className="text-red-600">El campo es requerido</p>
+                    )}
+                    {errors.lastname && <p>{errors.lastname.message}</p>}
+                  </div>
+                </label>
               </div>
-            )} */}
+              <div
+                id="rightSidePicture"
+                className="flex justify-center items-center w-2/4"
+              >
+                {editable == true && (
+                  <div id="picture" className="flex flex-col items-center">
+                    <img
+                      src={image}
+                      alt="Profile picture"
+                      className=" h-[160px] w-[160px] rounded-[50%]
+                        md:h-[200px] md:w-[200px]
+                        lg:h-[230px] lg:w-[230px]"
+                    />
+                  </div>
+                )}
+                {editable == false && (
+                  <div className="flex flex-col items-center">
+                    <img
+                      src={image}
+                      alt="Profile picture"
+                      className=" h-[160px] w-[178px] rounded-[50%]"
+                    />
+                    <input
+                      type="file"
+                      onChange={(e) => {
+                        setFile(e.target.files[0]),
+                          setImage(
+                            URL.createObjectURL(
+                              e.target.files[0],
+                              console.log("prueba")
+                            )
+                          );
+                      }}
+                      className="flex items-center justify-center bg-black text-white p-1  h-14 w-[200px] mt-3"
+                    />
+                  </div>
+                )}
 
-            </div>
-            
-            <div
-              id="right-side"
-              className="flex justify-center items-center w-2/4"
-            >
-              <div className="flex flex-col items-center">
-                <img
-                  src={image}
-                  alt="Profile picture"
-                  className="w-full rounded-full"
-                />
-              </div>
-
-              {editable == false && (
-                <div className="flex flex-col items-center">
-                  <img
-                    src={image}
-                    alt="Profile picture"
-                    className="w-full rounded-full "
-                  />
-                  <input
-                    type="file"
-                    onChange={(e) => {
-                      setFile(e.target.files[0]),
-                        setImage(
-                          URL.createObjectURL(
-                            e.target.files[0],
-                            console.log("prueba")
-                          )
-                        );
-                    }}
-                    className="flex items-center justify-center bg-black text-white p-1  h-14 w-[200px] mt-3"
-                  />
-                </div>
-              )}
-
-              {/* {editable==true && (
+                {/* {editable==true && (
                 <div>
                   <img src={user.profilePic} alt="Profile picture" className='w-full ' />
                 </div>
                )} */}
+              </div>
             </div>
-          </div>
+            <div id="sub-middle-container" className="flex flex-col">
+              <div id="number-age" className="flex flex-row gap-[10px]">
+                <div id="leftSideNumber" className="md:w-2/4">
+                  <label htmlFor="number" className="block cursor-pointer">
+                    <div className="py-1 mt-1">
+                      <h2 className="text-lg md:text-xl text-[#908989] mt-[5px] mb-1">
+                        Número
+                      </h2>
 
-          <div id="sub-bottom-container" className="flex flex-col">
-            
+                      <input
+                        className="md:text-xl text-black w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow"
+                        placeholder={user.phone}
+                        id="number"
+                        name="number"
+                        type="tel"
+                        readOnly={editable}
+                        {...register("number", {
+                          required: true,
+                          minLength: {
+                            value: 11,
+                            message: messages.phone,
+                          },
+                          maxLength: {
+                            value: 11,
+                            message: messages.phone,
+                          },
+                          pattern: {
+                            value: patterns.phone,
+                            message: messages.phone,
+                          },
+                        })}
+                      />
+                      {errors.number?.type === "required" && (
+                        <p className="text-red-600">El campo es requerido</p>
+                      )}
+                      {errors.number && <p>{errors.number.message}</p>}
+                    </div>
+                  </label>
+                </div>
+                <div id="rightSideAge" className="md:w-2/4">
+                  <label htmlFor="age" className="block cursor-pointer">
+                    <div className="py-1 mt-1">
+                      <h2 className="text-lg md:text-xl text-[#908989] mt-[5px] mb-1">
+                        Edad
+                      </h2>
 
-            <div>
-              
-              <div className="flex items-center justify-center w-full">
-                {editable==false && < button className=" cursor-pointer flex items-center justify-center bg-black text-white p-1 rounded-md h-10 w-[180px] text-center text-sm font-medium" type="submit" >Actualizar</button>}  
+                      <input
+                        placeholder={user.age}
+                        className="md:text-xl text-black w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow"
+                        id="age"
+                        name="age"
+                        type="number"
+                        readOnly={editable}
+                        {...register("age", {
+                          required: true,
+                          minLength: {
+                            value: 1,
+                            message: messages.phone,
+                          },
+                          maxLength: {
+                            value: 2,
+                            message: messages.phone,
+                          },
+                          pattern: {
+                            value: patterns.phone,
+                            message: messages.phone,
+                          },
+                        })}
+                      />
+                      {errors.age?.type === "required" && (
+                        <p className="text-red-600">El campo es requerido</p>
+                      )}
+                      {errors.age && <p>{errors.age.message}</p>}
+                    </div>
+                  </label>
+                </div>
               </div>
 
-              {editable == true && (
-                <div
-                  id="buttons"
-                  className="flex flex-row items-center justify-evenly w-full "
-                >
-                  <button
-                    onClick={() => {
-                      setEditable(!editable),
-                      setUploadConfirmmed(false);
-                    }}
-                    className="flex items-center justify-center bg-[#5974A9] text-white p-1 rounded-md h-14 w-2/5 mt-6 font-semibold"
-                  >
-                    Editar Datos Personales
-                  </button>
-                  
+              <div
+                id="contra-email"
+                className="flex flex-col md:flex-row md:gap-[10px]"
+              >
+                <div id="leftSideEmail" className="md:w-2/4">
+                  <label htmlFor="email" className="block cursor-pointer">
+                    <div className="py-1 mt-1">
+                      <h2 className="text-lg md:text-xl text-[#908989] mt-[5px] mb-1">
+                        Email
+                      </h2>
+
+                      <input
+                        className="md:text-xl text-black w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow"
+                        placeholder={user.email}
+                        id="email"
+                        name="email"
+                        type="text"
+                        readOnly={editable}
+                        {...register("mail", {
+                          required: true,
+                          pattern: {
+                            value: patterns.mail,
+                            message: messages.mail,
+                          },
+                        })}
+                      />
+                      {errors.mail?.type === "required" && (
+                        <p className="text-red-600">El campo es requerido</p>
+                      )}
+                      {errors.mail && <p>{errors.mail.message}</p>}
+                    </div>
+                  </label>
                 </div>
-              )}
+                <div id="rightSideContra" className="md:w-2/4">
+                  <label htmlFor="contra" className="block cursor-pointer">
+                    <div className="py-1 mt-1">
+                      <h2 className="text-lg md:text-xl text-[#908989] mt-[5px] mb-1">
+                        Contraseña
+                      </h2>
+
+                      <input
+                        className="md:text-xl text-black w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow"
+                        id="password"
+                        name="password"
+                        type="password"
+                        readOnly={editable}
+                        {...register("password", {
+                          required: true,
+                          pattern: {
+                            value: patterns.password,
+                            message: messages.password,
+                          },
+                        })}
+                      />
+                      {errors.password?.type === "required" && (
+                        <p className="text-red-600">El campo es requerido</p>
+                      )}
+                      {errors.password && <p>{errors.password.message}</p>}
+                    </div>
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <div id="sub-bottom-container" className="flex flex-col">
+              <div>
+                <div className="flex items-center justify-center w-full">
+                  {editable == false && (
+                    <button
+                      className=" cursor-pointer flex items-center justify-center bg-black text-white p-1 rounded-md h-10 w-[180px] text-center text-sm font-medium"
+                      type="submit"
+                    >
+                      Actualizar
+                    </button>
+                  )}
+                </div>
+
+                {editable == true && (
+                  <div
+                    id="buttons"
+                    className="flex flex-row items-center justify-evenly w-full "
+                  >
+                    <button
+                      onClick={() => {
+                        setEditable(!editable), setUploadConfirmmed(false);
+                      }}
+                      className="flex items-center justify-center bg-[#5974A9] text-white p-1 rounded-md h-14 w-2/5 mt-6 font-semibold md:text-lg"
+                    >
+                      Editar Datos Personales
+                    </button>
+                  </div>
+                )}
 
                 {editable == false && (
-                <div
-                  id="buttons"
-                  className="flex flex-row items-center justify-evenly w-full "
-                >
-                  {update == false && (<p>Actualiza primero sus cambios</p>)}
-                
-                  {uploadConfirmmed ? <p>Actualización de datos exitosa</p>: ""}
-                  
-                </div>
-              )}
-              
+                  <div
+                    id="buttons"
+                    className="flex flex-row items-center justify-evenly w-full "
+                  >
+                    {update == false && <p>Actualiza primero sus cambios</p>}
+
+                    {uploadConfirmmed ? (
+                      <p>Actualización de datos exitosa</p>
+                    ) : (
+                      ""
+                    )}
+                  </div>
+                )}
+              </div>
             </div>
-            
-          </div>
           </form>
         </div>
       </div>
