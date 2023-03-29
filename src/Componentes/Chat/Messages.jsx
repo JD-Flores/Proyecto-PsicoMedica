@@ -32,6 +32,7 @@ export function Messages() {
 
       const checkAvailable= async()=>{
         const citas = await getDoc(doc(db,"calendarios",data.user.uid))
+        // console.log(citas.data().citas)
         const dates=citas.data()?.citas
         setFound(false)
         setAvailable(true)
