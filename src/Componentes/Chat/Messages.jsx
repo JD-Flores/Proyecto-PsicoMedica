@@ -10,7 +10,7 @@ import { db,store  } from '../../firebase/config'
 import { v4 as uuid} from "uuid";
 import { getDownloadURL, ref, uploadBytesResumable } from '@firebase/storage'
 import { useUser } from '../../contexts/UserContext'
-import { Link } from 'react-router-dom'
+import { createRoutesFromChildren, Link } from 'react-router-dom'
 import { BUSCAR_DOC } from '../../constantes/urls'
 import { completed } from '../../firebase/auth-service'
 import { updateCompleted } from '../../firebase/users-service'
@@ -46,13 +46,19 @@ export function Messages() {
         if(date?.uid==user.uid & date?.completed == false){
             const reserveTime = new Date(date.info.start)
             const reserveEndTime = new Date(date.info.end);
-            // reserveEndTime.setDate(26)
+            // reserveTime.setHours(22)
+            // reserveTime.setDate(27)
+            // reserveEndTime.setHours(23)
+            // reserveEndTime.setDate(27)
+            // console.log(hour)
+            // console.log(reserveTime)
+            // console.log(reserveEndTime)
             if(reserveTime<hour & reserveEndTime>hour){ //la reserva esta en curso y desbloquea el input
-                setAvailable(false)
-                setFound(true)
+                setAvailable(false);
+                setFound(true);
+                return;
             }if (reserveEndTime<hour) {
                 updateCompleted(data.user,true,date.id)// reserva ya paso y se pone el estado completado en true
-                
             } else {
                 if(found!=true){
                     setAvailable(true)// reserva no ha pasado y bloquea el input
