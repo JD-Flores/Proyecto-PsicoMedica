@@ -6,6 +6,7 @@ import {
   CALENDAR,
   CHAT,
   CHATDOC,
+  FEEDBACK,
   PERFIL_DOCTOR,
 } from "../../constantes/urls";
 import ArrowDown from "../../imagenes/arrow-down-s-line.png";
@@ -54,6 +55,12 @@ export function DoctorNav() {
             className="flex items-center justify-center bg-[#5974A9] text-white p-1 rounded-md h-10 w-1/5 text-center"
           >
             Chats
+          </Link>
+          <Link
+            to={FEEDBACK}
+            className="flex items-center justify-center bg-[#5974A9] text-white p-1 rounded-md h-10 w-1/5 text-center"
+          >
+            Feedback
           </Link>
         </div>
       </div>

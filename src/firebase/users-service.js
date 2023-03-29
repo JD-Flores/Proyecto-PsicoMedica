@@ -252,7 +252,7 @@ export const handleFeedbackRating = async (doctor,user,date,review,rating)=>{
         }
         await updateDoc(doc(db,"feedback",doctor.uid),{
             ratings:arrayUnion({
-                ["Name"]:user.name,
+                ["name"]:user.name,
                 // ["Lastname"]:user.lastname,
                 ["date"]:date,
                 ["review"]:review,
@@ -262,19 +262,10 @@ export const handleFeedbackRating = async (doctor,user,date,review,rating)=>{
             
 }
 export const doctorRating = async (rating,doctor)=>{
-    console.log("doctorRating");
     const response = await getDoc(doc(db,"feedback",doctor.uid));
     const doctorInfo = await getDoctorById(doctor.uid);
-    console.log(response)
     const info = response.data().ratings;
-    console.log(info)
-    console.log(typeof info.length);
-    console.log(typeof rating);
-    console.log(typeof doctorInfo.ranking);
     const docRef =  doc(db,"users",doctor.uid)
-    console.log(info.length);
-    console.log(rating);
-    console.log(doctorInfo.ranking);
     const average = ((info.length-1)*(doctorInfo.ranking)+rating)/info.length;
     const data= {
         ranking: average,
@@ -284,6 +275,17 @@ export const doctorRating = async (rating,doctor)=>{
 
 })
 }
+
+export const feedbackForADoctor = async (doctor) => {
+    const docRef = await getDoc(doc(db,"feedback",doctor.uid));
+    const objectFeedbacks = docRef.data()?.ratings;
+    if (objectFeedbacks==undefined) {
+        return null;
+    }
+    return objectFeedbacks;
+}
+
+
 
 
 export const updateInfoClient = (user, result) => {
