@@ -5,7 +5,7 @@ import estrellagris from "../../imagenes/estrella gris.png";
 export function FeedbackCard({info}) {
   return (
     <div className='flex flex-col items-center bg-white rounded-3xl w-[220px] m-[4px]'>
-        <h1 className='mb-2 font-comfortaa font-semibold text-[18px]'>{info.name}</h1>
+        <h1 className='mb-2 font-comfortaa font-semibold text-[18px]'>{info.Name}</h1>
         <h1 className='text-[16px] text-center mb-2 font-semibold font-comfortaa'>{info.date.split(" ")[0]}</h1>
 
         <div>
