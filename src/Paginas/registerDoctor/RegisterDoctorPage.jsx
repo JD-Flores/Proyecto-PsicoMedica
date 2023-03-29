@@ -14,7 +14,6 @@ import {
   PERFIL_DOCTOR,
   REGISTER_DOCTOR_URL,
 } from "../../constantes/urls";
-import { Telefono } from "../../Componentes/ListasInputs/Telefono";
 import { store } from "../../firebase/config";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { uploadFile } from "../../firebase/users-service";
@@ -27,19 +26,10 @@ export function RegisterDoctorPage() {
   const [image, setImage] = useState(null);
   const [imageUrl, setImageUrl] = useState("");
   const [file, setFile] = useState(null);
-  // const [formData, setFormData] = useState();
-
-  function calculateAge(date) {
-    const now = new Date();
-    const diff = Math.abs(now - date);
-    const age = Math.floor(diff / (1000 * 60 * 60 * 24 * 365));
-    return age;
-  }
 
   const {
     register,
     handleSubmit,
-    getValues,
     watch,
     formState: { errors },
   } = useForm({
@@ -85,25 +75,6 @@ export function RegisterDoctorPage() {
     }
   };
 
-  //en cada input utiliza la info del campo para agregarla al form existente
-  // const handleSubmit = (event) => {
-  //   const { name, value } = event.target;
-  //   console.log(formData.age)
-
-    // if (name == "age") {
-    //   setFormData({
-    //     ...formData,
-    //     [name]: calculateAge(new Date(value)),
-    //   });
-
-    // } else {
-    //   setFormData({
-    //     ...formData,
-    //     [name]: value,
-    //   });
-    // }
-  // };
-
   return (
     <div className="flex justify-center items-center m-3 py-9">
       <div className="flex justify-center items-center flex-col  max-w-lg m-2 bg-white p-5 rounded-xl shadow shadow-slate-300 h-full text-xs ">
@@ -115,8 +86,9 @@ export function RegisterDoctorPage() {
           onSubmit={handleSubmit(onSubmit)}
           className="flex flex-col justify-between gap-2"
         >
-          <div className="flex flex-row  gap-x-16 gap-y-5">
+          <div className="flex flex-row  gap-x-8 gap-y-5">
             <div id="leftHalf" className="w-full">
+              {/* Label Nombre */}
               <label htmlFor="name" className="block cursor-pointer">
                 <div className="flex flex-row py-1 mt-2">
                   <h1 className="font-medium text-slate-700 pb-2 text-sm ">
@@ -127,7 +99,7 @@ export function RegisterDoctorPage() {
                   id="name"
                   name="name"
                   type="text"
-                  className="w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow text-sm"
+                  className="lg:w-full w-[160px] py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow text-sm"
                   placeholder="Ingresa tu nombre"
                   {...register("name", {
                     required: true,
@@ -141,7 +113,7 @@ export function RegisterDoctorPage() {
                   <p className="text-red-600">El dato ingresado no es válido</p>
                 )}
               </label>
-
+              {/* Label Apellido */}
               <label htmlFor="lastname" className="block cursor-pointer">
                 <div className="flex flex-row py-1 mt-2">
                   <h1 className="font-medium text-slate-700 pb-2 text-sm ">
@@ -152,7 +124,7 @@ export function RegisterDoctorPage() {
                   id="lastname"
                   name="lastname"
                   type="text"
-                  className="w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow text-sm"
+                  className="lg:w-full w-[160px] py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow text-sm"
                   placeholder="Ingresa tu apellido"
                   {...register("lastname", {
                     required: true,
@@ -166,7 +138,7 @@ export function RegisterDoctorPage() {
                   <p className="text-red-600">El dato ingresado no es válido</p>
                 )}
               </label>
-
+              {/* Label Correo */}
               <label htmlFor="email" className="block cursor-pointer">
                 <div className="flex flex-row py-1 mt-2">
                   <h1 className="font-medium text-slate-700 pb-2 text-sm">
@@ -177,7 +149,7 @@ export function RegisterDoctorPage() {
                   id="email"
                   name="email"
                   type="email"
-                  className="w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow text-sm"
+                  className="lg:w-full w-[160px] py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow text-sm"
                   placeholder="Ingresa tu correo"
                   {...register("email", {
                     required: true,
@@ -194,44 +166,44 @@ export function RegisterDoctorPage() {
                   </p>
                 )}
               </label>
-              <div>
-                <label htmlFor="telefono">
-                  <div className="flex flex-row py-1 mt-2">
-                    <h1 className="font-medium text-slate-700 pb-2 text-sm">
-                      Teléfono
-                    </h1>
-                  </div>
-                  <input
-                    id="phone"
-                    name="phone"
-                    type="text"
-                    className="w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow text-sm"
-                    placeholder="Ingresa tu número de teléfono"
-                    {...register("phone", {
-                      required: true,
-                      pattern: /^[0-9]+$/i,
-                      minLength: 11,
-                      maxLength: 11,
-                    })}
-                  />
-                  {errors.phone?.type === "required" && (
-                    <p className="text-red-600">El campo es requerido</p>
-                  )}
-                  {errors.phone?.type === "pattern" && (
-                    <p className="text-red-600">Ingresa sólo números</p>
-                  )}
-                  {errors.phone?.type === "minLength" && (
-                    <p className="text-red-600">
-                      El número ingresado no es válido
-                    </p>
-                  )}
-                  {errors.phone?.type === "maxLength" && (
-                    <p className="text-red-600">
-                      El número ingresado no es válido
-                    </p>
-                  )}
-                </label>
-              </div>
+              {/* Label Num Teléfono */}
+              <label htmlFor="telefono">
+                <div className="flex flex-row py-1 mt-2">
+                  <h1 className="font-medium text-slate-700 pb-2 text-sm">
+                    Teléfono
+                  </h1>
+                </div>
+                <input
+                  id="phone"
+                  name="phone"
+                  type="text"
+                  className="lg:w-full w-[160px] py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow text-sm"
+                  placeholder="Ingresa tu número de teléfono"
+                  {...register("phone", {
+                    required: true,
+                    pattern: /^[0-9]+$/i,
+                    minLength: 11,
+                    maxLength: 11,
+                  })}
+                />
+                {errors.phone?.type === "required" && (
+                  <p className="text-red-600">El campo es requerido</p>
+                )}
+                {errors.phone?.type === "pattern" && (
+                  <p className="text-red-600">Ingresa sólo números</p>
+                )}
+                {errors.phone?.type === "minLength" && (
+                  <p className="text-red-600">
+                    El número ingresado no es válido
+                  </p>
+                )}
+                {errors.phone?.type === "maxLength" && (
+                  <p className="text-red-600">
+                    El número ingresado no es válido
+                  </p>
+                )}
+              </label>
+              {/* Label Password */}
               <label htmlFor="password">
                 <div className="flex flex-row py-1 mt-2">
                   <h1 className="font-medium text-slate-700 pb-2 text-sm">
@@ -242,7 +214,7 @@ export function RegisterDoctorPage() {
                   id="password"
                   name="password"
                   type="password"
-                  className="w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow text-sm"
+                  className="lg:w-full w-[160px] py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow text-sm"
                   placeholder="Ingresa tu contraseña"
                   {...register("password", {
                     required: true,
@@ -258,6 +230,7 @@ export function RegisterDoctorPage() {
                   </p>
                 )}
               </label>
+              {/* Label Confirm Password */}
               <label htmlFor="confirmPassword">
                 <div className="flex flex-row py-1 mt-2">
                   <h1 className="font-medium text-slate-700 pb-2 text-sm">
@@ -268,7 +241,7 @@ export function RegisterDoctorPage() {
                   id="confirmPassword"
                   name="confirmPassword"
                   type="password"
-                  className="w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow text-sm"
+                  className="lg:w-full w-[160px] py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow text-sm"
                   placeholder="Ingresa nuevamente la contraseña"
                   {...register("confirmPassword", {
                     required: true,
@@ -288,6 +261,7 @@ export function RegisterDoctorPage() {
                   <p className="text-red-600">La contraseña no coincide</p>
                 )}
               </label>
+              {/* Label Experiencia doctor*/}
               <label htmlFor="Experience">
                 <div className="flex flex-row py-1 mt-2">
                   <h1 className="font-medium text-slate-700 pb-2 text-sm">
@@ -297,21 +271,26 @@ export function RegisterDoctorPage() {
                 <input
                   id="Experience"
                   name="Experience"
-                  type="text"
-                  className="w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow text-sm"
+                  type="number"
+                  className="lg:w-full w-[160px] py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow text-sm"
                   placeholder="Ingrese sus años de experiencia"
                   {...register("Experience", {
                     required: true,
-                    pattern: /^[0-9]+$/i,
+                    min: 1,
+                    max: 65,
                   })}
                 />
                 {errors.Experience?.type === "required" && (
                   <p className="text-red-600">El campo es requerido</p>
                 )}
-                {errors.Experience?.type === "pattern" && (
-                  <p className="text-red-600">Ingresa sólo números</p>
+                {errors.Experience?.type === "min" && (
+                  <p className="text-red-600">El dato ingresado no es válido</p>
+                )}
+                {errors.Experience?.type === "max" && (
+                  <p className="text-red-600">El dato ingresado no es válido</p>
                 )}
               </label>
+              {/* Label Precio consulta */}
               <label htmlFor="Price">
                 <div className="flex flex-row py-1 mt-2">
                   <h1 className="font-medium text-slate-700 pb-2 text-sm">
@@ -322,7 +301,7 @@ export function RegisterDoctorPage() {
                   id="Price"
                   name="Price"
                   type="number"
-                  className="w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow text-sm"
+                  className="lg:w-full w-[160px] py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow text-sm"
                   placeholder="Indique un precio"
                   {...register("Price", {
                     required: true,
@@ -334,54 +313,42 @@ export function RegisterDoctorPage() {
                 )}
                 {errors.Price?.type === "min" && (
                   <p className="text-red-600">
-                    El precio ingresado es inválido
+                    El precio ingresado no es válido
                   </p>
                 )}
               </label>
             </div>
-
             <div id="rightHalf" className="w-full">
-              {/* <div>
-                <label htmlFor="country">
-                  <div className="flex flex-row py-1 mt-2">
-                    <h1 className="font-medium text-slate-700 pb-2 text-sm">
-                      Nacionalidad
-                    </h1>
-                  </div>
-                  <input>
-                  
-                  </input>
-                  
-                  {...register("country")}
-                 
-                </label>
-                {errors.country?.type === "required" && (
-                  <p className="text-red-600">El campo es requerido</p>
-                )}
-              </div> */}
-
+              {/* Label edad */}
               <label htmlFor="age">
                 <div className="flex flex-row py-1 mt-2">
                   <h1 className="font-medium text-slate-700 pb-2 text-sm">
-                    Fecha de nacimiento
+                    Edad
                   </h1>
                 </div>
                 <input
                   id="age"
                   name="age"
-                  type="date"
-                  min="1930-01-01"
-                  max="2005-03-28"
+                  type="number"
                   className="w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow text-sm"
+                  placeholder="Ingresa tu edad"
                   {...register("age", {
                     required: true,
+                    min: 25,
+                    max: 90,
                   })}
                 />
                 {errors.age?.type === "required" && (
                   <p className="text-red-600">El campo es requerido</p>
                 )}
+                {errors.age?.type === "min" && (
+                  <p className="text-red-600">La edad ingresada no es válida</p>
+                )}
+                {errors.age?.type === "max" && (
+                  <p className="text-red-600">La edad ingresada no es válida</p>
+                )}
               </label>
-
+              {/* Label Género */}
               <label htmlFor="gender">
                 <div className="flex flex-row py-1 mt-2">
                   <h1 className="font-medium text-slate-700 pb-2 text-sm">
@@ -407,7 +374,7 @@ export function RegisterDoctorPage() {
                   <p className="text-red-600">El campo es requerido</p>
                 )}
               </label>
-
+              {/* Label Especialidad doctor */}
               <label htmlFor="specialty">
                 <div className="flex flex-row py-1 mt-2">
                   <h1 className="font-medium text-slate-700 pb-2 text-sm">
@@ -456,7 +423,7 @@ export function RegisterDoctorPage() {
                   <p className="text-red-600">El campo es requerido</p>
                 )}
               </label>
-
+              {/* Label Grado instrucción */}
               <label htmlFor="grade">
                 <div className="flex flex-row py-1 mt-2">
                   <h1 className="font-medium text-slate-700 pb-2 text-sm">
