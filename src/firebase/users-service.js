@@ -1,6 +1,6 @@
 import { async } from "@firebase/util";
 import { getAuth, updateProfile, updateEmail, updatePassword } from "firebase/auth";
-import{collection, doc,setDoc, where,query,getDocs, updateDoc, getDoc} from "firebase/firestore"
+import{collection, doc,setDoc, where,query,getDocs, updateDoc, getDoc, arrayUnion} from "firebase/firestore"
 import{db} from "./config"
 import { ref, uploadBytes,getDownloadURL } from "firebase/storage"
 import { store } from "../firebase/config"
@@ -80,7 +80,7 @@ export async function searchDoctorsAvailable(star, specialization){
     const results = await getDocs(usersQuery);
     //comprueba el tamano de users y retorna los usuarios
     if(results.size>0){
-        const users = results.docs.map((item)=>({
+        const users = results.docs.map((item, idx)=>({
             ...item.data(),
             id: item.id,
         }
@@ -90,13 +90,13 @@ export async function searchDoctorsAvailable(star, specialization){
         return null;
     }   
     }
-    else if(specialization == "vacio"){
+    else if(specialization == ""){
         const usersQuery = query(collection(db,"users"), where("doctor","==",true), where("ranking","==",star));
 
     const results = await getDocs(usersQuery);
     //comprueba el tamano de users y retorna los usuarios
     if(results.size>0){
-        const users = results.docs.map((item)=>({
+        const users = results.docs.map((item,idx)=>({
             ...item.data(),
             id: item.id,
         }
@@ -106,7 +106,7 @@ export async function searchDoctorsAvailable(star, specialization){
         return null;
     } 
     }
-    else if(specialization=="vacio" && star=="vacio"){
+    else if(specialization=="" && star=="vacio"){
         return [];
     }
     else{
@@ -115,7 +115,7 @@ export async function searchDoctorsAvailable(star, specialization){
     const results = await getDocs(usersQuery);
     //comprueba el tamano de users y retorna los usuarios
     if(results.size>0){
-        const users = results.docs.map((item)=>({
+        const users = results.docs.map((item,idx)=>({
             ...item.data(),
             id: item.id,
         }
@@ -160,14 +160,14 @@ export async function searchDoctorsAvailableByName(doctorName){
             var lastNameResults = await getDocs(usersQueryLastName);
 
             if(results.size>0){
-                users = results.docs.map((item)=>({
+                users = results.docs.map((item,idx)=>({
                     ...item.data(),
                     id: item.id,
                 }
                 ));
             }else{users=[]};
             if(lastNameResults.size>0){
-                users2 = lastNameResults.docs.map((item)=>({
+                users2 = lastNameResults.docs.map((item,idx)=>({
                     ...item.data(),
                     id: item.id,
                 }
@@ -210,6 +210,81 @@ export const updateProfilePic = (user, result) => {
     
 }
 
+export const updateCompleted = async (user, result,id) => {
+    const dbRef = doc(db, "calendarios",user.uid);
+    const docRef = await getDoc(dbRef)
+    let objectCitas  = docRef.data().citas;
+       if(objectCitas.length>0){
+        const resultArray = objectCitas.findIndex(element => element.id == id)
+        objectCitas[resultArray].completed= result;
+        const data= {
+            citas: objectCitas,
+          }
+          updateDoc(dbRef, data).then(docRef => {
+            console.log("A New Document Field has been added to an existing document");
+        }) 
+    }else{
+        console.log("Error de busqueda")
+    }   
+}
+export const feedbackDecision = async (user, result,id) => {
+    const dbRef = doc(db, "calendarios",user.uid);
+    const docRef = await getDoc(dbRef)
+    let objectCitas  = docRef.data().citas;
+       if(objectCitas.length>0){
+        const resultArray = objectCitas.findIndex(element => element.id == id)
+        objectCitas[resultArray].ranked= result;
+        const data= {
+            citas: objectCitas,
+          }
+          updateDoc(dbRef, data).then(docRef => {
+            console.log("A New Document Field has been added to an existing document");
+        }) 
+    }else{
+        console.log("Error de busqueda")
+    }   
+}
+export const handleFeedbackRating = async (doctor,user,date,review,rating)=>{
+    const response = await getDoc(doc(db,"feedback",doctor.uid)); 
+                    
+        if(!response.exists()){
+            await setDoc(doc(db,"feedback",doctor.uid),{ratings:[]});   
+        }
+        await updateDoc(doc(db,"feedback",doctor.uid),{
+            ratings:arrayUnion({
+                ["Name"]:user.name,
+                // ["Lastname"]:user.lastname,
+                ["date"]:date,
+                ["review"]:review,
+                ["rating"]:rating,
+                })
+            })
+            
+}
+export const doctorRating = async (rating,doctor)=>{
+    console.log("doctorRating");
+    const response = await getDoc(doc(db,"feedback",doctor.uid));
+    const doctorInfo = await getDoctorById(doctor.uid);
+    console.log(response)
+    const info = response.data().ratings;
+    console.log(info)
+    console.log(typeof info.length);
+    console.log(typeof rating);
+    console.log(typeof doctorInfo.ranking);
+    const docRef =  doc(db,"users",doctor.uid)
+    console.log(info.length);
+    console.log(rating);
+    console.log(doctorInfo.ranking);
+    const average = ((info.length-1)*(doctorInfo.ranking)+rating)/info.length;
+    const data= {
+        ranking: average,
+      }
+      updateDoc(docRef, data).then(docRef => {
+        console.log("A New Document Field has been added to an existing document");
+
+})
+}
+
 
 export const updateInfoClient = (user, result) => {
 
@@ -240,11 +315,43 @@ export const updateInfoClient = (user, result) => {
         // ...
         });
 
-        
+})
+};
 
-        
+export const updateInfoDoctor = (user, result) => {
+    const docRef = doc(db, "users", user.uid)
+    const data= {
+      email: result.newMail,
+      name: result.newName,
+      lastname: result.newLastName,
+      password: result.newPassword,
+      phone: result.newNumber,
+      experience: result.newExperience, 
+      price: result.newPrice, 
+      country: result.newCountry, 
+      gender: result.newGender, 
+      specialty: result.newSpecialty, 
+      grade: result.newGrade, 
+      biography: result.newBiography
+    }
 
-        
+    updateDoc(docRef, data).then(docRef => {
+    console.log("A New Document Field has been added to an existing document");
+
+    const auth = getAuth();
+
+
+        updateEmail(auth.currentUser, result.newMail).then(() => {
+        console.log("actualizado el email")
+        updatePassword(auth.currentUser, result.newPassword).then(() => {
+            // Update successful.
+            console.log("actualizado el password")
+        });
+        // ...
+        }).catch((error) => {
+        console.log("error mail");
+        // ...
+        });
 
 })
 }

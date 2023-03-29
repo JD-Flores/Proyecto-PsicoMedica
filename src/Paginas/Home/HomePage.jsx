@@ -102,10 +102,10 @@ export function HomePage() {
         <h1 className="text-[17px] sm:text-[22px] lg:text-[28px] mb-[15px] sm:mb-[40px] font-semibold text-[#5974A9] font-comfortaa">
           Encuentra al psicólogo que se adapte más a ti
         </h1>
-        <div className=" flex mt-[-5px] flex-row ml-4 p-4">
+        <div className=" flex mt-[-5px] flex-row ml-2 p-2 space-x-4">
           {" "}
           {/*Contenedor de ventajas de la app*/}
-          <div className="flex flex-col items-center justify-between ">
+          <div className="flex flex-col items-center justify-between">
             {" "}
             {/*Contenedor de ventaja 1*/}
             <img
@@ -113,7 +113,7 @@ export function HomePage() {
               alt="imagen de ventaja 1"
               className="w-[130px] h-[130px] sm:w-[150px] sm:h-[150px]"
             />
-            <h1 className="text-[12px] sm:text-[14px] lg:text-[18px]  text-center whitespace-nowrap font-bold font-comfortaa">
+            <h1 className="text-[12px] sm:text-[14px] lg:text-[18px] text-center whitespace-nowrap font-bold font-comfortaa">
               Psicólogos Certificados
             </h1>
             <h3 className="text-[9px] sm:text-[12px] lg:text-[14px] text-center mt-[8px] font-semibold font-comfortaa">
@@ -121,7 +121,7 @@ export function HomePage() {
               capacitados para realizar terapia
             </h3>
           </div>
-          <div className="flex flex-col items-center ">
+          <div className="flex flex-col items-center justify-between">
             {" "}
             {/*Contenedor de ventaja 2*/}
             <img
@@ -138,7 +138,7 @@ export function HomePage() {
               cada vez que lo necesites
             </h3>
           </div>
-          <div className="flex flex-col items-center ">
+          <div className="flex flex-col items-center justify-between">
             {" "}
             {/*Contenedor de ventaja 2*/}
             <img
@@ -188,7 +188,7 @@ export function HomePage() {
           <DoctorCard info={doctor} key={idx} />
         ))}
       </div>
-      <div className="bg-[#5974A9] flex flex-col text-[16px] mb-5">
+      <div className="bg-[#5974A9] flex flex-col font-semibold text-[13px] lg:text-[18px] mb-5">
         {" "}
         {/*Contenedor de pasos a seguir para usar la app*/}
         <Number
@@ -222,12 +222,11 @@ export function HomePage() {
       <div className="flex flex-col justify-center bg-white">
         {" "}
         {/*Contenedor de preguntas frecuentes*/}
-        <h1 className="text-[17px] sm:text-[28px]  mt-8 mb-10 text-[#5974A9] text-center font-semibold font-comfortaa">
+        <h1 className="text-[17px] sm:text-[28px]  mt-8 mb-4 lg:mb-8 text-[#5974A9] text-center font-semibold font-comfortaa">
           Preguntas Frecuentes
         </h1>
-
-        <div className="flex flex-box">
-          <div className="p-8 font-comfortaa font-black text-[13px] sm:text-[18px] w-[1200px]">
+        <div className="flex">
+          <div className="p-8 font-comfortaa font-black text-[13px] sm:text-[18px] w-[800px] lg:w-[1000px]">
             <div
               onClick={() => {
                 setFaq1(!faq1);
@@ -238,7 +237,7 @@ export function HomePage() {
                 className={`${
                   faq1
                     ? "opacity-100 visible translate-y-0 duration-500 text-justify"
-                    : "opacity-0 invisible translate-y-[-20px] duration-500"
+                    : "opacity-0 invisible translate-y-[-20px] duration-500 text-justify"
                 }`}
               >
                 <Dropdown
@@ -309,7 +308,7 @@ export function HomePage() {
                   className={`${
                     faq4
                       ? "opacity-100 visible translate-y-0 duration-500 text-justify"
-                      : "opacity-0 invisible translate-y-[-20px] duration-500 "
+                      : "opacity-0 invisible translate-y-[-20px] duration-500"
                   }`}
                 >
                   <Dropdown
@@ -323,13 +322,13 @@ export function HomePage() {
               </div>
             </div>
           </div>
-          <div className="w-[1000px] h-[400px] lg:w-[950px]">
+          <div className="hidden lg:block lg:h-[400px] lg:w-[1100px] sm:w-[800px]">
             {" "}
             {/*Lado derecho de la vista con imagen*/}
             <img
               src={imgpreguntas}
               alt="Imagen"
-              className="w-[400px] h-[150px] sm:h-[250px] sm:w-[600px] lg:h-[300px] lg:w-[400px] lg:ml-[150px] mt-[35px] lg:mt-[1px]"
+              className="w-[400px] h-[150px] sm:h-[250px] sm:w-[600px] lg:h-[350px] lg:w-[500px] lg:ml-[150px] mt-[35px] lg:mt-[1px]"
             />
           </div>
         </div>

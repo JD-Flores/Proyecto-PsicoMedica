@@ -96,7 +96,7 @@ export function Checkout({price}) {
                     citas:arrayUnion({
                         ["id"]:uuid(),
                         ["completed"]:false,
-                        ["ranked"]:false,
+                        ["ranked"]:"undefined",
                         ["uid"]:user.uid,
                         ["info"]:{title: reservationContext.title,
                         start:reservationContext.start,
