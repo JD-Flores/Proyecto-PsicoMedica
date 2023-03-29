@@ -199,6 +199,7 @@ export function PerfilDoctorPage() {
                 className="flex justify-center items-center w-2/4 m-2 mt-4"
               >
                 <div className="flex flex-col items-center">
+                  {editable == true && (
                   <img
                     src={image}
                     alt="Profile picture"
@@ -206,6 +207,7 @@ export function PerfilDoctorPage() {
                     md:h-[200px] md:w-[200px]
                     lg:h-[230px] lg:w-[230px]"
                   />
+                  )}
                 </div>
 
                 {editable == false && (

@@ -438,9 +438,7 @@ export function RegisterDoctorPage() {
                   type="country"
                   defaultValue="Default"
                   className="w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow text-sm"
-                  {...register("country", {
-                    required: true,
-                  })}
+                  
                   >
                   <option disabled hidden value="Default">Escoge</option>
                   <option value="Afghanistan">Afganistán</option>
