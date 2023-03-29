@@ -93,6 +93,7 @@ export function RegisterDoctorPage() {
         const{email,password,confirmPassword,...extraData}=formData//form destructurado
         
       await registerWithEmailAndPassword(email,password,confirmPassword,extraData);
+      console.log('Registrando')
       if(completed()){
         setCompleted()
         navigate(PERFIL_DOCTOR)
@@ -212,7 +213,7 @@ export function RegisterDoctorPage() {
               <div className='flex flex-row py-1 mt-2'>
               <h1 className="font-medium text-slate-700 pb-2 text-sm">Nacionalidad</h1><p className='text-red-600'>{errorCountry}</p>
               </div> 
-              <Nacionalidad handle={handleOnChange} ></Nacionalidad>
+              <Nacionalidad first='Elije tu país de residencia' editable={false} handle={handleOnChange} ></Nacionalidad>
             </label>
             </div>
             
@@ -223,7 +224,7 @@ export function RegisterDoctorPage() {
                   </div>
                 <input id="age" name="age" type="date" 
                 onChange={handleOnChange}
-                className="w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow text-sm" placeholder="nacionalidad"/>
+                className="w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow text-sm"/>
             
             </label>
             <label htmlFor="gender">
@@ -232,7 +233,7 @@ export function RegisterDoctorPage() {
                   </div>
                 <select id="gender" name="gender" 
                 onChange={handleOnChange}
-                className=" w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow text-sm" placeholder="nacionalidad">
+                className=" w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow text-sm">
                   <option>Elige tu género</option>
                   <option value="Masculino">Masculino</option>
                   <option value="Femenino">Femenino</option>
@@ -246,7 +247,7 @@ export function RegisterDoctorPage() {
                   </div>
                 <select id="specialty" name="specialty" 
                 onChange={handleOnChange}
-                className=" w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow text-sm" placeholder="nacionalidad">
+                className=" w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow text-sm">
                   <option>Indique su Especialidad</option>
                   <option value="Depresión">Depresión</option>
                   <option value="Trastorno bipolar">Trastorno bipolar</option>
