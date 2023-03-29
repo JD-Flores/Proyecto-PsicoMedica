@@ -297,6 +297,7 @@ export const updateInfoClient = (user, result) => {
       lastname: result.newLastName,
       password: result.newPassword,
       phone: result.newNumber,
+      age: result.newAge,
     }
 
     updateDoc(docRef, data).then(docRef => {

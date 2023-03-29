@@ -33,6 +33,7 @@ export function PerfilClientePage() {
   const newLastName = watch("lastname");
   const newPassword = watch("password");
   const newNumber = watch("number");
+  const newAge = watch("age");
 
   const patterns = {
     name: /^[A-Za-z]+$/i,
@@ -57,7 +58,7 @@ export function PerfilClientePage() {
   };
 
   const onSubmit = (data) => {
-    const result = { newMail, newName, newLastName, newNumber, newPassword };
+    const result = { newMail, newName, newLastName, newNumber, newPassword, newAge };
     updateInfoClient(user, result);
     setUploadConfirmmed(true);
     setUpdate(true);
@@ -167,7 +168,7 @@ export function PerfilClientePage() {
                       name="lastname"
                       type="text"
                       readOnly={editable}
-                      placeholder={user.lastName}
+                      placeholder={user.lastname}
                       {...register("lastname", {
                         required: true,
                         pattern: {
@@ -280,7 +281,7 @@ export function PerfilClientePage() {
                         className="w-full p-3 border border-slate-200 rounded-lg focus:outline-none focus:border-slate-500 hover:shadow text-sm"
                         id="age"
                         name="age"
-                        type="tel"
+                        type="number"
                         readOnly={editable}
                         {...register("age", {
                           required: true,
@@ -289,7 +290,7 @@ export function PerfilClientePage() {
                             message: messages.phone,
                           },
                           maxLength: {
-                            value: 3,
+                            value: 2,
                             message: messages.phone,
                           },
                           pattern: {
