@@ -5,15 +5,14 @@ import imagenPaciente from "../../imagenes/Paciente.png"
 import sesionPsicologica from "../../imagenes/sesionPsicologica.avif"
 
 
+
 export function RegisterPage() {
   return (
     <div id='contenedor' className="flex h-screen justify-center items-center">
         <div id="ladoizq" className="w-full h-full text-center">
-          <div id="logo" className="h-1/5 p-6">
-            <h2>LOGO</h2>
-          </div>
-          <div id="titulo" className=" flex text-center h-1/5 justify-center items-center text-white text-3xl font-bold lg:text-4xl ">
-            <h1 className="w-3/4 text-[32px] mb-16">¿Cómo podemos ayudarte?</h1>
+          
+          <div id="titulo" className="mt-10 flex text-center h-1/5 justify-center items-center text-white text-3xl font-bold lg:text-4xl ">
+            <h1 className="w-3/4 text-[30px] lg:text-[32px] mb-8">¿Cómo podemos ayudarte?</h1>
           </div>
           <div id="registros" className="flex justify-between items-center h-2/5 text-2xl">
               <div id="psicologo" className=" flex w-full  justify-center items-center">

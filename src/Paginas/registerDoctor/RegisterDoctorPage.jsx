@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router";
 import { Nacionalidad } from "../../Componentes/ListasInputs/Nacionalidad";
 import {
@@ -14,118 +14,64 @@ import {
   PERFIL_DOCTOR,
   REGISTER_DOCTOR_URL,
 } from "../../constantes/urls";
-import { Telefono } from "../../Componentes/ListasInputs/Telefono";
 import { store } from "../../firebase/config";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { uploadFile } from "../../firebase/users-service";
 import { async } from "@firebase/util";
+import { useForm } from "react-hook-form";
 
 export function RegisterDoctorPage() {
   const navigate = useNavigate();
-  function calculateAge(date) {
-    const now = new Date();
-    const diff = Math.abs(now - date);
-    const age = Math.floor(diff / (1000 * 60 * 60 * 24 * 365));
-    return age;
-  }
   const [error, setError] = useState("");
-  const [errorName, setErrorName] = useState("");
-  const [errorEmail, setErrorEmail] = useState("");
-  const [errorPhone, setErrorPhone] = useState("");
-  const [errorPassword, setErrorPassword] = useState("");
-  const [errorConfirm, setErrorConfirm] = useState("");
-  const [errorCountry, setErrorCountry] = useState("");
-  const [errorAge, setErrorAge] = useState("");
-  const [errorGender, setErrorGender] = useState("");
   const [image, setImage] = useState(null);
   const [imageUrl, setImageUrl] = useState("");
   const [file, setFile] = useState(null);
-  const [formData, setFormData] = useState({
-    doctor: true,
-    name: "",
-    lastname: "",
-    email: "",
-    phone: "",
-    password: "",
-    confirmPassword: "",
-    country: "",
-    age: "",
-    gender: "",
-    profilePic: "",
-    specialty: "",
-    grade: "",
-    experience: "",
-    Price: 0,
-    ranking: 1,
-    biography: "",
+
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm({
+    defaultValues: {
+      doctor: true,
+      name: "",
+      lastname: "",
+      email: "",
+      phone: "",
+      password: "",
+      confirmPassword: "",
+      country: "",
+      age: "",
+      gender: "",
+      profilePic:
+        "https://firebasestorage.googleapis.com/v0/b/proyecto-psicomedica-6dbc5.appspot.com/o/11997cb3-d7ea-4d18-bb98-14eded4b7d89?alt=media&token=af1b567a-8a9c-4b35-8305-a702ca72330f",
+      specialty: "",
+      grade: "",
+      Experience: "",
+      Price: 1,
+      ranking: 1,
+      biography: "",
+    },
   });
 
-  const onSubmit = async (event) => {
-    event.preventDefault(); //evita que el form recargue la pagina
-    if (formData.name == "") {
-      setError("Los campos marcados con * en rojo son obligatorios");
-      setErrorName("*");
-    }
-    if (formData.email == "") {
-      setError("Los campos marcados con * en rojo son obligatorios");
-      setErrorEmail("*");
-    }
-    if (formData.phone == "") {
-      setError("Los campos marcados con * en rojo son obligatorios");
-      setErrorPhone("*");
-    }
-    if (formData.password == "") {
-      setError("Los campos marcados con * en rojo son obligatorios");
-      setErrorPassword("*");
-    }
-    if (formData.confirmPassword == "") {
-      setError("Los campos marcados con * en rojo son obligatorios");
-      setErrorConfirm("*");
-    }
-    if (formData.country == "") {
-      setError("Los campos marcados con * en rojo son obligatorios");
-      setErrorCountry("*");
-    }
-    if (formData.age == "") {
-      setError("Los campos marcados con * en rojo son obligatorios");
-      setErrorAge("*");
-    }
-    if (formData.gender == "") {
-      setError("Los campos marcados con * en rojo son obligatorios");
-      setErrorGender("*");
-    } else {
-      const result = await uploadFile(file);
-      formData.profilePic = result;
-      const { email, password, confirmPassword, ...extraData } = formData; //form destructurado
+  // Para validar que las contraseñas sean iguales
+  const password = useRef({});
+  password.current = watch("password", "");
 
-      await registerWithEmailAndPassword(
-        email,
-        password,
-        confirmPassword,
-        extraData
-      );
-      console.log("Registrando");
-      if (completed()) {
-        setCompleted();
-        navigate(PERFIL_DOCTOR);
-      } else {
-        setError(returnError());
-      }
-    }
-  };
-  //en cada input utiliza la info del campo para agregarla al form existente
-  const handleOnChange = (event) => {
-    const { name, value } = event.target;
-    if (name == "age") {
-      setFormData({
-        ...formData,
-        [name]: calculateAge(new Date(value)),
-      });
+  const onSubmit = async (data) => {
+    const { email, password, confirmPassword, ...extraData } = data; //form destructurado
+
+    await registerWithEmailAndPassword(
+      email,
+      password,
+      confirmPassword,
+      extraData
+    );
+    if (completed()) {
+      navigate(PERFIL_DOCTOR);
     } else {
-      setFormData({
-        ...formData,
-        [name]: value,
-      });
+      setError(returnError());
     }
   };
 
@@ -137,210 +83,317 @@ export function RegisterDoctorPage() {
         </p>
         <form
           action=""
-          onSubmit={onSubmit}
+          onSubmit={handleSubmit(onSubmit)}
           className="flex flex-col justify-between gap-2"
         >
-          <div className="flex flex-row  gap-x-16 gap-y-5">
+          <div className="flex flex-row  gap-x-8 gap-y-5">
             <div id="leftHalf" className="w-full">
+              {/* Label Nombre */}
               <label htmlFor="name" className="block cursor-pointer">
                 <div className="flex flex-row py-1 mt-2">
                   <h1 className="font-medium text-slate-700 pb-2 text-sm ">
                     Nombre
                   </h1>
-                  <p className="text-red-600">{errorName}</p>
                 </div>
                 <input
                   id="name"
                   name="name"
                   type="text"
-                  onChange={handleOnChange}
-                  className="w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow text-sm"
+                  className="lg:w-full w-[160px] py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow text-sm"
                   placeholder="Ingresa tu nombre"
+                  {...register("name", {
+                    required: true,
+                    pattern: /^[A-Za-z]+$/i,
+                  })}
                 />
+                {errors.name?.type === "required" && (
+                  <p className="text-red-600">El campo es requerido</p>
+                )}
+                {errors.name?.type === "pattern" && (
+                  <p className="text-red-600">El dato ingresado no es válido</p>
+                )}
               </label>
-
+              {/* Label Apellido */}
               <label htmlFor="lastname" className="block cursor-pointer">
                 <div className="flex flex-row py-1 mt-2">
                   <h1 className="font-medium text-slate-700 pb-2 text-sm ">
                     Apellido
                   </h1>
-                  <p className="text-red-600">{errorName}</p>
                 </div>
                 <input
                   id="lastname"
                   name="lastname"
                   type="text"
-                  onChange={handleOnChange}
-                  className="w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow text-sm"
+                  className="lg:w-full w-[160px] py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow text-sm"
                   placeholder="Ingresa tu apellido"
+                  {...register("lastname", {
+                    required: true,
+                    pattern: /^[A-Za-z]+$/i,
+                  })}
                 />
+                {errors.lastname?.type === "required" && (
+                  <p className="text-red-600">El campo es requerido</p>
+                )}
+                {errors.lastname?.type === "pattern" && (
+                  <p className="text-red-600">El dato ingresado no es válido</p>
+                )}
               </label>
-
+              {/* Label Correo */}
               <label htmlFor="email" className="block cursor-pointer">
                 <div className="flex flex-row py-1 mt-2">
                   <h1 className="font-medium text-slate-700 pb-2 text-sm">
                     Correo electrónico
                   </h1>
-                  <p className="text-red-600">{errorEmail}</p>
                 </div>
                 <input
                   id="email"
                   name="email"
                   type="email"
-                  onChange={handleOnChange}
-                  className="w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow text-sm"
+                  className="lg:w-full w-[160px] py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow text-sm"
                   placeholder="Ingresa tu correo"
+                  {...register("email", {
+                    required: true,
+                    pattern:
+                      /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/,
+                  })}
                 />
+                {errors.email?.type === "required" && (
+                  <p className="text-red-600">El campo es requerido</p>
+                )}
+                {errors.email?.type === "pattern" && (
+                  <p className="text-red-600">
+                    El correo ingresado no es válido
+                  </p>
+                )}
               </label>
-              <div>
-                <label htmlFor="telefono">
-                  <div className="flex flex-row py-1 mt-2">
-                    <h1 className="font-medium text-slate-700 pb-2 text-sm">
-                      Teléfono
-                    </h1>
-                    <p className="text-red-600">{errorPhone}</p>
-                  </div>
-                  {/* <Telefono></Telefono> */}
-                  <input
-                    id="phone"
-                    name="phone"
-                    type="text"
-                    onChange={handleOnChange}
-                    className="w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow text-sm"
-                    placeholder="Ingresa tu número de teléfono"
-                  />
-                </label>
-              </div>
+              {/* Label Num Teléfono */}
+              <label htmlFor="telefono">
+                <div className="flex flex-row py-1 mt-2">
+                  <h1 className="font-medium text-slate-700 pb-2 text-sm">
+                    Teléfono
+                  </h1>
+                </div>
+                <input
+                  id="phone"
+                  name="phone"
+                  type="text"
+                  className="lg:w-full w-[160px] py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow text-sm"
+                  placeholder="Ingresa tu número de teléfono"
+                  {...register("phone", {
+                    required: true,
+                    pattern: /^[0-9]+$/i,
+                    minLength: 11,
+                    maxLength: 11,
+                  })}
+                />
+                {errors.phone?.type === "required" && (
+                  <p className="text-red-600">El campo es requerido</p>
+                )}
+                {errors.phone?.type === "pattern" && (
+                  <p className="text-red-600">Ingresa sólo números</p>
+                )}
+                {errors.phone?.type === "minLength" && (
+                  <p className="text-red-600">
+                    El número ingresado no es válido
+                  </p>
+                )}
+                {errors.phone?.type === "maxLength" && (
+                  <p className="text-red-600">
+                    El número ingresado no es válido
+                  </p>
+                )}
+              </label>
+              {/* Label Password */}
               <label htmlFor="password">
                 <div className="flex flex-row py-1 mt-2">
                   <h1 className="font-medium text-slate-700 pb-2 text-sm">
                     Contraseña
                   </h1>
-                  <p className="text-red-600">{errorPassword}</p>
                 </div>
                 <input
                   id="password"
                   name="password"
                   type="password"
-                  onChange={handleOnChange}
-                  className="w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow text-sm"
+                  className="lg:w-full w-[160px] py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow text-sm"
                   placeholder="Ingresa tu contraseña"
+                  {...register("password", {
+                    required: true,
+                    minLength: 8,
+                  })}
                 />
+                {errors.password?.type === "required" && (
+                  <p className="text-red-600">El campo es requerido</p>
+                )}
+                {errors.password?.type === "minLength" && (
+                  <p className="text-red-600">
+                    La contraseña debe tener mínimo 8 caracteres
+                  </p>
+                )}
               </label>
-              <label htmlFor="confirmar">
+              {/* Label Confirm Password */}
+              <label htmlFor="confirmPassword">
                 <div className="flex flex-row py-1 mt-2">
                   <h1 className="font-medium text-slate-700 pb-2 text-sm">
                     Confirmar contraseña
                   </h1>
-                  <p className="text-red-600">{errorConfirm}</p>
                 </div>
                 <input
                   id="confirmPassword"
                   name="confirmPassword"
                   type="password"
-                  onChange={handleOnChange}
-                  className="w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow text-sm"
+                  className="lg:w-full w-[160px] py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow text-sm"
                   placeholder="Ingresa nuevamente la contraseña"
+                  {...register("confirmPassword", {
+                    required: true,
+                    minLength: 8,
+                    validate: (value) => value === password.current,
+                  })}
                 />
+                {errors.confirmPassword?.type === "required" && (
+                  <p className="text-red-600">El campo es requerido</p>
+                )}
+                {errors.confirmPassword?.type === "minLength" && (
+                  <p className="text-red-600">
+                    La contraseña debe tener mínimo 8 caracteres
+                  </p>
+                )}
+                {errors.confirmPassword?.type === "validate" && (
+                  <p className="text-red-600">La contraseña no coincide</p>
+                )}
               </label>
-              <label htmlFor="experience">
+              {/* Label Experiencia doctor*/}
+              <label htmlFor="Experience">
                 <div className="flex flex-row py-1 mt-2">
                   <h1 className="font-medium text-slate-700 pb-2 text-sm">
-                    Años de experiencias
+                    Años de experiencia
                   </h1>
-                  <p className="text-red-600">{errorConfirm}</p>
                 </div>
                 <input
-                  id="experience"
-                  name="experience"
+                  id="Experience"
+                  name="Experience"
                   type="text"
-                  onChange={handleOnChange}
-                  className="w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow text-sm"
+                  className="lg:w-full w-[160px] py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow text-sm"
                   placeholder="Ingrese sus años de experiencia"
+                  {...register("Experience", {
+                    required: true,
+                    min: 1,
+                    max: 65,
+                    pattern: /^[0-9]+$/i,
+                  })}
                 />
+                {errors.Experience?.type === "required" && (
+                  <p className="text-red-600">El campo es requerido</p>
+                )}
+                {errors.Experience?.type === "min" && (
+                  <p className="text-red-600">El dato ingresado no es válido</p>
+                )}
+                {errors.Experience?.type === "max" && (
+                  <p className="text-red-600">El dato ingresado no es válido</p>
+                )}
+                {errors.Experience?.type === "pattern" && (
+                  <p className="text-red-600">Ingresa sólo números</p>
+                )}
               </label>
+              {/* Label Precio consulta */}
               <label htmlFor="Price">
                 <div className="flex flex-row py-1 mt-2">
                   <h1 className="font-medium text-slate-700 pb-2 text-sm">
                     Precio por consulta
                   </h1>
-                  <p className="text-red-600">{errorConfirm}</p>
                 </div>
                 <input
                   id="Price"
                   name="Price"
                   type="number"
-                  onChange={handleOnChange}
-                  className="w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow text-sm"
+                  className="lg:w-full w-[160px] py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow text-sm"
                   placeholder="Indique un precio"
+                  {...register("Price", {
+                    required: true,
+                    min: 1,
+                  })}
                 />
+                {errors.Price?.type === "required" && (
+                  <p className="text-red-600">El campo es requerido</p>
+                )}
+                {errors.Price?.type === "min" && (
+                  <p className="text-red-600">
+                    El precio ingresado no es válido
+                  </p>
+                )}
               </label>
             </div>
             <div id="rightHalf" className="w-full">
-              <div>
-                <label htmlFor="country">
-                  <div className="flex flex-row py-1 mt-2">
-                    <h1 className="font-medium text-slate-700 pb-2 text-sm">
-                      Nacionalidad
-                    </h1>
-                    <p className="text-red-600">{errorCountry}</p>
-                  </div>
-                  <Nacionalidad
-                    first="Elije tu país de residencia"
-                    editable={false}
-                    handle={handleOnChange}
-                  ></Nacionalidad>
-                </label>
-              </div>
-
+              {/* Label edad */}
               <label htmlFor="age">
                 <div className="flex flex-row py-1 mt-2">
                   <h1 className="font-medium text-slate-700 pb-2 text-sm">
-                    Fecha de nacimiento
+                    Edad
                   </h1>
-                  <p className="text-red-600">{errorAge}</p>
                 </div>
                 <input
                   id="age"
                   name="age"
-                  type="date"
-                  onChange={handleOnChange}
+                  type="number"
                   className="w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow text-sm"
+                  placeholder="Ingresa tu edad"
+                  {...register("age", {
+                    required: true,
+                    min: 25,
+                    max: 90,
+                  })}
                 />
+                {errors.age?.type === "required" && (
+                  <p className="text-red-600">El campo es requerido</p>
+                )}
+                {errors.age?.type === "min" && (
+                  <p className="text-red-600">La edad ingresada no es válida</p>
+                )}
+                {errors.age?.type === "max" && (
+                  <p className="text-red-600">La edad ingresada no es válida</p>
+                )}
               </label>
+              {/* Label Género */}
               <label htmlFor="gender">
                 <div className="flex flex-row py-1 mt-2">
                   <h1 className="font-medium text-slate-700 pb-2 text-sm">
                     Género
                   </h1>
-                  <p className="text-red-600">{errorGender}</p>
                 </div>
+
                 <select
                   id="gender"
                   name="gender"
-                  onChange={handleOnChange}
                   className=" w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow text-sm"
+                  {...register("gender", {
+                    required: "Elige tu género",
+                  })}
                 >
-                  <option>Elige tu género</option>
+                  <option value="">Elige tu género</option>
                   <option value="Masculino">Masculino</option>
                   <option value="Femenino">Femenino</option>
                   <option value="Otro">Otro</option>
                 </select>
+
+                {errors.gender?.type === "required" && (
+                  <p className="text-red-600">El campo es requerido</p>
+                )}
               </label>
+              {/* Label Especialidad doctor */}
               <label htmlFor="specialty">
                 <div className="flex flex-row py-1 mt-2">
                   <h1 className="font-medium text-slate-700 pb-2 text-sm">
                     Especialidad
                   </h1>
-                  <p className="text-red-600">{errorGender}</p>
                 </div>
                 <select
                   id="specialty"
                   name="specialty"
-                  onChange={handleOnChange}
                   className=" w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow text-sm"
+                  {...register("specialty", {
+                    required: "Indica tu especialidad",
+                  })}
                 >
-                  <option>Indique su Especialidad</option>
+                  <option value="">Indica tu especialidad</option>
                   <option value="Depresión">Depresión</option>
                   <option value="Trastorno bipolar">Trastorno bipolar</option>
                   <option value="Ansiedad">Ansiedad</option>
@@ -370,27 +423,33 @@ export function RegisterDoctorPage() {
                   <option value="Terapia de pareja">Terapia de pareja</option>
                   <option value="Otro">Otro</option>
                 </select>
+                {errors.specialty?.type === "required" && (
+                  <p className="text-red-600">El campo es requerido</p>
+                )}
               </label>
-
+              {/* Label Grado instrucción */}
               <label htmlFor="grade">
                 <div className="flex flex-row py-1 mt-2">
                   <h1 className="font-medium text-slate-700 pb-2 text-sm">
                     Grado
                   </h1>
-                  <p className="text-red-600">{errorGender}</p>
                 </div>
                 <select
                   id="grade"
                   name="grade"
-                  onChange={handleOnChange}
                   className=" w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow text-sm"
-                  placeholder="grado"
+                  {...register("grade", {
+                    required: "Indica tu grado",
+                  })}
                 >
-                  <option>Indica tu grado</option>
+                  <option value="">Indica tu grado</option>
                   <option value="Licenciado">Licenciado</option>
                   <option value="Master">Master</option>
                   <option value="Doctor">Doctor</option>
                 </select>
+                {errors.grade?.type === "required" && (
+                  <p className="text-red-600">El campo es requerido</p>
+                )}
               </label>
               <div className="flex flex-col py-1 mt-2">
                 <h1 className="font-medium text-slate-700 pb-2 text-sm">
