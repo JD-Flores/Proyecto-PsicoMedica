@@ -44,7 +44,7 @@ export function RegisterDoctorPage() {
       profilePic:"",
       specialty:"",
       grade:"",
-      Experience:"",
+      experience:"",
       Price:0,
       ranking:1,
       biography:""
@@ -190,11 +190,11 @@ export function RegisterDoctorPage() {
                     onChange={handleOnChange}
                     className="w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow text-sm" placeholder="Ingresa nuevamente la contraseña"/>
                 </label>
-                <label htmlFor="Experience">
+                <label htmlFor="experience">
                   <div className='flex flex-row py-1 mt-2'>
                   <h1 className="font-medium text-slate-700 pb-2 text-sm">Años de experiencias</h1><p className='text-red-600'>{errorConfirm}</p>
                   </div>
-                    <input id="Experience" name="Experience" type="text" 
+                    <input id="experience" name="experience" type="text" 
                     onChange={handleOnChange}
                     className="w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow text-sm" placeholder="Ingrese sus años de experiencia"/>
                 </label>

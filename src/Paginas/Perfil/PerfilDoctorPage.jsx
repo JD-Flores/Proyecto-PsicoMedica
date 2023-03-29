@@ -69,7 +69,7 @@ export function PerfilDoctorPage() {
     setEditable(!editable)
     setUpdate(false);
     updatePhoto();
-    
+    console.log('actualizado')
   }
 
   const handleUser = (result) => {
@@ -219,7 +219,7 @@ export function PerfilDoctorPage() {
 
                 {editable==false && (
                   <div className='flex flex-col items-center '>
-                    <img src={image} alt="Profile picture" className='w-full' />
+                    <img src={image} alt="Profile picture" className='w-full rounded-full' />
                     <input type="file" onChange={(e) => {setFile(e.target.files[0]), setImage(URL.createObjectURL(e.target.files[0]))}} className='flex items-center justify-center bg-black text-white p-1  h-14 w-[200px] mt-3' />
                   </div>
                 )}
@@ -285,10 +285,10 @@ export function PerfilDoctorPage() {
                   </p>
                   
                   <input 
-                  id="experience" name="experience" type="experience" readOnly={editable}
+                  id="experience" name="experience" type="number" readOnly={editable}
                   // onChange=""
                   className="w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow" 
-                  placeholder={user.Experience}
+                  placeholder={user.experience}
                   {...register("experience", {
                     required: true,
                     minLength: {
@@ -317,30 +317,17 @@ export function PerfilDoctorPage() {
                   </p>
                   
                   <input 
-                  id="price" name="price" type="price" readOnly={editable}
+                  id="price" name="price" type="number" readOnly={editable}
                   // onChange=""
                   className="w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow" 
                   placeholder={user.Price}
                     {...register("price", {
-                      required: true,
-                      minLength: {
-                        value: 1,
-                        message: messages.phone
-                      },
-                      maxLength: {
-                        value: 3,
-                        message: messages.phone
-                      },
-                      pattern: {
-                        value: patterns.phone,
-                        message: messages.phone,
-                      }
-                    })}
+                      required: true,}
+                    )}
                   />
                   {errors.price?.type === "required" && 
                     (<p className="text-red-600">El campo es requerido</p>)
                   }
-                  {errors.price && <p>{errors.price.message}</p>}
                 </label>
               </div>
               
@@ -427,11 +414,11 @@ export function PerfilDoctorPage() {
                   <textarea rows={5} 
                     id="biography" name="biography" type="biography" readOnly={editable}
                     className="resize-none w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow" 
-                    placeholder={user.biography}
+                    placeholder={user.biography} defaultValue={user.biography}
                     {...register("biography", {
                       required: false,
                     })}
-                  >{user.biography}</textarea>
+                  ></textarea>
               </label>
               
               <div>

@@ -72,7 +72,7 @@ export const registerWithEmailAndPassword = async(
   )=>{
     if(password==confirmPassword){
   try {
-    const result = await createUserWithEmailAndPassword(auth,email,password);
+    const result = await createUserWithEmailAndPassword(auth,email,password,extraData);
     await createUserProfile(result.user.uid,{
       uid:result.user.uid,
       email,

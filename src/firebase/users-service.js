@@ -329,7 +329,7 @@ export const updateInfoDoctor = (user, result) => {
       password: result.newPassword,
       phone: result.newNumber,
       experience: result.newExperience, 
-      price: result.newPrice, 
+      Price: result.newPrice, 
       country: result.newCountry, 
       gender: result.newGender, 
       specialty: result.newSpecialty, 
