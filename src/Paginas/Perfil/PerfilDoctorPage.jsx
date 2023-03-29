@@ -2,13 +2,12 @@ import React, { useState } from "react";
 import { Calendario } from "../../Componentes/Calendario/Calendario";
 import { DoctorNav } from "../../Componentes/ProfileNav/DoctorNav";
 import { uploadFile } from "../../firebase/users-service";
-import { updateProfilePic } from "../../firebase/users-service";
+import { updateProfilePic, updateInfoDoctor } from "../../firebase/users-service";
 import { useUser } from "../../contexts/UserContext";
 import { useEffect } from "react";
 import { FeedbackCard } from "../../Componentes/FeedbackCard/FeedbackCard";
 import { useForm } from "react-hook-form";
 import { Nacionalidad } from "../../Componentes/ListasInputs/Nacionalidad";
-import { updateInfoDoctor } from "../../firebase/users-service";
 
 export function PerfilDoctorPage() {
   const { user, setUser } = useUser();
