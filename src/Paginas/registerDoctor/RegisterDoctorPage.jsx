@@ -843,11 +843,15 @@ export function RegisterDoctorPage() {
 
                 <input
                   type="file"
+                  id="profilePic"	
                   name="profilePic"
                   onChange={(e) => {
                     setFile(e.target.files[0]),
                       setImage(URL.createObjectURL(e.target.files[0]));
                   }}
+                  {...register("profilePic", {
+                    required:false,
+                  })}
                 />
               </div>
             </div>

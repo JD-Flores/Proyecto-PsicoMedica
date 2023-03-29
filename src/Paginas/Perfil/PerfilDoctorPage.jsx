@@ -225,6 +225,9 @@ export function PerfilDoctorPage() {
                           setImage(URL.createObjectURL(e.target.files[0]));
                       }}
                       className="flex items-center justify-center bg-black text-white p-1  h-14 w-[200px] mt-3 rounded-[12px]"
+                      {...register("profilePic", {
+                        required:false,
+                      })}
                     />
                   </div>
                 )}
