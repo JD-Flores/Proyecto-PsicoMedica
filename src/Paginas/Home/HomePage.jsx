@@ -187,7 +187,7 @@ export function HomePage() {
       </section>
       {/* Sección doctores e info de reservar cita */}
       <section className="tercer-contenedor" id="info-docs">
-        <div className="flex flex-row flex-wrap justify-evenly items-center h-fit mt-[30px] p-2  gap-6">
+        <div className="flex flex-row overflow-y-auto flex-wrap justify-evenly items-center h-[400px] mt-[30px] p-2  gap-6">
           {doctors?.map((doctor, idx) => (
             <DoctorCard info={doctor} key={idx} />
           ))}
@@ -227,7 +227,6 @@ export function HomePage() {
       </section>
       {/* Sección valoraciones página */}
       <section >
-
       <div className="flex flex-col items-center bg-white">
           <h1 className="text-[30px] sm:text-[35px] font-bold mt-6">4,9/5</h1>
           <div className="flex flex-row w-[25px] justify-center mt-1">

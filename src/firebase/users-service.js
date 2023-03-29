@@ -1,6 +1,6 @@
 import { async } from "@firebase/util";
 import { getAuth, updateProfile, updateEmail, updatePassword } from "firebase/auth";
-import{collection, doc,setDoc, where,query,getDocs, updateDoc, getDoc, arrayUnion} from "firebase/firestore"
+import{collection, doc,setDoc, where,query,getDocs, updateDoc, getDoc, arrayUnion, onSnapshot} from "firebase/firestore"
 import{db} from "./config"
 import { ref, uploadBytes,getDownloadURL } from "firebase/storage"
 import { store } from "../firebase/config"
@@ -358,7 +358,15 @@ export const updateInfoDoctor = (user, result) => {
 
 })
 }
-
+export const getChats = (user,setChats)=>{
+    const unsub = onSnapshot(doc(db,"userChat",user.uid),(doc)=>{
+      setChats(doc.data())
+    });
+    
+    return()=>{
+      unsub();
+    };
+  }
 export const uploadFile = async (file) => {
     const storageRef = ref(store, `profilePictures/${v4()}`);
     await uploadBytes (storageRef, file);
