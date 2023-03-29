@@ -11,6 +11,8 @@ import {
 import { useUser } from "../../contexts/UserContext";
 import { logout } from "../../firebase/auth-service";
 import { uploadFile } from "../../firebase/users-service";
+import logoPsicoMedica from "../../imagenes/logoPsicoMedica.png"
+
 
 export function Navbar() {
   const { user, setUser } = useUser();
@@ -22,10 +24,16 @@ export function Navbar() {
       id="header"
       className="w-full z-30 top-10 py-1 border-slate-500 bg-[#5974A9] font-comfortaa text-[12px] lg:text-[14px]"
     >
-      <div className="w-full flex items-center justify-between mt-0 px-6 py-2">
-        <div className="group md:hidden block">
-          <button className="outline-none focus:outline-none border px-3 py-1 bg-white rounded-sm flex items-center min-w-32 h-[38px] lg:h-[48px] w-[80px] lg:w-[100px]">
-            <span className="pr-1 font-semibold flex-1">Menu</span>
+      <div className="w-full flex items-center justify-around">  
+      <div className="">
+      <img src={logoPsicoMedica} alt="" className="rounded-full lg:h-[120px] h-[80px] "/>
+      </div>    
+      
+      <div className="group md:hidden block">
+        
+          <button className="outline-none focus:outline-none border px-3 py-1 bg-white rounded-sm flex items-center min-w-32 h-[38px] lg:h-[48px] w-[80px] lg:w-[100px] ">
+
+            <span className="pr-1 font-semibold flex-1 ">Menu</span>
             <span>
               <svg
                 className="fill-current h-4 w-4 transform group-hover:-rotate-180
@@ -51,9 +59,12 @@ export function Navbar() {
               <Link to={FAQ_URL}>FAQ</Link>
             </li>
           </ul>
-        </div>
+      </div>
+
+
+
         <div
-          className="hidden md:flex md:items-center md:w-auto w-full order-3 md:order-1 overflow-y-auto "
+          className="hidden md:flex md:items-center mr-[500px] md:w-auto w-full order-3 md:order-1 overflow-y-auto "
           id="menu"
         >
           <nav>
