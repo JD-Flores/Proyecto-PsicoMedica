@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { Nacionalidad } from "../../Componentes/ListasInputs/Nacionalidad";
 import {
@@ -19,109 +19,115 @@ import { store } from "../../firebase/config";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { uploadFile } from "../../firebase/users-service";
 import { async } from "@firebase/util";
-import { useForm } from "react-hook-form";
 
 export function RegisterDoctorPage() {
   const navigate = useNavigate();
+  function calculateAge(date) {
+    const now = new Date();
+    const diff = Math.abs(now - date);
+    const age = Math.floor(diff / (1000 * 60 * 60 * 24 * 365));
+    return age;
+  }
   const [error, setError] = useState("");
+  const [errorName, setErrorName] = useState("");
+  const [errorEmail, setErrorEmail] = useState("");
+  const [errorPhone, setErrorPhone] = useState("");
+  const [errorPassword, setErrorPassword] = useState("");
+  const [errorConfirm, setErrorConfirm] = useState("");
+  const [errorCountry, setErrorCountry] = useState("");
+  const [errorAge, setErrorAge] = useState("");
+  const [errorGender, setErrorGender] = useState("");
   const [image, setImage] = useState(null);
   const [imageUrl, setImageUrl] = useState("");
   const [file, setFile] = useState(null);
-  const [formData,setFormData] =useState({
-      doctor:true,  
-      name:"",
-      lastname:"",
-      email:"",
-      phone:"",
-      password:"",
-      confirmPassword:"",
-      country:"",
-      age:"",
-      gender:"",
-      profilePic:"",
-      specialty:"",
-      grade:"",
-      experience:"",
-      Price:0,
-      ranking:1,
-      biography:""
+  const [formData, setFormData] = useState({
+    doctor: true,
+    name: "",
+    lastname: "",
+    email: "",
+    phone: "",
+    password: "",
+    confirmPassword: "",
+    country: "",
+    age: "",
+    gender: "",
+    profilePic: "",
+    specialty: "",
+    grade: "",
+    experience: "",
+    Price: 0,
+    ranking: 1,
+    biography: "",
+  });
 
+  const onSubmit = async (event) => {
+    event.preventDefault(); //evita que el form recargue la pagina
+    if (formData.name == "") {
+      setError("Los campos marcados con * en rojo son obligatorios");
+      setErrorName("*");
+    }
+    if (formData.email == "") {
+      setError("Los campos marcados con * en rojo son obligatorios");
+      setErrorEmail("*");
+    }
+    if (formData.phone == "") {
+      setError("Los campos marcados con * en rojo son obligatorios");
+      setErrorPhone("*");
+    }
+    if (formData.password == "") {
+      setError("Los campos marcados con * en rojo son obligatorios");
+      setErrorPassword("*");
+    }
+    if (formData.confirmPassword == "") {
+      setError("Los campos marcados con * en rojo son obligatorios");
+      setErrorConfirm("*");
+    }
+    if (formData.country == "") {
+      setError("Los campos marcados con * en rojo son obligatorios");
+      setErrorCountry("*");
+    }
+    if (formData.age == "") {
+      setError("Los campos marcados con * en rojo son obligatorios");
+      setErrorAge("*");
+    }
+    if (formData.gender == "") {
+      setError("Los campos marcados con * en rojo son obligatorios");
+      setErrorGender("*");
+    } else {
+      const result = await uploadFile(file);
+      formData.profilePic = result;
+      const { email, password, confirmPassword, ...extraData } = formData; //form destructurado
 
-  })
-
-
-  const onSubmit = async(event)=>{
-      event.preventDefault();//evita que el form recargue la pagina
-      if(formData.name==""){
-        setError("Los campos marcados con * en rojo son obligatorios")
-        setErrorName("*")
+      await registerWithEmailAndPassword(
+        email,
+        password,
+        confirmPassword,
+        extraData
+      );
+      console.log("Registrando");
+      if (completed()) {
+        setCompleted();
+        navigate(PERFIL_DOCTOR);
+      } else {
+        setError(returnError());
       }
-      if(formData.email==""){
-        setError("Los campos marcados con * en rojo son obligatorios")
-        setErrorEmail("*")
-            }
-      if(formData.phone==""){
-        setError("Los campos marcados con * en rojo son obligatorios")
-        setErrorPhone("*")
-      }
-      if(formData.password==""){
-        setError("Los campos marcados con * en rojo son obligatorios")
-        setErrorPassword("*")
-      }
-      if(formData.confirmPassword==""){
-        setError("Los campos marcados con * en rojo son obligatorios")
-        setErrorConfirm("*")
-      }
-      if(formData.country==""){
-        setError("Los campos marcados con * en rojo son obligatorios")
-        setErrorCountry("*")
-      }
-      if(formData.age==""){
-        setError("Los campos marcados con * en rojo son obligatorios")
-        setErrorAge("*")
-      }
-      if(formData.gender==""){
-        setError("Los campos marcados con * en rojo son obligatorios")
-        setErrorGender("*")
-      }else{
-        
-        const result = await uploadFile(file);
-        formData.profilePic=result;
-        const{email,password,confirmPassword,...extraData}=formData//form destructurado
-        
-      await registerWithEmailAndPassword(email,password,confirmPassword,extraData);
-      console.log('Registrando')
-      if(completed()){
-        setCompleted()
-        navigate(PERFIL_DOCTOR)
-      }else{
-        setError(returnError())
-      }
-      }
-      
-      
-  }
-//en cada input utiliza la info del campo para agregarla al form existente
-  const handleOnChange = (event)=>{
-      const{name,value}=event.target;
-      if(name=="age"){
-        setFormData({
-          ...formData,
-          [name]:calculateAge(new Date(value)),
-      }
-      )
-      }
-      else{
-        setFormData({
-          ...formData,
-          [name]:value,
-      })
-      }
-  }
-
-  
-
-  
+    }
+  };
+  //en cada input utiliza la info del campo para agregarla al form existente
+  const handleOnChange = (event) => {
+    const { name, value } = event.target;
+    if (name == "age") {
+      setFormData({
+        ...formData,
+        [name]: calculateAge(new Date(value)),
+      });
+    } else {
+      setFormData({
+        ...formData,
+        [name]: value,
+      });
+    }
+  };
 
   return (
     <div className="flex justify-center items-center m-3 py-9">
@@ -131,7 +137,7 @@ export function RegisterDoctorPage() {
         </p>
         <form
           action=""
-          onSubmit={handleSubmit(onSubmit)}
+          onSubmit={onSubmit}
           className="flex flex-col justify-between gap-2"
         >
           <div className="flex flex-row  gap-x-16 gap-y-5">
@@ -141,6 +147,7 @@ export function RegisterDoctorPage() {
                   <h1 className="font-medium text-slate-700 pb-2 text-sm ">
                     Nombre
                   </h1>
+                  <p className="text-red-600">{errorName}</p>
                 </div>
                 <input
                   id="name"
@@ -149,17 +156,7 @@ export function RegisterDoctorPage() {
                   onChange={handleOnChange}
                   className="w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow text-sm"
                   placeholder="Ingresa tu nombre"
-                  {...register("name", {
-                    required: true,
-                    pattern: /^[A-Za-z]+$/i,
-                  })}
                 />
-                {errors.name?.type === "required" && (
-                  <p className="text-red-600">El campo es requerido</p>
-                )}
-                {errors.name?.type === "pattern" && (
-                  <p className="text-red-600">El dato ingresado no es válido</p>
-                )}
               </label>
 
               <label htmlFor="lastname" className="block cursor-pointer">
@@ -167,6 +164,7 @@ export function RegisterDoctorPage() {
                   <h1 className="font-medium text-slate-700 pb-2 text-sm ">
                     Apellido
                   </h1>
+                  <p className="text-red-600">{errorName}</p>
                 </div>
                 <input
                   id="lastname"
@@ -175,17 +173,7 @@ export function RegisterDoctorPage() {
                   onChange={handleOnChange}
                   className="w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow text-sm"
                   placeholder="Ingresa tu apellido"
-                  {...register("lastname", {
-                    required: true,
-                    pattern: /^[A-Za-z]+$/i,
-                  })}
                 />
-                {errors.lastname?.type === "required" && (
-                  <p className="text-red-600">El campo es requerido</p>
-                )}
-                {errors.lastname?.type === "pattern" && (
-                  <p className="text-red-600">El dato ingresado no es válido</p>
-                )}
               </label>
 
               <label htmlFor="email" className="block cursor-pointer">
@@ -193,6 +181,7 @@ export function RegisterDoctorPage() {
                   <h1 className="font-medium text-slate-700 pb-2 text-sm">
                     Correo electrónico
                   </h1>
+                  <p className="text-red-600">{errorEmail}</p>
                 </div>
                 <input
                   id="email"
@@ -201,20 +190,7 @@ export function RegisterDoctorPage() {
                   onChange={handleOnChange}
                   className="w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow text-sm"
                   placeholder="Ingresa tu correo"
-                  {...register("email", {
-                    required: true,
-                    pattern:
-                      /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/,
-                  })}
                 />
-                {errors.email?.type === "required" && (
-                  <p className="text-red-600">El campo es requerido</p>
-                )}
-                {errors.email?.type === "pattern" && (
-                  <p className="text-red-600">
-                    El correo ingresado no es válido
-                  </p>
-                )}
               </label>
               <div>
                 <label htmlFor="telefono">
@@ -222,6 +198,7 @@ export function RegisterDoctorPage() {
                     <h1 className="font-medium text-slate-700 pb-2 text-sm">
                       Teléfono
                     </h1>
+                    <p className="text-red-600">{errorPhone}</p>
                   </div>
                   {/* <Telefono></Telefono> */}
                   <input
@@ -231,74 +208,74 @@ export function RegisterDoctorPage() {
                     onChange={handleOnChange}
                     className="w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow text-sm"
                     placeholder="Ingresa tu número de teléfono"
-                    {...register("phone", {
-                      required: true,
-                      pattern: /^[0-9]+$/i,
-                      minLength: 11,
-                      maxLength: 11,
-                    })}
                   />
-                  {errors.phone?.type === "required" && (
-                    <p className="text-red-600">El campo es requerido</p>
-                  )}
-                  {errors.phone?.type === "pattern" && (
-                    <p className="text-red-600">Ingresa sólo números</p>
-                  )}
-                  {errors.phone?.type === "minLength" && (
-                    <p className="text-red-600">
-                      El número ingresado no es válido
-                    </p>
-                  )}
-                  {errors.phone?.type === "maxLength" && (
-                    <p className="text-red-600">
-                      El número ingresado no es válido
-                    </p>
-                  )}
                 </label>
+              </div>
+              <label htmlFor="password">
+                <div className="flex flex-row py-1 mt-2">
+                  <h1 className="font-medium text-slate-700 pb-2 text-sm">
+                    Contraseña
+                  </h1>
+                  <p className="text-red-600">{errorPassword}</p>
                 </div>
-                <label htmlFor="password">
-                    <div className='flex flex-row py-1 mt-2'>
-                    <h1 className="font-medium text-slate-700 pb-2 text-sm">Contraseña</h1><p className='text-red-600'>{errorPassword}</p>
-                    </div>
-                    <input id="password" name="password" type="password" 
-                    onChange={handleOnChange}
-                    className="w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow text-sm" placeholder="Ingresa tu contraseña"/>
-                </label>
-                <label htmlFor="confirmar">
-                  <div className='flex flex-row py-1 mt-2'>
-                  <h1 className="font-medium text-slate-700 pb-2 text-sm">Confirmar contraseña</h1><p className='text-red-600'>{errorConfirm}</p>
-                  </div>
-                    <input id="confirmPassword" name="confirmPassword" type="password" 
-                    onChange={handleOnChange}
-                    className="w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow text-sm" placeholder="Ingresa nuevamente la contraseña"/>
-                </label>
-                <label htmlFor="experience">
-                  <div className='flex flex-row py-1 mt-2'>
-                  <h1 className="font-medium text-slate-700 pb-2 text-sm">Años de experiencias</h1><p className='text-red-600'>{errorConfirm}</p>
-                  </div>
-                    <input id="experience" name="experience" type="text" 
-                    onChange={handleOnChange}
-                    className="w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow text-sm" placeholder="Ingrese sus años de experiencia"/>
-                </label>
-                <label htmlFor="Price">
-                  <div className='flex flex-row py-1 mt-2'>
-                  <h1 className="font-medium text-slate-700 pb-2 text-sm">Precio por consulta</h1><p className='text-red-600'>{errorConfirm}</p>
-                  </div>
-                    <input id="Price" name="Price" type="number" 
-                    onChange={handleOnChange}
-                    className="w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow text-sm" placeholder="Indique un precio"/>
-                </label>
-          </div>
-          <div id='rightHalf' className='w-full'>
-          <div>
-            <label htmlFor="country">
-              <div className='flex flex-row py-1 mt-2'>
-              <h1 className="font-medium text-slate-700 pb-2 text-sm">Nacionalidad</h1><p className='text-red-600'>{errorCountry}</p>
-              </div> 
-              <Nacionalidad first='Elije tu país de residencia' editable={false} handle={handleOnChange} ></Nacionalidad>
-            </label>
+                <input
+                  id="password"
+                  name="password"
+                  type="password"
+                  onChange={handleOnChange}
+                  className="w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow text-sm"
+                  placeholder="Ingresa tu contraseña"
+                />
+              </label>
+              <label htmlFor="confirmar">
+                <div className="flex flex-row py-1 mt-2">
+                  <h1 className="font-medium text-slate-700 pb-2 text-sm">
+                    Confirmar contraseña
+                  </h1>
+                  <p className="text-red-600">{errorConfirm}</p>
+                </div>
+                <input
+                  id="confirmPassword"
+                  name="confirmPassword"
+                  type="password"
+                  onChange={handleOnChange}
+                  className="w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow text-sm"
+                  placeholder="Ingresa nuevamente la contraseña"
+                />
+              </label>
+              <label htmlFor="experience">
+                <div className="flex flex-row py-1 mt-2">
+                  <h1 className="font-medium text-slate-700 pb-2 text-sm">
+                    Años de experiencias
+                  </h1>
+                  <p className="text-red-600">{errorConfirm}</p>
+                </div>
+                <input
+                  id="experience"
+                  name="experience"
+                  type="text"
+                  onChange={handleOnChange}
+                  className="w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow text-sm"
+                  placeholder="Ingrese sus años de experiencia"
+                />
+              </label>
+              <label htmlFor="Price">
+                <div className="flex flex-row py-1 mt-2">
+                  <h1 className="font-medium text-slate-700 pb-2 text-sm">
+                    Precio por consulta
+                  </h1>
+                  <p className="text-red-600">{errorConfirm}</p>
+                </div>
+                <input
+                  id="Price"
+                  name="Price"
+                  type="number"
+                  onChange={handleOnChange}
+                  className="w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow text-sm"
+                  placeholder="Indique un precio"
+                />
+              </label>
             </div>
-
             <div id="rightHalf" className="w-full">
               <div>
                 <label htmlFor="country">
@@ -306,33 +283,63 @@ export function RegisterDoctorPage() {
                     <h1 className="font-medium text-slate-700 pb-2 text-sm">
                       Nacionalidad
                     </h1>
+                    <p className="text-red-600">{errorCountry}</p>
                   </div>
-                <input id="age" name="age" type="date" 
-                onChange={handleOnChange}
-                className="w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow text-sm"/>
-            
-            </label>
-            <label htmlFor="gender">
-            <div className='flex flex-row py-1 mt-2'>
-                  <h1 className="font-medium text-slate-700 pb-2 text-sm">Género</h1><p className='text-red-600'>{errorGender}</p>
-                  </div>
-                <select id="gender" name="gender" 
-                onChange={handleOnChange}
-                className=" w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow text-sm">
+                  <Nacionalidad
+                    first="Elije tu país de residencia"
+                    editable={false}
+                    handle={handleOnChange}
+                  ></Nacionalidad>
+                </label>
+              </div>
+
+              <label htmlFor="age">
+                <div className="flex flex-row py-1 mt-2">
+                  <h1 className="font-medium text-slate-700 pb-2 text-sm">
+                    Fecha de nacimiento
+                  </h1>
+                  <p className="text-red-600">{errorAge}</p>
+                </div>
+                <input
+                  id="age"
+                  name="age"
+                  type="date"
+                  onChange={handleOnChange}
+                  className="w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow text-sm"
+                />
+              </label>
+              <label htmlFor="gender">
+                <div className="flex flex-row py-1 mt-2">
+                  <h1 className="font-medium text-slate-700 pb-2 text-sm">
+                    Género
+                  </h1>
+                  <p className="text-red-600">{errorGender}</p>
+                </div>
+                <select
+                  id="gender"
+                  name="gender"
+                  onChange={handleOnChange}
+                  className=" w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow text-sm"
+                >
                   <option>Elige tu género</option>
                   <option value="Masculino">Masculino</option>
                   <option value="Femenino">Femenino</option>
                   <option value="Otro">Otro</option>
-                  </select>
-            
-            </label>
-            <label htmlFor="specialty">
-            <div className='flex flex-row py-1 mt-2'>
-                  <h1 className="font-medium text-slate-700 pb-2 text-sm">Especialidad</h1><p className='text-red-600'>{errorGender}</p>
-                  </div>
-                <select id="specialty" name="specialty" 
-                onChange={handleOnChange}
-                className=" w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow text-sm">
+                </select>
+              </label>
+              <label htmlFor="specialty">
+                <div className="flex flex-row py-1 mt-2">
+                  <h1 className="font-medium text-slate-700 pb-2 text-sm">
+                    Especialidad
+                  </h1>
+                  <p className="text-red-600">{errorGender}</p>
+                </div>
+                <select
+                  id="specialty"
+                  name="specialty"
+                  onChange={handleOnChange}
+                  className=" w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow text-sm"
+                >
                   <option>Indique su Especialidad</option>
                   <option value="Depresión">Depresión</option>
                   <option value="Trastorno bipolar">Trastorno bipolar</option>
@@ -363,9 +370,6 @@ export function RegisterDoctorPage() {
                   <option value="Terapia de pareja">Terapia de pareja</option>
                   <option value="Otro">Otro</option>
                 </select>
-                {errors.specialty?.type === "required" && (
-                  <p className="text-red-600">El campo es requerido</p>
-                )}
               </label>
 
               <label htmlFor="grade">
@@ -373,24 +377,20 @@ export function RegisterDoctorPage() {
                   <h1 className="font-medium text-slate-700 pb-2 text-sm">
                     Grado
                   </h1>
+                  <p className="text-red-600">{errorGender}</p>
                 </div>
                 <select
                   id="grade"
                   name="grade"
                   onChange={handleOnChange}
                   className=" w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow text-sm"
-                  {...register("grade", {
-                    required: "Indica tu grado",
-                  })}
+                  placeholder="grado"
                 >
-                  <option value="">Indica tu grado</option>
+                  <option>Indica tu grado</option>
                   <option value="Licenciado">Licenciado</option>
                   <option value="Master">Master</option>
                   <option value="Doctor">Doctor</option>
                 </select>
-                {errors.grade?.type === "required" && (
-                  <p className="text-red-600">El campo es requerido</p>
-                )}
               </label>
               <div className="flex flex-col py-1 mt-2">
                 <h1 className="font-medium text-slate-700 pb-2 text-sm">
