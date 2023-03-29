@@ -162,6 +162,7 @@ export function PerfilClientePage() {
 
               <input
                 className="w-[200px] p-3 border border-slate-200 rounded-lg focus:outline-none focus:border-slate-500 hover:shadow text-sm"
+                placeholder={user.lastname}
                 id="lastname"
                 name="lastname"
                 type="text"
@@ -210,8 +211,8 @@ export function PerfilClientePage() {
               />
               {errors.number?.type === "required" && 
                 (<p className="text-red-600">El campo es requerido</p>)
-            }
-            {errors.number && <p>{errors.number.message}</p>}
+              }
+              {errors.number && <p>{errors.number.message}</p>}
             </div>
             </label>
 
@@ -224,7 +225,7 @@ export function PerfilClientePage() {
                 className="w-[200px] p-3 border border-slate-200 rounded-lg focus:outline-none focus:border-slate-500 hover:shadow text-sm"
                 id="age"
                 name="age"
-                type="tel"
+                type="age"
                 readOnly={editable}
                 {...register("age", {
                   required: true,
@@ -244,17 +245,16 @@ export function PerfilClientePage() {
               />
               {errors.age?.type === "required" && 
                 (<p className="text-red-600">El campo es requerido</p>)
-            }
-            {errors.age && <p>{errors.age.message}</p>}
+              }
+              {errors.age && <p>{errors.age.message}</p>}
             </div>
             </label>
 
-            <label htmlFor="age" className="block cursor-pointer">
+            <label htmlFor="password" className="block cursor-pointer">
             <div className="py-1 mt-1">
               <h2 className="text-lg text-black font-bold  mb-1">Contraseña</h2>
 
               <input
-                placeholder={user.password}
                 className="w-[200px] p-3 border border-slate-200 rounded-lg focus:outline-none focus:border-slate-500 hover:shadow text-sm"
                 id="password"
                 name="password"
@@ -369,7 +369,7 @@ export function PerfilClientePage() {
             
 
             <div>
-              
+
               <div className="flex items-center justify-center w-full">
                 {editable==false && < button className=" cursor-pointer flex items-center justify-center bg-black text-white p-1 rounded-md h-10 w-[180px] text-center text-sm font-medium" type="submit" >Actualizar</button>}  
               </div>

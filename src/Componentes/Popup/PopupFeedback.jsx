@@ -1,19 +1,27 @@
 import React, { useState } from 'react'
-import { feedbackDecision, handleFeedbackRating } from '../../firebase/users-service';
+import { doctorRating, feedbackDecision, handleFeedbackRating } from '../../firebase/users-service';
 import Popup from 'reactjs-popup';
 
 export  function PopupFeedback(props) {
   const [rating,setRating]=useState(0);
   const [review,setReview]=useState("");
+  const [message, setMessage]= useState("");
 
   const handleNo = async ()=>{//Funcion que setea el rating de la funcion a no (de que el usuario decidio no dar una reseña)
       await feedbackDecision(props.doctor,"no",props.cita.id);
       props.setOpen(false)
   }
   const handleRating = async ()=>{//Funcion que agrega la reseña a la lista de reseñas del doctor
-    await handleFeedbackRating(props.doctor,props.user,props.cita.info.start,review,rating);
-    await feedbackDecision(props.doctor,"yes",props.cita.id)
-    props.setOpen(false)
+    if (rating==0) {
+      setMessage("La calificación es requerida");
+    }
+    else{
+      await handleFeedbackRating(props.doctor,props.user,props.cita.info.start,review,rating);
+      await feedbackDecision(props.doctor,"yes",props.cita.id);
+      await doctorRating(rating,props.doctor);
+      props.setOpen(false);
+    }
+    
   }
   const handleTextArea = (event)=>{
     setReview(event.target.value);
@@ -64,6 +72,7 @@ export  function PopupFeedback(props) {
                   </div>
                   <p className='text-xl font-bold'>{rating}/5</p>
                  </div>
+                 <p className='text-red-500'>{message}</p>
                  </div>
             <div className='flex flex-col gap-2'>
               <p className='self-center'>Desea dejar una reseña?</p>

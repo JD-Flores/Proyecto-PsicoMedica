@@ -259,6 +259,30 @@ export const handleFeedbackRating = async (doctor,user,date,review,rating)=>{
                 ["rating"]:rating,
                 })
             })
+            
+}
+export const doctorRating = async (rating,doctor)=>{
+    console.log("doctorRating");
+    const response = await getDoc(doc(db,"feedback",doctor.uid));
+    const doctorInfo = await getDoctorById(doctor.uid);
+    console.log(response)
+    const info = response.data().ratings;
+    console.log(info)
+    console.log(typeof info.length);
+    console.log(typeof rating);
+    console.log(typeof doctorInfo.ranking);
+    const docRef =  doc(db,"users",doctor.uid)
+    console.log(info.length);
+    console.log(rating);
+    console.log(doctorInfo.ranking);
+    const average = ((info.length-1)*(doctorInfo.ranking)+rating)/info.length;
+    const data= {
+        ranking: average,
+      }
+      updateDoc(docRef, data).then(docRef => {
+        console.log("A New Document Field has been added to an existing document");
+
+})
 }
 
 
@@ -291,11 +315,43 @@ export const updateInfoClient = (user, result) => {
         // ...
         });
 
-        
+})
+};
 
-        
+export const updateInfoDoctor = (user, result) => {
+    const docRef = doc(db, "users", user.uid)
+    const data= {
+      email: result.newMail,
+      name: result.newName,
+      lastname: result.newLastName,
+      password: result.newPassword,
+      phone: result.newNumber,
+      experience: result.newExperience, 
+      price: result.newPrice, 
+      country: result.newCountry, 
+      gender: result.newGender, 
+      specialty: result.newSpecialty, 
+      grade: result.newGrade, 
+      biography: result.newBiography
+    }
 
-        
+    updateDoc(docRef, data).then(docRef => {
+    console.log("A New Document Field has been added to an existing document");
+
+    const auth = getAuth();
+
+
+        updateEmail(auth.currentUser, result.newMail).then(() => {
+        console.log("actualizado el email")
+        updatePassword(auth.currentUser, result.newPassword).then(() => {
+            // Update successful.
+            console.log("actualizado el password")
+        });
+        // ...
+        }).catch((error) => {
+        console.log("error mail");
+        // ...
+        });
 
 })
 }
