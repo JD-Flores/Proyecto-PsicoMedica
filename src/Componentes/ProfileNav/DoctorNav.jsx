@@ -31,7 +31,10 @@ export function DoctorNav() {
       </button>
 
       {isOpen && (
-        <div className="flex flex-col w-[364px]  bg-white p-2 rounded-xl shadow shadow-slate-300 ">
+        <div className="flex flex-col w-[364px]  bg-white p-2 rounded-xl shadow shadow-slate-300 
+        md:w-[583px] md:text-[20px]
+        lg:w-[683px] lg:text-[24px]
+        xl:w-[763px] xl:text-[24px]">
         <div id="top" className="flex items-center justify-center h-full">
           <h1 className="flex items-center justify-center text-center text-xl  mb-2 md:text-2xl lg:text-3xl">
             Bienvenido {user.name}

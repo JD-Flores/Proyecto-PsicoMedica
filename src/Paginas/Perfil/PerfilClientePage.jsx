@@ -58,7 +58,14 @@ export function PerfilClientePage() {
   };
 
   const onSubmit = (data) => {
-    const result = { newMail, newName, newLastName, newNumber, newPassword, newAge };
+    const result = {
+      newMail,
+      newName,
+      newLastName,
+      newNumber,
+      newPassword,
+      newAge,
+    };
     updateInfoClient(user, result);
     setUploadConfirmmed(true);
     setUpdate(true);
@@ -130,12 +137,12 @@ export function PerfilClientePage() {
               <div id="leftSideNameLastName" className="w-2/4 ">
                 <label htmlFor="name" className="block cursor-pointer">
                   <div className="py-1 mt-1">
-                    <h2 className="text-xl text-black font-bold  mb-1">
+                    <h2 className="text-lg md:text-xl text-[#908989] mt-[5px] mb-1">
                       Nombre
                     </h2>
 
                     <input
-                      className="w-full p-3 border border-slate-200 rounded-lg focus:outline-none focus:border-slate-500 hover:shadow text-sm"
+                      className="md:text-xl text-black w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow"
                       placeholder={user.name}
                       id="name"
                       name="name"
@@ -158,12 +165,12 @@ export function PerfilClientePage() {
 
                 <label htmlFor="lastname" className="block cursor-pointer">
                   <div className="py-1 md:py-3 lg:py-6 mt-1">
-                    <h2 className="text-lg text-black font-bold  mb-1">
+                    <h2 className="text-lg md:text-xl text-[#908989] mt-[5px] mb-1">
                       Apellido
                     </h2>
 
                     <input
-                      className="w-full p-3 border border-slate-200 rounded-lg focus:outline-none focus:border-slate-500 hover:shadow text-sm"
+                      className="md:text-xl text-black w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow"
                       id="lastname"
                       name="lastname"
                       type="text"
@@ -183,45 +190,44 @@ export function PerfilClientePage() {
                     {errors.lastname && <p>{errors.lastname.message}</p>}
                   </div>
                 </label>
-
-                </div>
-                <div
-                  id="rightSidePicture"
-                  className="flex justify-center items-center w-2/4"
-                >
-                  {editable == true && (
-                    <div id="picture" className="flex flex-col items-center">
-                      <img
-                        src={image}
-                        alt="Profile picture"
-                        className=" h-[160px] w-[160px] rounded-[50%]
+              </div>
+              <div
+                id="rightSidePicture"
+                className="flex justify-center items-center w-2/4"
+              >
+                {editable == true && (
+                  <div id="picture" className="flex flex-col items-center">
+                    <img
+                      src={image}
+                      alt="Profile picture"
+                      className=" h-[160px] w-[160px] rounded-[50%]
                         md:h-[200px] md:w-[200px]
                         lg:h-[230px] lg:w-[230px]"
-                      />
-                    </div>
-                  )}
-                  {editable == false && (
-                    <div className="flex flex-col items-center">
-                      <img
-                        src={image}
-                        alt="Profile picture"
-                        className=" h-[160px] w-[178px] rounded-[50%]"
-                      />
-                      <input
-                        type="file"
-                        onChange={(e) => {
-                          setFile(e.target.files[0]),
-                            setImage(
-                              URL.createObjectURL(
-                                e.target.files[0],
-                                console.log("prueba")
-                              )
-                            );
-                        }}
-                        className="flex items-center justify-center bg-black text-white p-1  h-14 w-[200px] mt-3"
-                      />
-                    </div>
-                  )}
+                    />
+                  </div>
+                )}
+                {editable == false && (
+                  <div className="flex flex-col items-center">
+                    <img
+                      src={image}
+                      alt="Profile picture"
+                      className=" h-[160px] w-[178px] rounded-[50%]"
+                    />
+                    <input
+                      type="file"
+                      onChange={(e) => {
+                        setFile(e.target.files[0]),
+                          setImage(
+                            URL.createObjectURL(
+                              e.target.files[0],
+                              console.log("prueba")
+                            )
+                          );
+                      }}
+                      className="flex items-center justify-center bg-black text-white p-1  h-14 w-[200px] mt-3"
+                    />
+                  </div>
+                )}
 
                 {/* {editable==true && (
                 <div>
@@ -235,12 +241,12 @@ export function PerfilClientePage() {
                 <div id="leftSideNumber" className="md:w-2/4">
                   <label htmlFor="number" className="block cursor-pointer">
                     <div className="py-1 mt-1">
-                      <h2 className="text-lg text-black font-bold  mb-1">
+                      <h2 className="text-lg md:text-xl text-[#908989] mt-[5px] mb-1">
                         Número
                       </h2>
 
                       <input
-                        className="w-full p-3 border border-slate-200 rounded-lg focus:outline-none focus:border-slate-500 hover:shadow text-sm"
+                        className="md:text-xl text-black w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow"
                         placeholder={user.phone}
                         id="number"
                         name="number"
@@ -272,13 +278,13 @@ export function PerfilClientePage() {
                 <div id="rightSideAge" className="md:w-2/4">
                   <label htmlFor="age" className="block cursor-pointer">
                     <div className="py-1 mt-1">
-                      <h2 className="text-lg text-black font-bold  mb-1">
+                      <h2 className="text-lg md:text-xl text-[#908989] mt-[5px] mb-1">
                         Edad
                       </h2>
 
                       <input
                         placeholder={user.age}
-                        className="w-full p-3 border border-slate-200 rounded-lg focus:outline-none focus:border-slate-500 hover:shadow text-sm"
+                        className="md:text-xl text-black w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow"
                         id="age"
                         name="age"
                         type="number"
@@ -312,43 +318,15 @@ export function PerfilClientePage() {
                 id="contra-email"
                 className="flex flex-col md:flex-row md:gap-[10px]"
               >
-                <div id="leftSideContra" className="md:w-2/4">
-                  <label htmlFor="contra" className="block cursor-pointer">
-                    <div className="py-1 mt-1">
-                      <h2 className="text-lg text-black font-bold  mb-1">
-                        Contraseña
-                      </h2>
-
-                      <input
-                        className="w-full p-3 border border-slate-200 rounded-lg focus:outline-none focus:border-slate-500 hover:shadow text-sm"
-                        id="password"
-                        name="password"
-                        type="password"
-                        readOnly={editable}
-                        {...register("password", {
-                          required: true,
-                          pattern: {
-                            value: patterns.password,
-                            message: messages.password,
-                          },
-                        })}
-                      />
-                      {errors.password?.type === "required" && (
-                        <p className="text-red-600">El campo es requerido</p>
-                      )}
-                      {errors.password && <p>{errors.password.message}</p>}
-                    </div>
-                  </label>
-                </div>
-                <div id="rightSideEmail" className="md:w-2/4">
+                <div id="leftSideEmail" className="md:w-2/4">
                   <label htmlFor="email" className="block cursor-pointer">
                     <div className="py-1 mt-1">
-                      <h2 className="text-xl text-black font-bold  mb-1">
+                      <h2 className="text-lg md:text-xl text-[#908989] mt-[5px] mb-1">
                         Email
                       </h2>
 
                       <input
-                        className="w-full p-3 border border-slate-200 rounded-lg focus:outline-none focus:border-slate-500 hover:shadow text-sm"
+                        className="md:text-xl text-black w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow"
                         placeholder={user.email}
                         id="email"
                         name="email"
@@ -366,6 +344,34 @@ export function PerfilClientePage() {
                         <p className="text-red-600">El campo es requerido</p>
                       )}
                       {errors.mail && <p>{errors.mail.message}</p>}
+                    </div>
+                  </label>
+                </div>
+                <div id="rightSideContra" className="md:w-2/4">
+                  <label htmlFor="contra" className="block cursor-pointer">
+                    <div className="py-1 mt-1">
+                      <h2 className="text-lg md:text-xl text-[#908989] mt-[5px] mb-1">
+                        Contraseña
+                      </h2>
+
+                      <input
+                        className="md:text-xl text-black w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow"
+                        id="password"
+                        name="password"
+                        type="password"
+                        readOnly={editable}
+                        {...register("password", {
+                          required: true,
+                          pattern: {
+                            value: patterns.password,
+                            message: messages.password,
+                          },
+                        })}
+                      />
+                      {errors.password?.type === "required" && (
+                        <p className="text-red-600">El campo es requerido</p>
+                      )}
+                      {errors.password && <p>{errors.password.message}</p>}
                     </div>
                   </label>
                 </div>
@@ -394,7 +400,7 @@ export function PerfilClientePage() {
                       onClick={() => {
                         setEditable(!editable), setUploadConfirmmed(false);
                       }}
-                      className="flex items-center justify-center bg-[#5974A9] text-white p-1 rounded-md h-14 w-2/5 mt-6 font-semibold"
+                      className="flex items-center justify-center bg-[#5974A9] text-white p-1 rounded-md h-14 w-2/5 mt-6 font-semibold md:text-lg"
                     >
                       Editar Datos Personales
                     </button>

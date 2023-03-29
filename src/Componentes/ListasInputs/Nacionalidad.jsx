@@ -6,7 +6,7 @@ export function Nacionalidad({first, editable, handle}) {
 
     <select id="country" name="country" onChange={handle} disabled={editable}
     defaultValue={first}
-    className=" w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow text-sm">
+    className=" md:text-xl text-black w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow">
     <option disabled hidden value={first}>{first}</option>
     <option value="Afghanistan">Afganistán</option>
     <option value="Aland Islands">Islas Aland</option>

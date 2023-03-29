@@ -76,15 +76,15 @@ export function Calendario({userid}) {
   
 
     return (
-      <div  className="bigCalendar-container bg-[#5974A9] text-black font-semibold h-[400px] rounded-lg">
-      <Calendar
+      <div  className="bigCalendar-container bg-white text-black text-xs md:text-xl font-semibold h-[400px] rounded-lg">
+      <Calendar 
         localizer={localizer}
         events={reserva}
         startAccessor="start"
         endAccessor="end"
         messages={{
-          next: "sig",
-          previous: "ant",
+          next: ">",
+          previous: "<",
           today: "Hoy",
           month: "Mes",
           week: "Semana",
