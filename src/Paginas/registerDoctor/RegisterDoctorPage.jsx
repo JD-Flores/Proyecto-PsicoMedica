@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router";
 import { Nacionalidad } from "../../Componentes/ListasInputs/Nacionalidad";
 import {
@@ -18,6 +18,7 @@ import { store } from "../../firebase/config";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { uploadFile } from "../../firebase/users-service";
 import { async } from "@firebase/util";
+import { useForm } from "react-hook-form";
 
 export function RegisterDoctorPage() {
   const navigate = useNavigate();
@@ -70,23 +71,7 @@ export function RegisterDoctorPage() {
     if (completed()) {
       navigate(PERFIL_DOCTOR);
     } else {
-      const result = await uploadFile(file);
-      formData.profilePic = result;
-      const { email, password, confirmPassword, ...extraData } = formData; //form destructurado
-
-      await registerWithEmailAndPassword(
-        email,
-        password,
-        confirmPassword,
-        extraData
-      );
-      console.log("Registrando");
-      if (completed()) {
-        setCompleted();
-        navigate(PERFIL_DOCTOR);
-      } else {
-        setError(returnError());
-      }
+      setError(returnError());
     }
   };
 
@@ -98,7 +83,7 @@ export function RegisterDoctorPage() {
         </p>
         <form
           action=""
-          onSubmit={onSubmit}
+          onSubmit={handleSubmit(onSubmit)}
           className="flex flex-col justify-between gap-2"
         >
           <div className="flex flex-row  gap-x-8 gap-y-5">
@@ -109,7 +94,6 @@ export function RegisterDoctorPage() {
                   <h1 className="font-medium text-slate-700 pb-2 text-sm ">
                     Nombre
                   </h1>
-                  <p className="text-red-600">{errorName}</p>
                 </div>
                 <input
                   id="name"
@@ -117,7 +101,17 @@ export function RegisterDoctorPage() {
                   type="text"
                   className="lg:w-full w-[160px] py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow text-sm"
                   placeholder="Ingresa tu nombre"
+                  {...register("name", {
+                    required: true,
+                    pattern: /^[A-Za-z]+$/i,
+                  })}
                 />
+                {errors.name?.type === "required" && (
+                  <p className="text-red-600">El campo es requerido</p>
+                )}
+                {errors.name?.type === "pattern" && (
+                  <p className="text-red-600">El dato ingresado no es válido</p>
+                )}
               </label>
               {/* Label Apellido */}
               <label htmlFor="lastname" className="block cursor-pointer">
@@ -125,7 +119,6 @@ export function RegisterDoctorPage() {
                   <h1 className="font-medium text-slate-700 pb-2 text-sm ">
                     Apellido
                   </h1>
-                  <p className="text-red-600">{errorName}</p>
                 </div>
                 <input
                   id="lastname"
@@ -133,7 +126,17 @@ export function RegisterDoctorPage() {
                   type="text"
                   className="lg:w-full w-[160px] py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow text-sm"
                   placeholder="Ingresa tu apellido"
+                  {...register("lastname", {
+                    required: true,
+                    pattern: /^[A-Za-z]+$/i,
+                  })}
                 />
+                {errors.lastname?.type === "required" && (
+                  <p className="text-red-600">El campo es requerido</p>
+                )}
+                {errors.lastname?.type === "pattern" && (
+                  <p className="text-red-600">El dato ingresado no es válido</p>
+                )}
               </label>
               {/* Label Correo */}
               <label htmlFor="email" className="block cursor-pointer">
@@ -141,7 +144,6 @@ export function RegisterDoctorPage() {
                   <h1 className="font-medium text-slate-700 pb-2 text-sm">
                     Correo electrónico
                   </h1>
-                  <p className="text-red-600">{errorEmail}</p>
                 </div>
                 <input
                   id="email"
@@ -149,7 +151,20 @@ export function RegisterDoctorPage() {
                   type="email"
                   className="lg:w-full w-[160px] py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow text-sm"
                   placeholder="Ingresa tu correo"
+                  {...register("email", {
+                    required: true,
+                    pattern:
+                      /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/,
+                  })}
                 />
+                {errors.email?.type === "required" && (
+                  <p className="text-red-600">El campo es requerido</p>
+                )}
+                {errors.email?.type === "pattern" && (
+                  <p className="text-red-600">
+                    El correo ingresado no es válido
+                  </p>
+                )}
               </label>
               {/* Label Num Teléfono */}
               <label htmlFor="telefono">
@@ -194,7 +209,6 @@ export function RegisterDoctorPage() {
                   <h1 className="font-medium text-slate-700 pb-2 text-sm">
                     Contraseña
                   </h1>
-                  <p className="text-red-600">{errorPassword}</p>
                 </div>
                 <input
                   id="password"
@@ -202,7 +216,19 @@ export function RegisterDoctorPage() {
                   type="password"
                   className="lg:w-full w-[160px] py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow text-sm"
                   placeholder="Ingresa tu contraseña"
+                  {...register("password", {
+                    required: true,
+                    minLength: 8,
+                  })}
                 />
+                {errors.password?.type === "required" && (
+                  <p className="text-red-600">El campo es requerido</p>
+                )}
+                {errors.password?.type === "minLength" && (
+                  <p className="text-red-600">
+                    La contraseña debe tener mínimo 8 caracteres
+                  </p>
+                )}
               </label>
               {/* Label Confirm Password */}
               <label htmlFor="confirmPassword">
@@ -210,7 +236,6 @@ export function RegisterDoctorPage() {
                   <h1 className="font-medium text-slate-700 pb-2 text-sm">
                     Confirmar contraseña
                   </h1>
-                  <p className="text-red-600">{errorConfirm}</p>
                 </div>
                 <input
                   id="confirmPassword"
@@ -218,26 +243,42 @@ export function RegisterDoctorPage() {
                   type="password"
                   className="lg:w-full w-[160px] py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow text-sm"
                   placeholder="Ingresa nuevamente la contraseña"
+                  {...register("confirmPassword", {
+                    required: true,
+                    minLength: 8,
+                    validate: (value) => value === password.current,
+                  })}
                 />
+                {errors.confirmPassword?.type === "required" && (
+                  <p className="text-red-600">El campo es requerido</p>
+                )}
+                {errors.confirmPassword?.type === "minLength" && (
+                  <p className="text-red-600">
+                    La contraseña debe tener mínimo 8 caracteres
+                  </p>
+                )}
+                {errors.confirmPassword?.type === "validate" && (
+                  <p className="text-red-600">La contraseña no coincide</p>
+                )}
               </label>
               {/* Label Experiencia doctor*/}
               <label htmlFor="Experience">
                 <div className="flex flex-row py-1 mt-2">
                   <h1 className="font-medium text-slate-700 pb-2 text-sm">
-                    Años de experiencias
+                    Años de experiencia
                   </h1>
-                  <p className="text-red-600">{errorConfirm}</p>
                 </div>
                 <input
                   id="Experience"
                   name="Experience"
-                  type="number"
+                  type="text"
                   className="lg:w-full w-[160px] py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow text-sm"
                   placeholder="Ingrese sus años de experiencia"
                   {...register("Experience", {
                     required: true,
                     min: 1,
                     max: 65,
+                    pattern: /^[0-9]+$/i,
                   })}
                 />
                 {errors.Experience?.type === "required" && (
@@ -249,6 +290,9 @@ export function RegisterDoctorPage() {
                 {errors.Experience?.type === "max" && (
                   <p className="text-red-600">El dato ingresado no es válido</p>
                 )}
+                {errors.Experience?.type === "pattern" && (
+                  <p className="text-red-600">Ingresa sólo números</p>
+                )}
               </label>
               {/* Label Precio consulta */}
               <label htmlFor="Price">
@@ -256,7 +300,6 @@ export function RegisterDoctorPage() {
                   <h1 className="font-medium text-slate-700 pb-2 text-sm">
                     Precio por consulta
                   </h1>
-                  <p className="text-red-600">{errorConfirm}</p>
                 </div>
                 <input
                   id="Price"
@@ -286,7 +329,6 @@ export function RegisterDoctorPage() {
                   <h1 className="font-medium text-slate-700 pb-2 text-sm">
                     Edad
                   </h1>
-                  <p className="text-red-600">{errorAge}</p>
                 </div>
                 <input
                   id="age"
@@ -316,18 +358,25 @@ export function RegisterDoctorPage() {
                   <h1 className="font-medium text-slate-700 pb-2 text-sm">
                     Género
                   </h1>
-                  <p className="text-red-600">{errorGender}</p>
                 </div>
+
                 <select
                   id="gender"
                   name="gender"
                   className=" w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow text-sm"
+                  {...register("gender", {
+                    required: "Elige tu género",
+                  })}
                 >
-                  <option>Elige tu género</option>
+                  <option value="">Elige tu género</option>
                   <option value="Masculino">Masculino</option>
                   <option value="Femenino">Femenino</option>
                   <option value="Otro">Otro</option>
                 </select>
+
+                {errors.gender?.type === "required" && (
+                  <p className="text-red-600">El campo es requerido</p>
+                )}
               </label>
               {/* Label Especialidad doctor */}
               <label htmlFor="specialty">
@@ -335,12 +384,14 @@ export function RegisterDoctorPage() {
                   <h1 className="font-medium text-slate-700 pb-2 text-sm">
                     Especialidad
                   </h1>
-                  <p className="text-red-600">{errorGender}</p>
                 </div>
                 <select
                   id="specialty"
                   name="specialty"
                   className=" w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow text-sm"
+                  {...register("specialty", {
+                    required: "Indica tu especialidad",
+                  })}
                 >
                   <option value="">Indica tu especialidad</option>
                   <option value="Depresión">Depresión</option>
@@ -372,6 +423,9 @@ export function RegisterDoctorPage() {
                   <option value="Terapia de pareja">Terapia de pareja</option>
                   <option value="Otro">Otro</option>
                 </select>
+                {errors.specialty?.type === "required" && (
+                  <p className="text-red-600">El campo es requerido</p>
+                )}
               </label>
               {/* Label Grado instrucción */}
               <label htmlFor="grade">
@@ -379,19 +433,23 @@ export function RegisterDoctorPage() {
                   <h1 className="font-medium text-slate-700 pb-2 text-sm">
                     Grado
                   </h1>
-                  <p className="text-red-600">{errorGender}</p>
                 </div>
                 <select
                   id="grade"
                   name="grade"
                   className=" w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow text-sm"
-                  placeholder="grado"
+                  {...register("grade", {
+                    required: "Indica tu grado",
+                  })}
                 >
-                  <option>Indica tu grado</option>
+                  <option value="">Indica tu grado</option>
                   <option value="Licenciado">Licenciado</option>
                   <option value="Master">Master</option>
                   <option value="Doctor">Doctor</option>
                 </select>
+                {errors.grade?.type === "required" && (
+                  <p className="text-red-600">El campo es requerido</p>
+                )}
               </label>
               <div className="flex flex-col py-1 mt-2">
                 <h1 className="font-medium text-slate-700 pb-2 text-sm">
