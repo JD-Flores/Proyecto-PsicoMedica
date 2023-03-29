@@ -273,11 +273,11 @@ export function BuscarDoc() {
               <div>No hay resultados para su búsqueda</div>
             ) : (
               doctors?.map((doctor, idx) => (
-                <>
+      
                   <Link to={`/doctors/${doctor.uid}`}>
                     <DoctorCard info={doctor} key={idx} />
                   </Link>
-                </>
+                
               ))
             )}
           </div>

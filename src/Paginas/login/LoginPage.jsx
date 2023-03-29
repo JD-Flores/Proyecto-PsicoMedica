@@ -88,19 +88,6 @@ export function LoginPage() {
           </label>
           <div className="flex flex-row justify-between">
             <div>
-              <label htmlFor="remember" className="">
-                <input
-                  type="checkbox"
-                  id="remember"
-                  className="w-4 h-4 border-slate-200 focus:bg-indigo-600 m-2"
-                />
-                Recuérdame
-              </label>
-            </div>
-            <div>
-              <a href="#" className="font-medium text-indigo-600">
-                ¿Has olvidado tu contraseña?
-              </a>
             </div>
           </div>
           <button className="w-full py-3 font-medium text-white bg-indigo-600 hover:bg-indigo-500 rounded-lg border-indigo-500 hover:shadow inline-flex space-x-2 items-center justify-center">

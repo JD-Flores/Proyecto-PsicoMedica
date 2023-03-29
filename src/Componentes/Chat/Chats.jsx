@@ -11,9 +11,9 @@ export function Chats() {
   const {dispatch} = useContext(ChatContext);
   const [chats,setChats]=useState([]);
   const [archived,setArchived]=useState(false);
-  const [chatToday,setChatToday]=useState();
-  const [noArchive,SetNoArchive]=useState();
-  const [tchats,setTchats]=useState();
+  const [chatToday,setChatToday]=useState([]);
+  const [noArchive,SetNoArchive]=useState([]);
+  const [tchats,setTchats]=useState([]);
   const [disable,setdisable]=useState(true);
 
   const getChats = async ()=>{
@@ -40,16 +40,18 @@ export function Chats() {
         const total = Object.entries(chats)?.filter(element2=>element.uid == element2[1].userInfo.uid) ;
         array.push(total[0]);
       } )
+      console.log(array)
       setTchats(array);
       const verificacion=[];
 
        filters?.forEach((element,i) =>{
         verificacion.push(element.uid)//Pone en el array verificacion los uid de los clientes del dia de hoy  
       } )
-      const total = Object.entries(chats)?.filter(element2=> !verificacion.includes(element2[1].userInfo.uid)) 
+      const total = Object.entries(chats)?.filter(element2=> !verificacion?.includes(element2[1].userInfo.uid)) 
+       if(total.length != 0){
         array2.push(total[0]);
+       }
         SetNoArchive(array2);
-
     setdisable(false);
     }
         
@@ -138,31 +140,31 @@ export function Chats() {
         </div>
     </div>
       ))}
-      {archived == true && noArchive?.sort((a,b)=>b[1].date-a[1].date).map((chat)=>(
-        <div 
-        id='userchat' 
-        key={chat[0]} 
-        onClick={()=>handleSelect(chat[1]?.userInfo)}
-        className='flex flex-row p-2 items-center gap-3 text-black hover:bg-black hover:text-white cursor-pointer w-full'>       
-          <img 
-          src={chat[1]?.userInfo?.photoURL} 
-          alt="" 
-          className='w-[50px] h-[50px] object-cover rounded-[50%]'/>
-         <div id='userinfo' className='flex flex-col w-full overflow-hidden '>
-        <span 
-          className='font-semibold text-lg md:text-xl'>
-          {chat[1]?.userInfo?.name}</span>
-        <p 
-        className='w-4/5 text-xs text-gray-300 truncate '>
-          {chat[1]?.lastMessage?.text!=""&&
-          chat[1]?.lastMessage?.text
-          }
-          {chat[1]?.lastMessage?.text==""&&
-          "photo."
-          }
-          </p>
-        </div>
-    </div>
+      {archived == true && noArchive?.sort((a,b)=>b[1].date-a[1].date).map((chat,idx)=>(
+       <div 
+       id='' 
+       key={chat[0]} 
+       onClick={()=>handleSelect(chat[1].userInfo)}
+       className='flex flex-row p-2 items-center gap-3 text-black hover:bg-black hover:text-white cursor-pointer w-full'>       
+         <img 
+         src={chat[1].userInfo?.photoURL} 
+         alt="" 
+         className='w-[50px] h-[50px] object-cover rounded-[50%]'/>
+        <div id='' className='flex flex-col w-full overflow-hidden '>
+       <span 
+         className='font-semibold text-lg md:text-xl'>
+         {chat[1].userInfo?.name}</span>
+       <p 
+       className='w-4/5 text-xs text-gray-300 truncate '>
+         {chat[1].lastMessage?.text!=""&&
+         chat[1].lastMessage?.text
+         }
+         {chat[1].lastMessage?.text==""&&
+         "photo."
+         }
+         </p>
+       </div>
+   </div>
       ))}
         
     </div>
