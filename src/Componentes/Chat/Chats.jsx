@@ -15,57 +15,45 @@ export function Chats() {
   const [noArchive,SetNoArchive]=useState();
   const [tchats,setTchats]=useState();
   const [disable,setdisable]=useState(true);
-  const setCons = (value)=>{
-    console.log(value)
-    setChatToday(value);
-    console.log(chatToday)
-  }
+
   const getChats = async ()=>{
     onSnapshot(doc(db,"userChat",user.uid),(doc)=>{
       setChats(doc.data());
     });
-    const dbRef = doc(db, "userChat",user.uid);
-        const docRef = await getDoc(dbRef);
-        console.log(docRef.data());
-        setChats(docRef.data());
   }
     const getFeedback = async ()=>{
       onSnapshot(doc(db,"calendarios",user.uid),(doc)=>{
-        setChatToday(doc.data().citas);
+        setChatToday(doc.data()?.citas);
       })
-      const dbRef = doc(db, "calendarios",user.uid);
-        const docRef = await getDoc(dbRef);
-        console.log(docRef.data().citas);
-        setCons(docRef.data().citas);
-        console.log(chatToday);
-        const start = new Date();
-        const finish = new Date();
-        start.setHours(0);
-        start.setMinutes(0);
-        finish.setHours(23);
-        finish.setMinutes(59);
-        const array =[];
-        const array2=[];
-        console.log(chatToday);
-        const filters = chatToday?.filter(element => new Date(element.info.start)>start && new Date(element.info.start)<finish );
-        const dobleFiltro = filters?.forEach((element,i) =>{
-          const total = Object.entries(chats)?.filter(element2=>element.uid == element2[1].userInfo.uid) ;
-          array.push(total[0]);
-        } )
-        setTchats(array);
-        const verificacion=[];
+      }
+    const Processor=()=>{
+      const start = new Date();
+      const finish = new Date();
+      start.setHours(0);
+      start.setMinutes(0);
+      finish.setHours(23);
+      finish.setMinutes(59);
+      const array =[];
+      const array2=[];
+      const filters = chatToday?.filter(element => new Date(element.info.start)>start && new Date(element.info.start)<finish );
+      const dobleFiltro = filters?.forEach((element,i) =>{
+        const total = Object.entries(chats)?.filter(element2=>element.uid == element2[1].userInfo.uid) ;
+        array.push(total[0]);
+      } )
+      setTchats(array);
+      const verificacion=[];
 
-         filters?.forEach((element,i) =>{
-          verificacion.push(element.uid)//Pone en el array verificacion los uid de los clientes del dia de hoy  
-        } )
-        const total = Object.entries(chats)?.filter(element2=> !verificacion.includes(element2[1].userInfo.uid)) 
-          array2.push(total[0]);
-          SetNoArchive(array2);
-          console.log(array2);
-      
-      
-      setdisable(false);
+       filters?.forEach((element,i) =>{
+        verificacion.push(element.uid)//Pone en el array verificacion los uid de los clientes del dia de hoy  
+      } )
+      const total = Object.entries(chats)?.filter(element2=> !verificacion.includes(element2[1].userInfo.uid)) 
+        array2.push(total[0]);
+        SetNoArchive(array2);
+
+    setdisable(false);
     }
+        
+    
     
   
   useEffect(()=>{
@@ -73,6 +61,10 @@ export function Chats() {
     user.uid && getChats();
     getFeedback();
   },[user.uid])
+  
+  useEffect(()=>{
+    Processor()
+  },[chatToday]);
 
   const handleSelect=(u)=>{
     dispatch({type:"CHANGE_USER",payload:u})
@@ -86,11 +78,11 @@ export function Chats() {
 
   return (
     <div className='w-full overflow-hidden text-ellipsis border-y-2 border-gray-300'>
-      <div className='flex flex-row justify-evenly'>
+      <div className='flex flex-row justify-evenly p-3'>
         {user.doctor == true &&
         <>
-        <button disabled={disable} className='text-white text-3xl' onClick={handleChats}>chats</button>
-        <button disabled={disable} className='text-white text-3xl' onClick={handleArchived}>archive</button>
+        <button disabled={disable} className='text-white text-3xl hover:font-bold' onClick={handleChats}>Citas de hoy</button>
+        <button disabled={disable} className='text-white text-3xl hover:font-bold' onClick={handleArchived}>Chats archivados</button>
         </>
           }
       </div>
