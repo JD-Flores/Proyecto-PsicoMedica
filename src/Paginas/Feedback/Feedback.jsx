@@ -33,8 +33,14 @@ export function Feedback() {
         <DoctorNav></DoctorNav>
       </div>
 
-      <div className="w-[450px] lg:w-[650px] mx-auto m-8 bg-white p-8 rounded-xl shadow shadow-slate-300 h-fit mt-10">
-        <div id="title" className="text-center text-2xl lg:text-3xl font-semibold text-[#5974A9] m-2">
+      <div id="bottom-containeer" className="flex flex-col p-4 w-[363px] h-4/5 bg-white rounded-[12px] 
+        md:w-[583px]
+        lg:w-[683px]
+        xl:w-[763px]">
+        <div
+          id="title"
+          className="text-center text-2xl lg:text-3xl font-semibold text-[#5974A9] m-2"
+        >
           {user == null ? <h1></h1> : <h1>Calificación global del usuario</h1>}
         </div>
 
