@@ -141,33 +141,33 @@ export function Messages() {
 
   return (
     
-    <div className='flex flex-col w-2/3 '>
+    <div className='flex flex-col w-2/3'>
         <PopupFeedback setOpen={setOpen} open={open} cita={cita} doctor={data.user} user={user} />
-        <div className='flex items-center w-full text-3xl p-2 bg-blue-800 text-white h-[70px]'>
+        <div className='flex items-center w-full text-3xl p-2 lg:p-3 bg-blue-900 text-white h-[70px]'>
             <span>{data.user?.name}</span>
             
             {/* <button onClick={}>Actualizar</button> */}
         </div>
-        <div className='w-full h-full p-2 overflow-y-scroll'>
+        <div className='w-full h-full overflow-y-scroll  bg-[#D1D5DB]'>
             {messages.map((m)=>(
                 <Message message={m} key={m.id}/>
             ))
             }
             
             {data.user.uid==user.uid && user.doctor==false &&
-            <div className='flex flex-col items-center justify-center h-full bg-gray-500'>
-            <p className='text-white text-xl'>Reserva una cita para empezar a Chatear</p>
-            <Link to={BUSCAR_DOC} className="text-[12px] sm:text-[16px] lg:text-lg text-white bg-[#EF3D3E] font-comfortaa   border-indigo-500 hover:shadow p-2 rounded-[6px] mt-[15px] mb-[15px]" >Agendar Doctores</Link>
+            <div className='flex flex-col items-center justify-center h-full bg-gray-500 mt-1'>
+            <p className='font-bold text-white text-[15px] lg:text-xl text-center font-comfortaa'>Agenda una cita para empezar a Chatear</p>
+            <Link to={BUSCAR_DOC} className="text-[12px] sm:text-[16px] lg:text-lg text-white bg-[#EF3D3E] font-comfortaa font-semibold  border-indigo-500 hover:shadow p-2 rounded-[6px] mt-[15px] mb-[15px]" >Agendar Cita</Link>
             </div>
             }
             {data.user.uid==user.uid && user.doctor==true &&
             <div className='flex flex-col items-center justify-center h-full bg-gray-500'>
-            <p className='text-white text-xl'>Seleccione un chat con un cliente o espere a que clientes reserven citas.</p>
+            <p className='font-bold text-white text-[15px] lg:text-xl text-center font-comfortaa'>Seleccione un chat con un cliente o espere a que clientes reserven citas</p>
             </div>
             }
             
         </div>
-        <div className='flex justify-between bg-blue-700 p-1 pl-0 pr-5'>
+        <div className='flex justify-between bg-blue-900 p-1 pl-0 pr-5'>
             <div className='flex items center justify center w-full'>
             <input 
             type="text" 

@@ -76,7 +76,7 @@ export function Calendario({userid}) {
   
 
     return (
-      <div  className="bigCalendar-container bg-blue-300 text-white h-[400px]">
+      <div  className="bigCalendar-container bg-[#5974A9] text-black font-semibold h-[400px] rounded-lg">
       <Calendar
         localizer={localizer}
         events={reserva}
