@@ -27,7 +27,6 @@ export function RegisterDoctorPage() {
   const [image, setImage] = useState(null);
   const [imageUrl, setImageUrl] = useState("");
   const [file, setFile] = useState(null);
-  // const [formData, setFormData] = useState();
 
   function calculateAge(date) {
     const now = new Date();
@@ -36,11 +35,12 @@ export function RegisterDoctorPage() {
     return age;
   }
 
+  
   const {
     register,
     handleSubmit,
-    getValues,
     watch,
+    setValue,
     formState: { errors },
   } = useForm({
     defaultValues: {
@@ -70,7 +70,10 @@ export function RegisterDoctorPage() {
   password.current = watch("password", "");
 
   const onSubmit = async (data) => {
-    const { email, password, confirmPassword, ...extraData } = data; //form destructurado
+    const { email, password, confirmPassword, ...extraData } = data;
+
+    console.log(data);
+    // console.log(calculateAge(new Date(data.age)));
 
     await registerWithEmailAndPassword(
       email,
@@ -84,25 +87,6 @@ export function RegisterDoctorPage() {
       setError(returnError());
     }
   };
-
-  //en cada input utiliza la info del campo para agregarla al form existente
-  // const handleSubmit = (event) => {
-  //   const { name, value } = event.target;
-  //   console.log(formData.age)
-
-    // if (name == "age") {
-    //   setFormData({
-    //     ...formData,
-    //     [name]: calculateAge(new Date(value)),
-    //   });
-
-    // } else {
-    //   setFormData({
-    //     ...formData,
-    //     [name]: value,
-    //   });
-    // }
-  // };
 
   return (
     <div className="flex justify-center items-center m-3 py-9">
@@ -341,24 +325,20 @@ export function RegisterDoctorPage() {
             </div>
 
             <div id="rightHalf" className="w-full">
-              {/* <div>
+              <div>
                 <label htmlFor="country">
                   <div className="flex flex-row py-1 mt-2">
                     <h1 className="font-medium text-slate-700 pb-2 text-sm">
                       Nacionalidad
                     </h1>
                   </div>
-                  <input>
+                 <Nacionalidad>
                   
-                  </input>
-                  
-                  {...register("country")}
+                 </Nacionalidad>
                  
                 </label>
-                {errors.country?.type === "required" && (
-                  <p className="text-red-600">El campo es requerido</p>
-                )}
-              </div> */}
+                
+              </div>
 
               <label htmlFor="age">
                 <div className="flex flex-row py-1 mt-2">
@@ -367,6 +347,8 @@ export function RegisterDoctorPage() {
                   </h1>
                 </div>
                 <input
+                  // value= {selectAge}
+                  // onChange={handleChange}
                   id="age"
                   name="age"
                   type="date"
