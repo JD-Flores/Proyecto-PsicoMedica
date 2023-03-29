@@ -33,7 +33,7 @@ export function PerfilDoctorPage() {
   const newPassword = watch("password");
   const newExperience = watch("experience");
   const newPrice = watch("price");
-  const newCountry = watch("country");
+  const [newCountry, setNewCountry] = useState(user.country);
   const newGender = watch("gender");
   const newSpecialty = watch("specialty");
   const newGrade = watch("grade");
@@ -78,6 +78,11 @@ export function PerfilDoctorPage() {
     setUser(user);
     console.log("prueba " + user.profilePic);
   }
+
+  const handleOnChange = (event)=>{
+    const{name,value}=event.target;
+    setNewCountry(value);
+}
   
   useEffect(() => {  
       setImage(user.profilePic);
@@ -344,7 +349,7 @@ export function PerfilDoctorPage() {
                   <p className="font-medium text-[#908989] mt-[5px]">
                   Nacionalidad
                   </p>
-                  <Nacionalidad first={user.country} editable={editable} handle={()=>console.log('Nacionalidad cambiada')}></Nacionalidad>
+                  <Nacionalidad first={user.country} editable={editable} handle={handleOnChange}></Nacionalidad>
                   {errors.country?.type === "required" && 
                     (<p className="text-red-600">El campo es requerido</p>)
                   }
@@ -365,9 +370,6 @@ export function PerfilDoctorPage() {
                       <option value="Femenino">Femenino</option>
                       <option value="Otro">Otro</option>
                   </select>
-                  {errors.gender?.type === "required" && 
-                    (<p className="text-red-600">El campo es requerido</p>)
-                  }
     
                 </label>
               </div>
@@ -399,9 +401,6 @@ export function PerfilDoctorPage() {
                   <option value="Terapia de pareja">Terapia de pareja</option>
                   <option value="Otro">Otro</option>
                   </select>
-                {errors.specialty?.type === "required" && 
-                  (<p className="text-red-600">El campo es requerido</p>)
-                }
               </label>
 
               <label htmlFor="grado">
@@ -421,9 +420,6 @@ export function PerfilDoctorPage() {
                     <option value="Master">Master</option>
                     <option value="Doctor">Doctor</option>
                 </select>
-                {errors.grade?.type === "required" && 
-                  (<p className="text-red-600">El campo es requerido</p>)
-                }
               </label>
 
               <label htmlFor="biography">
@@ -435,7 +431,7 @@ export function PerfilDoctorPage() {
                     {...register("biography", {
                       required: false,
                     })}
-                  />
+                  >{user.biography}</textarea>
               </label>
               
               <div>
