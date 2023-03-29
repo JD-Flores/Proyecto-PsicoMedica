@@ -167,6 +167,7 @@ export function PerfilClientePage() {
                       name="lastname"
                       type="text"
                       readOnly={editable}
+                      placeholder={user.lastName}
                       {...register("lastname", {
                         required: true,
                         pattern: {
@@ -318,7 +319,6 @@ export function PerfilClientePage() {
                       </h2>
 
                       <input
-                        placeholder={user.password}
                         className="w-full p-3 border border-slate-200 rounded-lg focus:outline-none focus:border-slate-500 hover:shadow text-sm"
                         id="password"
                         name="password"
