@@ -44,8 +44,8 @@ export function LoginPage() {
     });
   };
   return (
-    <div className="max-w-lg mx-auto m-16 bg-white p-10 rounded-xl shadow shadow-slate-300 h-9/10">
-      <h1 className="text-4xl font-medium text-center p-2">Iniciar sesión</h1>
+    <div className="md:max-w-lg max-w-sm mx-auto bg-white p-8 rounded-xl shadow shadow-slate-300 mt-8 sm:mt-4 h-[600px]">
+      <h1 className="text-3xl lg:text-4xl font-medium text-center p-2">Iniciar sesión</h1>
 
       <div className="my-5">
         <button
@@ -88,17 +88,17 @@ export function LoginPage() {
           </label>
           <div className="flex flex-row justify-between">
             <div>
-              <label htmlFor="remember" className="">
+              <label htmlFor="remember" className="text-[14px] flex">
                 <input
                   type="checkbox"
                   id="remember"
-                  className="w-4 h-4 border-slate-200 focus:bg-indigo-600 m-2"
+                  className=" w-4 h-4 border-slate-200 focus:bg-indigo-600 m-2"
                 />
-                Recuérdame
+                <p className="mt-1">Recuérdame</p>
               </label>
             </div>
             <div>
-              <a href="#" className="font-medium text-indigo-600">
+              <a href="#" className="font-medium text-indigo-600 text-[14px]">
                 ¿Has olvidado tu contraseña?
               </a>
             </div>
