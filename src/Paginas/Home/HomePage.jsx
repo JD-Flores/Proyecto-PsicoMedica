@@ -21,7 +21,6 @@ export function HomePage() {
 
   const getDoctors = async () => {
     const data = await getDoctorsInfo();
-    console.log(data);
     setDoctors(data);
   };
 

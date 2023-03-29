@@ -26,7 +26,9 @@ export function Navbar() {
     >
       <div className="w-full flex items-center justify-around">  
       <div className="">
+      <Link to={HOME_URL}>
       <img src={logoPsicoMedica} alt="" className="rounded-full lg:h-[120px] h-[80px] "/>
+      </Link>
       </div>    
       
       <div className="group md:hidden block">
@@ -51,9 +53,6 @@ export function Navbar() {
           >
             <li className="rounded-sm px-3 py-1 hover:bg-gray-100">
               <Link to={HOME_URL}>Inicio</Link>
-            </li>
-            <li className="rounded-sm px-3 py-1 hover:bg-gray-100">
-              <Link to={HOME_URL}>Nosotros</Link>
             </li>
             <li className="rounded-sm px-3 py-1 hover:bg-gray-100">
               <Link to={FAQ_URL}>FAQ</Link>
