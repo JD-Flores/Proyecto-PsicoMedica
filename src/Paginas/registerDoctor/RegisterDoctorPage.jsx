@@ -1,33 +1,25 @@
-import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router";
-import { Nacionalidad } from "../../Componentes/ListasInputs/Nacionalidad";
-import {
-  completed,
-  registerWithEmailAndPassword,
-  returnError,
-  setCompleted,
-  signInWithGoogle,
-} from "../../firebase/auth-service";
-import { Link } from "react-router-dom";
-import {
-  LOGIN_URL,
-  PERFIL_DOCTOR,
-  REGISTER_DOCTOR_URL,
-} from "../../constantes/urls";
-import { Telefono } from "../../Componentes/ListasInputs/Telefono";
-import { store } from "../../firebase/config";
-import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
-import { uploadFile } from "../../firebase/users-service";
-import { async } from "@firebase/util";
+import React, { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router';
+import { Nacionalidad } from '../../Componentes/ListasInputs/Nacionalidad';
+import { completed, registerWithEmailAndPassword, returnError, setCompleted, signInDoctorWithGoogle } from '../../firebase/auth-service';
+import { Link } from 'react-router-dom';
+import { LOGIN_URL, PERFIL_DOCTOR, REGISTER_DOCTOR_URL } from '../../constantes/urls';
+import { Telefono } from '../../Componentes/ListasInputs/Telefono';
+import { store } from '../../firebase/config';
+import {ref, uploadBytes, getDownloadURL} from "firebase/storage";
+import { uploadFile } from '../../firebase/users-service';
+import { async } from '@firebase/util';
 
 export function RegisterDoctorPage() {
   const navigate = useNavigate();
   function calculateAge(date) {
     const now = new Date();
-    const diff = Math.abs(now - date);
-    const age = Math.floor(diff / (1000 * 60 * 60 * 24 * 365));
-    return age;
-  }
+    const diff = Math.abs(now - date );
+    const age = Math.floor(diff / (1000 * 60 * 60 * 24 * 365)); 
+    return age
+  } 
+
+  const [googleLogin, setGooglelogin] = useState(false);
   const [error, setError] = useState("");
   const [errorName, setErrorName] = useState("");
   const [errorEmail, setErrorEmail] = useState("");
@@ -110,9 +102,48 @@ export function RegisterDoctorPage() {
         navigate(PERFIL_DOCTOR);
       } else {
         setError(returnError());
+      };
+    }};
+
+  const handleSignInWithGoogle = async ()=>{
+
+    var result = await signInDoctorWithGoogle();
+
+    if(completed()){
+
+      let nombreSplit = result.name.split(" ");
+      console.log('Split: ',nombreSplit);
+      console.log('Split length: ',nombreSplit.length);
+
+      var nombre = '';
+      var apellido = '';
+
+      if (nombreSplit.length > 3) {
+        console.log('nombre y apellido doble');
+        nombre = nombreSplit[0] + ' ' + nombreSplit[1];
+        apellido = nombreSplit[2] + ' ' + nombreSplit[3];
+      }else if (nombreSplit.length == 3) {
+        console.log('nombre doble');
+        nombre = nombreSplit[0] + ' ' + nombreSplit[1];
+        apellido = nombreSplit[2];
+      }else if (nombreSplit.length == 2) {
+        console.log('Un nombre: ');
+        nombre = nombreSplit[0];
+        apellido = nombreSplit[1];
+      }
+      setFormData({
+        ...formData,
+        name:nombre,
+        lastname:apellido,
+        email:result.email,
+      })
+
+      setGooglelogin(true)
+      }else{
+        navigate(REGISTER_DOCTOR_URL)
       }
     }
-  };
+
   //en cada input utiliza la info del campo para agregarla al form existente
   const handleOnChange = (event) => {
     const { name, value } = event.target;
@@ -130,35 +161,37 @@ export function RegisterDoctorPage() {
   };
 
   return (
-    <div className="flex justify-center items-center m-3 py-9">
-      <div className="flex justify-center items-center flex-col  max-w-lg m-2 bg-white p-5 rounded-xl shadow shadow-slate-300 h-full text-xs ">
-        <p className=" my-4 p-2 font-bold pb-1 text-black text-lg">
-          Ingresa tus datos para confirmar el registro
-        </p>
-        <form
-          action=""
-          onSubmit={onSubmit}
-          className="flex flex-col justify-between gap-2"
-        >
-          <div className="flex flex-row  gap-x-16 gap-y-5">
-            <div id="leftHalf" className="w-full">
-              <label htmlFor="name" className="block cursor-pointer">
-                <div className="flex flex-row py-1 mt-2">
-                  <h1 className="font-medium text-slate-700 pb-2 text-sm ">
-                    Nombre
-                  </h1>
-                  <p className="text-red-600">{errorName}</p>
-                </div>
-                <input
-                  id="name"
-                  name="name"
-                  type="text"
-                  onChange={handleOnChange}
-                  className="w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow text-sm"
-                  placeholder="Ingresa tu nombre"
-                />
-              </label>
+    <div className='flex justify-center items-center m-3 py-9'>
+      <div className='flex justify-center items-center flex-col  max-w-lg m-2 bg-white p-5 rounded-xl shadow shadow-slate-300 h-full text-xs '>
+        <p className=" my-4 p-2 font-bold pb-1 text-black text-lg">Ingresa tus datos para confirmar el registro</p>
 
+        <div className="my-5 w-4/5">
+        <button onClick={handleSignInWithGoogle} className="w-full text-center text-sm py-3 border flex space-x-2 items-center justify-center border-slate-200 rounded-lg text-slate-700 hover:border-slate-400 hover:text-slate-900 hover:shadow transition duration-150">
+          <img src="https://www.svgrepo.com/show/355037/google.svg" className="w-6 h-6" alt=""/> <span>Rellenar datos con Google</span>
+        </button>
+        </div>
+
+        <form action="" onSubmit={onSubmit} className="flex flex-col justify-between gap-2">
+          <div className='flex flex-row  gap-x-4 gap-y-5'>
+            <div id='leftHalf' className='w-full'>
+              <label htmlFor="name" className= "block cursor-pointer">
+                <div className='flex flex-row py-1 mt-2'>
+                  <h1 className="font-medium text-slate-700 pb-2 text-sm ">Nombre</h1><p className='text-red-600'>{errorName}</p>
+                </div>
+                {!googleLogin && (
+                  <input 
+                  id="name" name="name" type="text"
+                  onChange={handleOnChange}
+                  className="w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow text-sm" placeholder="Ingresa tu nombre"/>
+                )}
+                {googleLogin && (
+                  <input value={formData.name}
+                  onChange={handleOnChange}
+                  readOnly={true}
+                  id="name" name="name" type="text"
+                  className="w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow text-sm" placeholder="Ingresa tu nombre"/>
+                )}
+              </label>
               <label htmlFor="lastname" className="block cursor-pointer">
                 <div className="flex flex-row py-1 mt-2">
                   <h1 className="font-medium text-slate-700 pb-2 text-sm ">
@@ -166,115 +199,112 @@ export function RegisterDoctorPage() {
                   </h1>
                   <p className="text-red-600">{errorName}</p>
                 </div>
-                <input
+                {!googleLogin && (
+                  <input 
                   id="lastname"
                   name="lastname"
                   type="text"
                   onChange={handleOnChange}
                   className="w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow text-sm"
                   placeholder="Ingresa tu apellido"
-                />
+                  />
+                )}
+                {googleLogin && (
+                  <input value={formData.lastname}
+                  readOnly={true}
+                  id="lastname"
+                  name="lastname"
+                  type="text"
+                  onChange={handleOnChange}
+                  className="w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow text-sm" 
+                  placeholder="Ingresa tu apellido"/>
+                )}
               </label>
-
-              <label htmlFor="email" className="block cursor-pointer">
-                <div className="flex flex-row py-1 mt-2">
-                  <h1 className="font-medium text-slate-700 pb-2 text-sm">
-                    Correo electrónico
-                  </h1>
-                  <p className="text-red-600">{errorEmail}</p>
-                </div>
-                <input
+              <label htmlFor="email" className= "block cursor-pointer">
+                <div className='flex flex-row py-1 mt-2'>
+                  <h1 className="font-medium text-slate-700 pb-2 text-sm">Correo electrónico</h1><p className='text-red-600'>{errorEmail}</p>
+                </div>                   
+                {!googleLogin && (
+                  <input 
                   id="email"
                   name="email"
                   type="email"
                   onChange={handleOnChange}
-                  className="w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow text-sm"
-                  placeholder="Ingresa tu correo"
-                />
+                  className="w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow text-sm" 
+                  placeholder="Ingresa tu correo"/>
+                )}
+                {googleLogin && (
+                  <input value={formData.email}
+                  id="email"
+                  name="email"
+                  type="email"
+                  onChange={handleOnChange}
+                  readOnly={true}
+                  className="w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow text-sm" placeholder="Ingresa tu correo"/>
+                )}
               </label>
-              <div>
-                <label htmlFor="telefono">
-                  <div className="flex flex-row py-1 mt-2">
-                    <h1 className="font-medium text-slate-700 pb-2 text-sm">
-                      Teléfono
-                    </h1>
-                    <p className="text-red-600">{errorPhone}</p>
+                <div>
+                  <label htmlFor="telefono">
+                    <div className="flex flex-row py-1 mt-2">
+                      <h1 className="font-medium text-slate-700 pb-2 text-sm">
+                        Teléfono
+                      </h1>
+                      <p className="text-red-600">{errorPhone}</p>
+                    </div>
+                    {/* <Telefono></Telefono> */}
+                    <input
+                      id="phone"
+                      name="phone"
+                      type="text"
+                      onChange={handleOnChange}
+                      className="w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow text-sm"
+                      placeholder="Ingresa tu número de teléfono"
+                    />
+                  </label>
+                </div>
+                <label htmlFor="password">
+                  <div className='flex flex-row py-1 mt-2'>
+                    <h1 className="font-medium text-slate-700 pb-2 text-sm">Contraseña</h1>
+                    <p className='text-red-600'>{errorPassword}</p>
                   </div>
-                  {/* <Telefono></Telefono> */}
-                  <input
-                    id="phone"
-                    name="phone"
-                    type="text"
+                  <input 
+                    id="password" 
+                    name="password" 
+                    type="password" 
                     onChange={handleOnChange}
-                    className="w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow text-sm"
-                    placeholder="Ingresa tu número de teléfono"
-                  />
+                    className="w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow text-sm" 
+                    placeholder="Ingresa tu contraseña"
+                    />
                 </label>
-              </div>
-              <label htmlFor="password">
-                <div className="flex flex-row py-1 mt-2">
-                  <h1 className="font-medium text-slate-700 pb-2 text-sm">
-                    Contraseña
-                  </h1>
-                  <p className="text-red-600">{errorPassword}</p>
-                </div>
-                <input
-                  id="password"
-                  name="password"
-                  type="password"
-                  onChange={handleOnChange}
-                  className="w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow text-sm"
-                  placeholder="Ingresa tu contraseña"
-                />
-              </label>
-              <label htmlFor="confirmar">
-                <div className="flex flex-row py-1 mt-2">
-                  <h1 className="font-medium text-slate-700 pb-2 text-sm">
-                    Confirmar contraseña
-                  </h1>
-                  <p className="text-red-600">{errorConfirm}</p>
-                </div>
-                <input
-                  id="confirmPassword"
-                  name="confirmPassword"
-                  type="password"
-                  onChange={handleOnChange}
-                  className="w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow text-sm"
-                  placeholder="Ingresa nuevamente la contraseña"
-                />
-              </label>
-              <label htmlFor="experience">
-                <div className="flex flex-row py-1 mt-2">
-                  <h1 className="font-medium text-slate-700 pb-2 text-sm">
-                    Años de experiencias
-                  </h1>
-                  <p className="text-red-600">{errorConfirm}</p>
-                </div>
-                <input
-                  id="experience"
-                  name="experience"
-                  type="text"
-                  onChange={handleOnChange}
-                  className="w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow text-sm"
-                  placeholder="Ingrese sus años de experiencia"
-                />
-              </label>
-              <label htmlFor="Price">
-                <div className="flex flex-row py-1 mt-2">
-                  <h1 className="font-medium text-slate-700 pb-2 text-sm">
-                    Precio por consulta
-                  </h1>
-                  <p className="text-red-600">{errorConfirm}</p>
-                </div>
-                <input
-                  id="Price"
-                  name="Price"
-                  type="number"
-                  onChange={handleOnChange}
-                  className="w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow text-sm"
-                  placeholder="Indique un precio"
-                />
-              </label>
+                <label htmlFor="confirmar">
+                  <div className='flex flex-row py-1 mt-2'>
+                    <h1 className="font-medium text-slate-700 pb-2 text-sm">Confirmar contraseña</h1>
+                     <p className='text-red-600'>{errorConfirm}</p>
+                  </div>
+                  <input 
+                    id="confirmPassword" 
+                    name="confirmPassword" 
+                    type="password" 
+                    onChange={handleOnChange}
+                    className="w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow text-sm" 
+                    placeholder="Ingresa nuevamente la contraseña"/>
+                </label>
+                <label htmlFor="experience">
+                  <div className='flex flex-row py-1 mt-2'>
+                    <h1 className="font-medium text-slate-700 pb-2 text-sm">Años de experiencias</h1><p className='text-red-600'>{errorConfirm}</p>
+                  </div>
+                  <input id="experience" name="experience" type="number" 
+                    onChange={handleOnChange}
+                    className="w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow text-sm" placeholder="Ingrese sus años de experiencia"/>
+                </label>
+                <label htmlFor="Price">
+                  <div className='flex flex-row py-1 mt-2'>
+                    <h1 className="font-medium text-slate-700 pb-2 text-sm">Precio por consulta</h1><p className='text-red-600'>{errorConfirm}</p>
+                  </div>
+                  <input id="Price" name="Price" type="number" 
+                    onChange={handleOnChange}
+                    className="w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow text-sm" placeholder="Indique un precio"/>
+                </label>
             </div>
             <div id="rightHalf" className="w-full">
               <div>
@@ -460,4 +490,4 @@ export function RegisterDoctorPage() {
       </div>
     </div>
   );
-}
+};

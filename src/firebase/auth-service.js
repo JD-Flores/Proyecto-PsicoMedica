@@ -55,6 +55,16 @@ export const signInWithGoogle = async()=>{
     }
 };
 
+export const signInDoctorWithGoogle = async()=>{
+  try {
+      const result = await signInWithPopup(auth,googleProvider)//abre la ventana de login de google
+      complete=true;
+      return {'name': result.user.displayName, 'email': result.user.email};
+  } catch (error) {
+    Validacion(error) 
+  }
+};
+
 export const logInWithEmailAndPassword = async(email,password)=>{
   try {
     const result = await signInWithEmailAndPassword(auth,email,password);
