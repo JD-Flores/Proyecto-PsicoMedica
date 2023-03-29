@@ -4,7 +4,7 @@ import estrellagris from "../../imagenes/estrella gris.png";
 
 export function DoctorCard({info}) {
   return (
-    <div className='flex flex-col items-center bg-white rounded-3xl lg:w-[220px] lg:h-[380px] w-[180px] h-[320px] m-[4px]'>
+    <div className='flex flex-col items-center bg-white rounded-3xl lg:w-[220px] lg:h-[380px] w-[170px] h-[320px]'>
 
         <img className='rounded-full w-[80px] h-[80px]    lg:w-[110px] lg:h-[110px] mb-2 mt-6 border-indigo-600' src={info.profilePic} alt="Image from doctor" />
         <h1 className='mb-2 font-comfortaa font-semibold text-[14px] lg:text-[18px]'>Psicólogo</h1>

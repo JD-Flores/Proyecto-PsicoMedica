@@ -19,13 +19,13 @@ export function DoctorNav() {
     <div id="main-container" className=" flex flex-col gap-y-[13px] w-full items-center ">
       <button onClick={() => setIsOpen((prev) => !prev)} className="flex flex-row justify-between text-white items-center w-[363px] h-[36px] bg-[#908989] rounded-[12px] px-[13px]
       md:w-[583px] md:text-[20px]
-      lg:w-[683px] lg:text-[24px]
-      xl:w-[763px] xl:text-[24px]">
+      lg:w-[683px] lg:text-[20px]
+      xl:w-[763px] xl:text-[20px]">
         Menu
         {!isOpen ? (
-          <img className="w-[24px] lg:w-[32px] h-[24px] lg:h-[32px]" src={ArrowDown} alt="" />
+          <img className="w-[24px] h-[24px]" src={ArrowDown} alt="" />
         ) : (
-          <img className="w-[24px] lg:w-[32px] h-[24px] lg:h-[32px]" src={ArrowUp} alt="" />
+          <img className="w-[24px] h-[24px]" src={ArrowUp} alt="" />
         )}
       </button>
 
