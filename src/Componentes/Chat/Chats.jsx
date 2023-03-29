@@ -83,8 +83,8 @@ export function Chats() {
       <div className='flex flex-row justify-evenly p-3'>
         {user.doctor == true &&
         <>
-        <button disabled={disable} className='text-white text-3xl hover:font-bold' onClick={handleChats}>Citas de hoy</button>
-        <button disabled={disable} className='text-white text-3xl hover:font-bold' onClick={handleArchived}>Chats archivados</button>
+        <button disabled={disable} className='text-black text-lg lg:text-xl hover:font-bold' onClick={handleChats}>Citas de hoy</button>
+        <button disabled={disable} className='text-black text-lg lg:text-xl hover:font-bold' onClick={handleArchived}>Chats archivados</button>
         </>
           }
       </div>
@@ -93,7 +93,7 @@ export function Chats() {
         id='userchat' 
         key={chat[0]} 
         onClick={()=>handleSelect(chat[1].userInfo)}
-        className='flex flex-row p-2 items-center gap-3 text-white hover:bg-blue-900 cursor-pointer w-full'>       
+        className='flex flex-row p-2 items-center gap-3 text-black hover:bg-blue-900 cursor-pointer w-full'>       
           <img 
           src={chat[1].userInfo?.photoURL} 
           alt="" 
@@ -119,14 +119,14 @@ export function Chats() {
         id='userchat' 
         key={chat[0]} 
         onClick={()=>handleSelect(chat[1].userInfo)}
-        className='flex flex-row p-2 items-center gap-3 text-white hover:bg-blue-900 cursor-pointer w-full'>       
+        className='flex flex-row p-2 items-center gap-3 text-black hover:bg-black hover:text-white cursor-pointer w-full'>       
           <img 
           src={chat[1].userInfo?.photoURL} 
           alt="" 
           className='w-[50px] h-[50px] object-cover rounded-[50%]'/>
          <div id='userinfo' className='flex flex-col w-full overflow-hidden '>
         <span 
-          className='font-bold text-xl'>
+          className='font-semibold text-lg md:text-xl'>
           {chat[1].userInfo?.name}</span>
         <p 
         className='w-4/5 text-xs text-gray-300 truncate '>
@@ -145,14 +145,14 @@ export function Chats() {
        id='' 
        key={chat[0]} 
        onClick={()=>handleSelect(chat[1].userInfo)}
-       className='flex flex-row p-2 items-center gap-3 text-white hover:bg-blue-900 cursor-pointer w-full'>       
+       className='flex flex-row p-2 items-center gap-3 text-black hover:bg-black hover:text-white cursor-pointer w-full'>       
          <img 
          src={chat[1].userInfo?.photoURL} 
          alt="" 
          className='w-[50px] h-[50px] object-cover rounded-[50%]'/>
         <div id='' className='flex flex-col w-full overflow-hidden '>
        <span 
-         className='font-bold text-xl'>
+         className='font-semibold text-lg md:text-xl'>
          {chat[1].userInfo?.name}</span>
        <p 
        className='w-4/5 text-xs text-gray-300 truncate '>

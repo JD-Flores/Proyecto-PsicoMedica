@@ -34,7 +34,7 @@ export function Message({message}) {
              <img src={message.img} alt="" className='max-w-[250px] rounded' />
             
             {message.text != ""&&
-            <p className='flex flex-col items-start bg-blue-800 text-white p-2 rounded-l rounded-tr  break-all'>
+            <p className='flex flex-col items-start bg-[#5974A9] text-white p-2 rounded-l rounded-tr  break-all'>
             {message.text}
             </p>
             }
@@ -60,7 +60,7 @@ export function Message({message}) {
             <img src={message.img} alt="" className='max-w-[250px] rounded' />
             
             {message.text != ""&&
-            <p className='flex flex-col items-start bg-green-800 text-white p-2 rounded-r rounded-tl  break-all'>
+            <p className='flex flex-col items-start bg-black text-white p-2 rounded-r rounded-tl  break-all'>
             {message.text}
             </p>
             }

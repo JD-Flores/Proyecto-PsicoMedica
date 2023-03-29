@@ -148,9 +148,9 @@ export function Messages() {
 
   return (
     
-    <div className='flex flex-col w-2/3'>
+    <div className='flex flex-col   h-full  bg-white'>
         <PopupFeedback setOpen={setOpen} open={open} cita={cita} doctor={data.user} user={user} />
-        <div className='flex items-center w-full text-3xl p-2 lg:p-3 bg-blue-900 text-white h-[70px]'>
+        <div className='flex justify-center items-center w-full text-3xl p-2 lg:p-3 bg-[#5974A9] text-white h-[70px]'>
             <span>{data.user?.name}</span>
             
             {/* <button onClick={}>Actualizar</button> */}
@@ -174,8 +174,8 @@ export function Messages() {
             }
             
         </div>
-        <div className='flex justify-between bg-blue-900 p-1 pl-0 pr-5'>
-            <div className='flex items center justify center w-full'>
+        <div className='flex justify-between bg-[#5974A9] p-1 pl-0 pr-5'>
+            <div className='flex items center justify center w-full p-2'>
             <input 
             type="text" 
             onChange={e=>setText(e.target.value)}
