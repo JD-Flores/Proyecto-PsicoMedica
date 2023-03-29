@@ -438,7 +438,9 @@ export function RegisterDoctorPage() {
                   type="country"
                   defaultValue="Default"
                   className="w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow text-sm"
-                  
+                  {...register("country", {
+                    required: true,
+                  })}
                   >
                   <option disabled hidden value="Default">Escoge</option>
                   <option value="Afghanistan">Afganistán</option>
@@ -727,20 +729,6 @@ export function RegisterDoctorPage() {
                 {errors.age?.type === "max" && (
                   <p className="text-red-600">La edad ingresada no es válida</p>
                 )}
-              </label>
-              {/* Label nacionalidad */}
-              <label htmlFor="country">
-                <div className="flex flex-row py-1 mt-2">
-                  <h1 className="font-medium text-slate-700 pb-2 text-sm">
-                    Nacionalidad
-                  </h1>
-                  <p className="text-red-600">{errorCountry}</p>
-                </div>
-                <Nacionalidad
-                  first="Elige tu país de residencia"
-                  editable={false}
-                  handle={handleOnChange}
-                ></Nacionalidad>
               </label>
 
               
