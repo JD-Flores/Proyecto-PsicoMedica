@@ -6,6 +6,7 @@ import {
   LOGIN_URL,
   PERFIL_CLIENTE,
   REGISTER_URL,
+  FAQ_URL
 } from "../../constantes/urls";
 import { useUser } from "../../contexts/UserContext";
 import { logout } from "../../firebase/auth-service";
@@ -47,7 +48,7 @@ export function Navbar() {
               <Link to={HOME_URL}>Nosotros</Link>
             </li>
             <li className="rounded-sm px-3 py-1 hover:bg-gray-100">
-              <Link to={HOME_URL}>FAQ</Link>
+              <Link to={FAQ_URL}>FAQ</Link>
             </li>
           </ul>
         </div>
@@ -75,7 +76,7 @@ export function Navbar() {
               </li>
               <li>
                 <Link
-                  to={HOME_URL}
+                  to={FAQ_URL}
                   className="inline-block no-underline hover:text-black text-lg py-2 px-4 lg:-ml-2"
                 >
                   FAQ
