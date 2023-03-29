@@ -82,8 +82,8 @@ export function RegisterPatientPage() {
   };
 
   return (
-    <div className="max-w-lg mx-auto my-10 bg-white p-8 rounded-xl shadow shadow-slate-300">
-      <h1 className="text-4xl font-medium text-center p-2">Registrar Cuenta</h1>
+    <div className="md:max-w-lg max-w-sm mx-auto bg-white p-8 rounded-xl shadow shadow-slate-300 mt-8">
+      <h1 className="text-3xl lg:text-4xl font-medium text-center p-2">Registrar Cuenta</h1>
 
       <div className="my-5">
         <button

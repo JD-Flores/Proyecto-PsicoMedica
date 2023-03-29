@@ -26,9 +26,7 @@ export function Navbar() {
     >
       <div className="w-full flex items-center justify-around">  
       <div className="">
-      <Link to={HOME_URL}>
-      <img src={logoPsicoMedica} alt="" className="rounded-full lg:h-[120px] h-[80px] "/>
-      </Link>
+      <img src={logoPsicoMedica} alt="" className="rounded-full lg:h-[120px] h-[70px] "/>
       </div>    
       
       <div className="group md:hidden block">

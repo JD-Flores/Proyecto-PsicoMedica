@@ -149,12 +149,12 @@ export function RegisterDoctorPage() {
 
   return (
     <div className='flex justify-center items-center m-3 py-9'>
-      <div className='flex justify-center items-center flex-col  max-w-lg m-2 bg-white p-5 rounded-xl shadow shadow-slate-300 h-full text-xs '>
-        <p className=" my-4 p-2 font-bold pb-1 text-black text-lg">Ingresa tus datos para confirmar el registro</p>
+      <div className='flex justify-center items-center flex-col gap-2 max-w-lg m-3 bg-white p-6 rounded-xl shadow shadow-slate-300 h-full text-xs '>
+        <p className=" my-4 p-2 font-bold pb-1 text-black text-xl text-center">Ingresa tus datos para confirmar el registro</p>
 
         <div className="my-5 w-4/5">
         <button onClick={handleSignInWithGoogle} className="w-full text-center text-sm py-3 border flex space-x-2 items-center justify-center border-slate-200 rounded-lg text-slate-700 hover:border-slate-400 hover:text-slate-900 hover:shadow transition duration-150">
-          <img src="https://www.svgrepo.com/show/355037/google.svg" className="w-6 h-6" alt=""/> <span>Rellenar datos con Google</span>
+          <img src="https://www.svgrepo.com/show/355037/google.svg" className="w-6 h-6" alt=""/> <span>Continuar con Google</span>
         </button>
         </div>
         <form
@@ -172,7 +172,7 @@ export function RegisterDoctorPage() {
                 {!googleLogin && (
                   <input 
                   id="name" name="name" type="text"
-                  className="w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow text-sm" placeholder="Ingresa tu nombre"
+                  className="sm:w-full lg:w-full w-[160px] py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow text-sm" placeholder="Ingresa tu nombre"
                   {...register("name", {
                     required: true,
                     pattern: /^[A-Za-z]+$/i,
@@ -182,7 +182,7 @@ export function RegisterDoctorPage() {
                   <input value={nombre1}
                   readOnly={true}
                   id="name" name="name" type="text"
-                  className="w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow text-sm" placeholder="Ingresa tu nombre"/>
+                  className="sm:w-full lg:w-full w-[160px] py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow text-sm" placeholder="Ingresa tu nombre"/>
                 )}
                 {errors.name?.type === "required" && (
                   <p className="text-red-600">El campo es requerido</p>
@@ -203,7 +203,7 @@ export function RegisterDoctorPage() {
                   id="lastname"
                   name="lastname"
                   type="text"
-                  className="lg:w-full w-[160px] py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow text-sm"
+                  className="sm:w-full lg:w-full w-[160px] py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow text-sm"
                   placeholder="Ingresa tu apellido"
                   {...register("lastname", {
                     required: true,
@@ -218,7 +218,7 @@ export function RegisterDoctorPage() {
                   id="lastname"
                   name="lastname"
                   type="text"
-                  className="w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow text-sm" 
+                  className="sm:w-full lg:w-full w-[160px] py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow text-sm" 
                   placeholder="Ingresa tu apellido"/>
                 )}
                 {errors.lastname?.type === "required" && (
@@ -240,7 +240,7 @@ export function RegisterDoctorPage() {
                     name="email"
                     type="email"
 
-                    className="w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow text-sm" 
+                    className="sm:w-full lg:w-full w-[160px] py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow text-sm" 
                     placeholder="Ingresa tu correo"
                     {...register("email", {
                       required: true,
@@ -255,7 +255,7 @@ export function RegisterDoctorPage() {
                   name="email"
                   type="email"
                   readOnly={true}
-                  className="w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow text-sm" placeholder="Ingresa tu correo"/>
+                  className="sm:w-full lg:w-full w-[160px] py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow text-sm" placeholder="Ingresa tu correo"/>
                 )}
                 {errors.email?.type === "required" && (
                   <p className="text-red-600">El campo es requerido</p>
@@ -278,7 +278,7 @@ export function RegisterDoctorPage() {
                   id="phone"
                   name="phone"
                   type="text"
-                  className="w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow text-sm"
+                  className="sm:w-full lg:w-full w-[160px] py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow text-sm"
                   placeholder="Ingresa tu número de teléfono"
                   {...register("phone", {
                     required: true,
@@ -315,7 +315,7 @@ export function RegisterDoctorPage() {
                   id="password"
                   name="password"
                   type="password"
-                  className="lg:w-full w-[160px] py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow text-sm"
+                  className="sm:w-full lg:w-full w-[160px] py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow text-sm"
                   placeholder="Ingresa tu contraseña"
                   {...register("password", {
                     required: true,
@@ -342,7 +342,7 @@ export function RegisterDoctorPage() {
                   id="confirmPassword"
                   name="confirmPassword"
                   type="password"
-                  className="lg:w-full w-[160px] py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow text-sm"
+                  className="sm:w-full lg:w-full w-[160px] py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow text-sm"
                   placeholder="Ingresa nuevamente la contraseña"
                   {...register("confirmPassword", {
                     required: true,
@@ -373,8 +373,8 @@ export function RegisterDoctorPage() {
                   id="Experience"
                   name="Experience"
                   type="text"
-                  className="lg:w-full w-[160px] py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow text-sm"
-                  placeholder="Ingrese sus años de experiencia"
+                  className="sm:w-full lg:w-full w-[160px] py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow text-sm"
+                  placeholder="Ingresa tus años de experiencia"
                   {...register("Experience", {
                     required: true,
                     min: 1,
@@ -406,7 +406,7 @@ export function RegisterDoctorPage() {
                   id="Price"
                   name="Price"
                   type="number"
-                  className="lg:w-full w-[160px] py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow text-sm"
+                  className="sm:w-full lg:w-full w-[160px] py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow text-sm"
                   placeholder="Indique un precio"
                   {...register("Price", {
                     required: true,
@@ -728,6 +728,22 @@ export function RegisterDoctorPage() {
                   <p className="text-red-600">La edad ingresada no es válida</p>
                 )}
               </label>
+              {/* Label nacionalidad */}
+              <label htmlFor="country">
+                <div className="flex flex-row py-1 mt-2">
+                  <h1 className="font-medium text-slate-700 pb-2 text-sm">
+                    Nacionalidad
+                  </h1>
+                  <p className="text-red-600">{errorCountry}</p>
+                </div>
+                <Nacionalidad
+                  first="Elige tu país de residencia"
+                  editable={false}
+                  handle={handleOnChange}
+                ></Nacionalidad>
+              </label>
+
+              
               {/* Label Género */}
               <label htmlFor="gender">
                 <div className="flex flex-row py-1 mt-2">
