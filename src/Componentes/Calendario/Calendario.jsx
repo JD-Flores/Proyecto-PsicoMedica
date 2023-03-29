@@ -16,10 +16,9 @@ import { date } from "date-arithmetic";
 
 
 
-export function Calendario() {
+export function Calendario({userid}) {
   const [dates,setDates]=useState([]);
-  const [reserva,setReserva]=useState([])
-  const {user}=useUser();
+  const [reserva,setReserva]=useState([]);
 
   function useDates(){
     
@@ -28,41 +27,41 @@ export function Calendario() {
   useEffect(() => {  
 
     const events = dates?.map((element) =>{
-        const temp = element.end
+        const temp = element.info.end
         element.end = new Date(temp)
-        const temp2 = element.start
+        const temp2 = element.info.start
         element.start = new Date(temp2)
+        element.title = element.info.title
         setReserva(dates)
     }) 
     
    },[dates]);
 
-   useEffect(() => {  
-     onSnapshot(doc(db,"calendarios",user.uid),(doc)=>{
+  useEffect(() => {  
+     onSnapshot(doc(db,"calendarios",userid),(doc)=>{
       doc.exists()&& setDates(doc.data().citas)
     })
-
     
    },[]);
 
-   const handle=()=>{
-    console.log(dates)
-   }
-   const handleClick= async ()=>{
-    onSnapshot(doc(db,"calendarios",user.uid),(doc)=>{
-      doc.exists()&& setDates(doc.data().citas)
-    })
-    const events = dates?.map((element) =>{
-        const temp = element.end
-        element.end = new Date(temp)
-        const temp2 = element.start
-        element.start = new Date(temp2)
-        setDates(dates)
-        console.log(dates)
-    })
+//    const handle=()=>{
+//     console.log(dates)
+//    }
+//    const handleClick= async ()=>{
+//     onSnapshot(doc(db,"calendarios",user.uid),(doc)=>{
+//       doc.exists()&& setDates(doc.data().citas)
+//     })
+//     const events = dates?.map((element) =>{
+//         const temp = element.info.end
+//         element.end = new Date(temp)
+//         const temp2 = element.info.start
+//         element.start = new Date(temp2)
+//         setDates(dates)
+//         console.log(dates)
+//     })
 
     
-};
+// };
    
   
 
@@ -77,7 +76,7 @@ export function Calendario() {
   
 
     return (
-      <div  className="bigCalendar-container bg-blue-300 text-white h-[400px]">
+      <div  className="bigCalendar-container bg-[#5974A9] text-black font-semibold h-[400px] rounded-lg">
       <Calendar
         localizer={localizer}
         events={reserva}

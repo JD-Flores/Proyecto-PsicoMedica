@@ -8,6 +8,7 @@ import { BUSCAR_DOC, CHAT } from "../../constantes/urls";
 import { reserveContext } from "../../contexts/ReserveContext";
 import { arrayUnion, doc, getDoc, serverTimestamp, setDoc, updateDoc } from "firebase/firestore";
 import { db } from "../../firebase/config";
+import { v4 as uuid} from "uuid";
 
 export function Checkout({price}) {
     const [show, setShow] = useState(false);
@@ -56,12 +57,12 @@ export function Checkout({price}) {
         user.uid + context.uid : 
         context.uid + user.uid;
         const res = await getDoc(doc(db,"chats",combinedID));
-        try{    
+        // try{    
             
             if(!res.exists()){
                 //crea el chat
                 await setDoc(doc(db,"chats",combinedID),{messages:[]});
-            }
+            
                 //crea user chats
                 console.log(user)
                 console.log(context)
@@ -81,7 +82,8 @@ export function Checkout({price}) {
                     },
                     [combinedID+".date"]: serverTimestamp()
                 })
-            
+                
+            }
             // busca si el documento exist o ya esta creado
                 const res2 = await getDoc(doc(db,"calendarios",context.uid)); 
                     
@@ -92,22 +94,26 @@ export function Checkout({price}) {
                 // Si ya existe o fue creado agrega al array de citas la nueva cita
                     await updateDoc(doc(db,"calendarios",context.uid),{
                     citas:arrayUnion({
-                        title: reservationContext.title,
+                        ["id"]:uuid(),
+                        ["completed"]:false,
+                        ["ranked"]:"undefined",
+                        ["uid"]:user.uid,
+                        ["info"]:{title: reservationContext.title,
                         start:reservationContext.start,
-                        end:reservationContext.end,
+                        end:reservationContext.end,}
                         })
                     })
             navigate(CHAT)
-        }catch{
-            console.error("error")
-        }
+        // }catch{
+        //     console.error("error")
+        // }
         
 
     }
 
     useEffect(() => {
         if (success) {
-            alert("Payment successful!!");
+            
             console.log('Order successful . Your order id is--', orderID);
             setChatReserve()
         }

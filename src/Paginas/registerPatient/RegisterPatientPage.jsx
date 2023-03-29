@@ -16,7 +16,6 @@ import { registerWithEmailAndPassword } from "../../firebase/auth-service";
 export function RegisterPatientPage() {
   const navigate = useNavigate();
   const [error, setError] = useState("");
-  const [formData, setFormData] = useState();
 
   //const para el login con google
   const handleSigninWithGoogle = async () => {
@@ -67,15 +66,6 @@ export function RegisterPatientPage() {
     }
   };
 
-  //en cada input utiliza la info del campo para agregarla al form existente
-  const handleOnChange = (event) => {
-    const { name, value } = event.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
-  };
-
   return (
     <div className="max-w-lg mx-auto my-10 bg-white p-8 rounded-xl shadow shadow-slate-300">
       <h1 className="text-4xl font-medium text-center p-2">Registrar Cuenta</h1>
@@ -104,12 +94,12 @@ export function RegisterPatientPage() {
               id="name"
               name="name"
               type="text"
-              onChange={handleOnChange}
               className="w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow"
               placeholder="Ingresa tu nombre"
               {...register("name", {
                 required: true,
                 pattern: /^[A-Za-z]+$/i,
+                minLength: 3,
               })}
             />
             {errors.name?.type === "required" && (
@@ -117,6 +107,9 @@ export function RegisterPatientPage() {
             )}
             {errors.name?.type === "pattern" && (
               <p className="text-red-600">El dato ingresado no es válido</p>
+            )}
+            {errors.name?.type === "minLength" && (
+              <p className="text-red-600">El nombre ingresado no es válido</p>
             )}
           </label>
           <label htmlFor="lastname">
@@ -127,12 +120,12 @@ export function RegisterPatientPage() {
               id="lastname"
               name="lastname"
               type="text"
-              onChange={handleOnChange}
               className="w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow"
               placeholder="Ingresa tu apellido"
               {...register("lastname", {
                 required: true,
                 pattern: /^[A-Za-z]+$/i,
+                minLength: 3,
               })}
             />
             {errors.lastname?.type === "required" && (
@@ -140,6 +133,9 @@ export function RegisterPatientPage() {
             )}
             {errors.lastname?.type === "pattern" && (
               <p className="text-red-600">El dato ingresado no es válido</p>
+            )}
+            {errors.name?.type === "minLength" && (
+              <p className="text-red-600">El apellido ingresado no es válido</p>
             )}
           </label>
           <label htmlFor="email">
@@ -152,7 +148,6 @@ export function RegisterPatientPage() {
               id="email"
               name="email"
               type="email"
-              onChange={handleOnChange}
               className="w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow"
               placeholder="Ingresa tu correo electrónico"
               {...register("email", {
@@ -178,7 +173,6 @@ export function RegisterPatientPage() {
               id="phone"
               name="phone"
               type="text"
-              onChange={handleOnChange}
               className="w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow"
               placeholder="Ingresa tu número de teléfono"
               {...register("phone", {
@@ -209,7 +203,6 @@ export function RegisterPatientPage() {
               id="password"
               name="password"
               type="password"
-              onChange={handleOnChange}
               className="w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow"
               placeholder="Ingresa tu contraseña"
               {...register("password", {
@@ -236,7 +229,6 @@ export function RegisterPatientPage() {
               id="confirmPassword"
               name="confirmPassword"
               type="password"
-              onChange={handleOnChange}
               className="w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow"
               placeholder="Ingresa nuevamente la contraseña"
               {...register("confirmPassword", {

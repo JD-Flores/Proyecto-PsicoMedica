@@ -44,6 +44,8 @@ export const signInWithGoogle = async()=>{
             name: result.user.displayName,
             doctor:false,
             phone: "",
+            profilePic:"https://firebasestorage.googleapis.com/v0/b/proyecto-psicomedica-6dbc5.appspot.com/o/11997cb3-d7ea-4d18-bb98-14eded4b7d89?alt=media&token=af1b567a-8a9c-4b35-8305-a702ca72330f",
+
             
           })
         }
@@ -70,7 +72,7 @@ export const registerWithEmailAndPassword = async(
   )=>{
     if(password==confirmPassword){
   try {
-    const result = await createUserWithEmailAndPassword(auth,email,password);
+    const result = await createUserWithEmailAndPassword(auth,email,password,extraData);
     await createUserProfile(result.user.uid,{
       uid:result.user.uid,
       email,

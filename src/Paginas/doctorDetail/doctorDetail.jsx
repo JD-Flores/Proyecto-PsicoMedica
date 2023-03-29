@@ -6,6 +6,8 @@ import { getDoc } from "firebase/firestore";
 import { useContext, useState } from "react";
 import { useEffect } from "react";
 import { docContext, DoctorContext } from "../../contexts/DoctorContext";
+import { Calendario } from "../../Componentes/Calendario/Calendario";
+import { ProfileNav } from "../../Componentes/ProfileNav/ProfileNav";
 
 export function DoctorDetail() {
   const navigate = useNavigate();
@@ -13,74 +15,177 @@ export function DoctorDetail() {
   const [doctor, setDoctor] = useState([]);
   const [context, setContext] = useContext(docContext);
 
-  const getDoctor= async (id) => {
-      const data = await getDoctorById(id);
-      setDoctor(data);
-    }
-  const handleReserve = ()=>{
-      setContext(doctor)
+  const getDoctor = async (id) => {
+    const data = await getDoctorById(id);
+    setDoctor(data);
+  };
+  const handleReserve = () => {
+    setContext(doctor);
 
-      navigate(`/reservas/${doctor.uid}`)
-  }
+    navigate(`/reservas/${doctor.uid}`);
+  };
 
   useEffect(() => {
-      const result = getDoctor(doctor_id);
-    }, []);
+    const result = getDoctor(doctor_id);
+  }, []);
 
   return (
     <div
       id="main-container"
-      className="sm:w-[650px] mx-auto m-8 bg-white p-10 rounded-xl shadow shadow-slate-300 h-fit mt-10"
+      className="flex flex-col justify-center items-center gap-[13px] py-[17px] "
     >
-      <div id="top-container" className="flex flex-row">
-        <div id="left-side" className="flex flex-col text-justify ">
-          <img id="foto" alt="foto" src={doctor.profilePic} className="w-[250px] h-[220px] mb-4"/>
-          <button
-          onClick={handleReserve}
-          className="cursor-pointer flex items-center justify-center bg-[#5974A9] text-white p-1 rounded-md h-10 w-[180px] text-center text-sm font-medium">
-            Reservar Cita
-          </button>
-        </div>
+      <div id="top-container">
+        <ProfileNav></ProfileNav>
+      </div>
+      <div
+        id="bottom-container"
+        className="flex flex-col justify-center w-[363px] p-[17px] bg-white rounded-[12px] 
+        md:w-[583px] md:text-[]
+        lg:w-[683px] lg:text-[]
+        xl:w-[763px] xl:text-[]"
+      >
+        <div id="sub-top-container" className="flex flex-row gap-[13px]">
+          <div
+            id="leftSideFotoReserva"
+            className="flex flex-col w-1/2  gap-[8px]
+            md:w-2/5 
+            lg:w-2/5 
+            xl:w-2/5 "
+          >
+            <img
+              id="foto"
+              alt="foto"
+              src={doctor.profilePic}
+              className="h-[210px] md:h-[250px]  md:w-screen rounded-[12px]"
+            />
+            <button
+              onClick={handleReserve}
+              className="flex justify-center items-center cursor-pointer bg-[#5974A9] text-white rounded-[12px] h-[38px] w-full text-center text-sm font-medium md:text-base lg:text-lg xl:text-xl"
+            >
+              Reservar Cita
+            </button>
+          </div>
 
-        <div id="right-side" className="flex flex-col gap-[6px] lg:ml-[100px] ml-[50px]">
-            <hr className="border-t-8 border-[#5974A9] mt-2"/>
-            <h1 className="text-[#5974A9] text-3xl font-bold font-comfortaa">
+          <div
+            id="rightSideInfoDoc"
+            className="flex flex-col gap-[6px] w-1/2
+            md:w-3/5 
+            lg:w-3/5 
+            xl:w-3/5 "
+          >
+            <hr className="border-t-8 border-[#1E1E1E] w-full" />
+            <h1
+              className="text-[#5974A9] text-base font-bold font-comfortaa
+              md:text-lg
+              lg:text-xl
+              xl:text-xl"
+            >
               Doctor
             </h1>
-            <h2 className="font-bold text-2xl font-comfortaa"> {doctor.name} {doctor.lastname}</h2>
-            <hr className="border-t-8 border-[#5974A9] mt-2"/>
-            <p className="text-[#5974A9] text-base font-bold font-comfortaa">
+            <h2 className="font-bold text-lg font-comfortaa
+              sm:text-xl
+              lg:text-2xl
+              xl:text-2xl">
+              {" "}
+              {doctor.name} {doctor.lastname}
+            </h2>
+            <hr className="border-t-8 border-[#1E1E1E]" />
+            <p
+              className="text-[#5974A9] text-sm font-bold font-comfortaa
+              md:text-lg
+              lg:text-xl
+              xl:text-xl"
+            >
               Especialidad:
             </p>
-            <p className="text-base font-bold font-comfortaa"> {doctor.specialty}</p>
-            <p className="text-[#5974A9] text-base font-bold font-comfortaa">Ranking:</p>
-            <p className="text-base font-bold font-comfortaa"> {doctor.ranking} estrellas</p>
-              
-            
-            <p className="text-[#5974A9] text-base font-bold font-comfortaa">
-              Precio consulta: 
+            <p className="text-base font-bold font-comfortaa
+              sm:text-lg
+              lg:text-xl
+              xl:text-xl">
+              {" "}
+              {doctor.specialty}
             </p>
-            <p className="text-base font-bold font-comfortaa">
-            ${doctor.Price} por hora
+            <p className="text-[#5974A9] text-sm font-bold font-comfortaa
+              md:text-lg
+              lg:text-xl
+              xl:text-xl">
+              Ranking:
             </p>
-            
+            <p className="text-base font-bold font-comfortaa
+              sm:text-lg
+              lg:text-xl
+              xl:text-xl">
+              {" "}
+              {doctor.ranking} estrella(s)
+            </p>
+
+            <p className="text-[#5974A9] text-sm font-bold font-comfortaa
+              md:text-lg
+              lg:text-xl
+              xl:text-xl">
+              Precio consulta:
+            </p>
+            <p className="text-base font-bold font-comfortaa
+              sm:text-lg
+              lg:text-xl
+              xl:text-xl">
+              ${doctor.Price} por hora
+            </p>
           </div>
-      </div>
-
-      <hr className="border-t-8 border-[#5974A9] mt-2"/>
-
-      <div id="middle-container" className="flex flex-row">
-        <div id="bio" className="flex flex-col p-2 text-justify">
-          <h2 className="text-[#5974A9] text-[18px] font-comfortaa font-bold">Biografía:</h2>
-          <p className="font-comfortaa text-[14px]">{doctor.biography}</p>
         </div>
-      </div>
 
-      <hr className="border-t-8 border-[#5974A9] mt-2"/>
-      <div id="bottom-container" className="flex flex-col mt-2 p-2 text-justify">
-        <div id="feedback">
-          <h2 className="text-[#5974A9] text-[18px]  font-comfortaa font-bold">Feedback:</h2>
-          <p className="font-comfortaa text-[14px]"></p>
+        <div id="sub-middle-container">
+          <hr className="border-t-8 border-[#1E1E1E] mt-2 w-full" />
+
+          <div id="bio" className="flex flex-col p-2 text-justify">
+            <h2 className="text-[#5974A9] text-base font-comfortaa font-bold 
+              md:text-lg
+              lg:text-xl
+              xl:text-xl">
+              Biografía:
+            </h2>
+            <p className="font-comfortaa text-base 
+              md:text-lg
+              lg:text-xl
+              xl:text-xl">
+              {doctor.biography}
+            </p>
+          </div>
+
+          <hr className="border-t-8 border-[#1E1E1E] mt-2 w-full" />
+
+          <div
+            id="feedback"
+            className="flex flex-col p-2 text-justify overflow-y-scroll"
+          >
+            <h2 className="text-[#5974A9] text-base  font-comfortaa font-bold
+              md:text-lg
+              lg:text-xl
+              xl:text-xl">
+              Feedback:
+            </h2>
+            <p className="font-comfortaa text-base
+              md:text-lg
+              lg:text-xl
+              xl:text-xl"></p>
+          </div>
+
+          <hr className="border-t-8 border-[#1E1E1E] mt-2 w-full" />
+        </div>
+
+        <div
+          id="sub-bottom-container"
+          className="flex flex-col p-2 text-justify"
+        >
+          <div id="agenda">
+            <h2 className="text-[#5974A9] text-base  font-comfortaa font-bold mb-2
+              md:text-lg
+              lg:text-xl
+              xl:text-xl">
+              Agenda:
+            </h2>
+            <Calendario userid={doctor_id} />
+          </div>
         </div>
       </div>
     </div>
